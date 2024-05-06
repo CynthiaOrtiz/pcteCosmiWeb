@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BarCodesContentComponent } from './components/barCodes-content/barCodes-content.component';
+import { ConsultorioContentComponent } from './components/consultorio-content/consultorio-content.component';
 
 /**
- * BarCodes module routing.
+ * consultorio module routing.
  *
  * @author components
  * @version 1.0
@@ -11,7 +11,7 @@ import { BarCodesContentComponent } from './components/barCodes-content/barCodes
  */
 const routes: Routes = [
   {
-    path: '', component: BarCodesContentComponent
+    path: '', component: ConsultorioContentComponent
   }
 ];
 
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BarCodesRoutingModule { }
+export class ConsultorioRoutingModule { }
