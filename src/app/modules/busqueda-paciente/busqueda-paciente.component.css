@@ -1,11 +1,79 @@
-.table-header {
-  background-color: #e3b6ff;
+.busqueda-paciente-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.busqueda-paciente-container h2 {
   text-align: center;
-  border-bottom-width: 3px;
+  color: #ff69b4;  /* Color femenino */
+  font-family: 'Cursive', sans-serif;  /* Fuente coquette */
 }
-.table-body {
-  text-align: left;
+
+.busqueda-paciente-container ul {
+  list-style-type: none;
+  padding: 0;
 }
-.seleccionado {
-  background-color: blue;
+
+.busqueda-paciente-container ul li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.busqueda-paciente-container ul li:hover {
+  background-color: #ffebf7;  /* Suave color femenino para hover */
+}
+
+.editar-paciente {
+  margin-top: 20px;
+}
+
+.editar-paciente form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.editar-paciente form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.editar-paciente form label {
+  font-weight: bold;
+  color: #ff69b4;  /* Color femenino */
+}
+
+.editar-paciente form input,
+.editar-paciente form textarea,
+.editar-paciente form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.editar-paciente form input[type="date"] {
+  padding: 8px 10px;
+}
+
+.editar-paciente form button {
+  padding: 10px 15px;
+  background-color: #ff69b4;  /* Color femenino */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editar-paciente form button:hover {
+  background-color: #ff1493;  /* Color más oscuro para hover */
 }

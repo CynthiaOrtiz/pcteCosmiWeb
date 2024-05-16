@@ -1,0 +1,21 @@
+<div class="lista-tratamientos-container">
+    <h2>Tratamientos del Paciente</h2>
+    <ul>
+      <li *ngFor="let tratamiento of tratamientos">
+        <div>
+          <strong>Descripción:</strong> {{ tratamiento.descripcion }}
+        </div>
+        <div>
+          <strong>Observación:</strong> {{ tratamiento.observacion }}
+        </div>
+        <div>
+          <strong>Tipo de Tratamiento:</strong> {{ tratamiento.tipoTratamiento }}
+        </div>
+        <div>
+          <strong>Fecha:</strong> {{ tratamiento.fecha }}
+        </div>
+        <!-- Aquí puedes agregar botones para editar/eliminar el tratamiento -->
+      </li>
+    </ul>
+  </div>
+  

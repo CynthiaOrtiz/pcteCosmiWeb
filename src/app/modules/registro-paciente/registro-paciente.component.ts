@@ -10,7 +10,7 @@ import { Paciente } from '../../model/vo/paciente';
   styleUrls: ['./registro-paciente.component.css']
 })
 export class RegistroPacienteComponent implements OnInit {
-  formularioPaciente: FormGroup;
+  formularioPaciente!: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private pacienteService: PacienteService) { }
 

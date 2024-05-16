@@ -1,0 +1,33 @@
+export interface HistoriaClinica {
+    id: number;
+    descripcion: string;
+    observacion: string;
+    paciente: number;
+    embarazo: number;
+    lactancia: number;
+    depilacion: number;
+    metodo: string;
+    bronceado: number;
+    fecha_bronceado: Date;
+    queloides: number;
+    problemas_hormonales: number;
+    enfermedad_cutanea: string;
+    hipertricosis: string;
+    epilepsia: number;
+    tatuaje: string;
+    coagulacion: number;
+    herpes: number;
+    dispositivo_interno: string;
+    zona_dispositivo: string;
+    alergias: string;
+    color_piel: string;
+    pecas: number;
+    color_pelo: number;
+    color_ojos: number;
+    raza: number;
+    potencial_quemadura: number;
+    potencial_bronceado: number;
+    fototipo_piel: number;
+    medicacion: number;
+    fecha_medicacion: Date;
+  }

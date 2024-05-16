@@ -1,102 +1,66 @@
-<button mat-raised-button class="btn-action" [routerLink]="['/paciente-form']">
-  <fa-icon [icon]="['fas', 'star']"></fa-icon>Nuevo
-</button>
-<router-outlet></router-outlet>
-<div class="container">
-  <div>
-    <h1>Buscar Paciente</h1>
-    <form (ngSubmit)="buscarPaciente()" #buscarForm="ngForm" style="width: 50%">
-      <div style="padding: 5px;">
-        <label for="cedula" style="padding: inherit;"
-          >Cedula de identidad:</label>
-        <input
-          type="number"
-          id="cedula"
-          style="width:210px"
-          [(ngModel)]="paciente.cedula"
-          name="cedula"
-          #name="ngModel"
-        />
+<div class="busqueda-paciente-container">
+  <h2>Lista de Pacientes</h2>
+  <ul>
+    <li *ngFor="let paciente of pacientes" (click)="seleccionarPaciente(paciente)">
+      {{ paciente.nombre_completo }} - {{ paciente.cedula }}
+      <button (click)="verHistoriaClinica(paciente)">
+        <i class="fas fa-file-medical"></i> Historia Clínica
+      </button>
+      <button (click)="nuevoTratamiento(paciente)">
+        <i class="fas fa-plus-circle"></i> Nuevo Tratamiento
+      </button>
+      <button (click)="verTratamientos(paciente)">
+        <i class="fas fa-list"></i> Tratamientos
+      </button>
+    </li>
+    
+  </ul>
+
+  <div *ngIf="selectedPaciente" class="editar-paciente">
+    <h2>Editar Paciente</h2>
+    <form [formGroup]="pacienteForm" (ngSubmit)="guardarCambios()">
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" formControlName="nombre" type="text">
       </div>
-      <div style="padding: 5px;">
-        <label for="cedula" style="padding: inherit;">Nombre:</label>
-        <input
-          type="string"
-          id="nombre"
-          style="width:300px"
-          [(ngModel)]="paciente.nombre"
-          name="nombre"
-          #name="ngModel"
-        />
+      <div>
+        <label for="apellido">Apellido:</label>
+        <input id="apellido" formControlName="apellido" type="text">
       </div>
-      <div class="row text-center">
-        <button type="submit" class="btn btn-success"
-        onmouseout="style='background-color: #d45cec;'"
-        style="margin: 10px;">
-          Buscar
-        </button>
-        <button
-          type="button"
-          class="btn btn-default text-center"
-          (click)="limpiarFiltros(); buscarForm.reset()"
-          title="Limpiar cajas"
-          style="margin: 5px;"
-        >
-          <fa-icon [icon]="['fas', 'eraser']"></fa-icon>
-        </button>
+      <div>
+        <label for="nombre_completo">Nombre Completo:</label>
+        <input id="nombre_completo" formControlName="nombre_completo" type="text">
       </div>
+      <div>
+        <label for="cedula">Cédula:</label>
+        <input id="cedula" formControlName="cedula" type="text">
+      </div>
+      <div>
+        <label for="direccion">Dirección:</label>
+        <input id="direccion" formControlName="direccion" type="text">
+      </div>
+      <div>
+        <label for="telefono">Teléfono:</label>
+        <input id="telefono" formControlName="telefono" type="number">
+      </div>
+      <div>
+        <label for="ocupacion">Ocupación:</label>
+        <input id="ocupacion" formControlName="ocupacion" type="text">
+      </div>
+      <div>
+        <label for="genero">Género:</label>
+        <input id="genero" formControlName="genero" type="text">
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email" type="email">
+      </div>
+      <div>
+        <label for="nacimiento">Fecha de Nacimiento:</label>
+        <input id="nacimiento" formControlName="nacimiento" type="date">
+      </div>
+      <button type="submit" [disabled]="pacienteForm.invalid">Guardar Cambios</button>
+      <button type="button" (click)="cancelarEdicion()">Cancelar</button>
     </form>
-  </div>
-
-  <div style="width: 100%;height: 100%;overflow-y: hide;overflow-x: scroll;">
-    <table class="table table-striped table-bordered">
-      <thead class="table-header">
-        <tr>
-          <th>Cedula</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Direcci&oacute;n</th>
-          <th>Tel&eacute;fono</th>
-          <th>Ocupaci&oacute;n</th>
-          <th>G&eacute;nero</th>
-          <th>E-Mail</th>
-          <th>Fecha nacimiento</th>
-        </tr>
-      </thead>
-
-      <tbody class="table-body">
-        <tr (click)="editarPaciente(paciente)" onmouseover="style='background-color:#c7c5c5'"
-          *ngFor="let paciente of pacientes;" onmouseout="style='background-color:white'">
-          <td>
-            <span>{{paciente.cedula}}</span>
-          </td>
-          <td>
-            {{paciente.nombre}}
-          </td>
-          <td>
-            {{paciente.apellido}}
-          </td>
-          <td>
-            <span>{{paciente.direccion}}</span>
-          </td>
-          <td>
-            <span>{{paciente.telefono}}</span>
-          </td>
-          <td>
-            <span>{{paciente.ocupacion}}</span>
-          </td>
-          <td>
-            <span>{{paciente.genero}}</span>
-          </td>
-          <td>
-            <span>{{paciente.email}}</span>
-          </td>
-          <td>
-            <span>{{paciente.nacimiento}}</span>
-          </td>
-        </tr>
-      </tbody>
-
-    </table>
   </div>
 </div>

@@ -1,0 +1,162 @@
+<div class="historia-clinica-container">
+    <h2>Historia Clínica</h2>
+    <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()">
+      <!-- Campos de Historia Clínica -->
+      <div>
+        <label for="descripcion">Descripción:</label>
+        <input id="descripcion" formControlName="descripcion" type="text">
+      </div>
+      <div>
+        <label for="observacion">Observación:</label>
+        <textarea id="observacion" formControlName="observacion"></textarea>
+      </div>
+      <div>
+        <label for="paciente">ID Paciente:</label>
+        <input id="paciente" formControlName="paciente" type="number">
+      </div>
+      <div>
+        <label for="embarazo">Embarazo:</label>
+        <input id="embarazo" formControlName="embarazo" type="number">
+      </div>
+      <div>
+        <label for="lactancia">Lactancia:</label>
+        <input id="lactancia" formControlName="lactancia" type="number">
+      </div>
+      <div>
+        <label for="depilacion">Depilación:</label>
+        <input id="depilacion" formControlName="depilacion" type="number">
+      </div>
+      <div>
+        <label for="metodo">Método:</label>
+        <input id="metodo" formControlName="metodo" type="text">
+      </div>
+      <div>
+        <label for="bronceado">Bronceado:</label>
+        <input id="bronceado" formControlName="bronceado" type="number">
+      </div>
+      <div>
+        <label for="fecha_bronceado">Fecha Bronceado:</label>
+        <input id="fecha_bronceado" formControlName="fecha_bronceado" type="date">
+      </div>
+      <div>
+        <label for="queloides">Queloides:</label>
+        <input id="queloides" formControlName="queloides" type="number">
+      </div>
+      <div>
+        <label for="problemas_hormonales">Problemas Hormonales:</label>
+        <input id="problemas_hormonales" formControlName="problemas_hormonales" type="number">
+      </div>
+      <div>
+        <label for="enfermedad_cutanea">Enfermedad Cutánea:</label>
+        <input id="enfermedad_cutanea" formControlName="enfermedad_cutanea" type="text">
+      </div>
+      <div>
+        <label for="hipertricosis">Hipertricosis:</label>
+        <input id="hipertricosis" formControlName="hipertricosis" type="text">
+      </div>
+      <div>
+        <label for="epilepsia">Epilepsia:</label>
+        <input id="epilepsia" formControlName="epilepsia" type="number">
+      </div>
+      <div>
+        <label for="tatuaje">Tatuaje:</label>
+        <input id="tatuaje" formControlName="tatuaje" type="text">
+      </div>
+      <div>
+        <label for="coagulacion">Coagulación:</label>
+        <input id="coagulacion" formControlName="coagulacion" type="number">
+      </div>
+      <div>
+        <label for="herpes">Herpes:</label>
+        <input id="herpes" formControlName="herpes" type="number">
+      </div>
+      <div>
+        <label for="dispositivo_interno">Dispositivo Interno:</label>
+        <input id="dispositivo_interno" formControlName="dispositivo_interno" type="text">
+      </div>
+      <div>
+        <label for="zona_dispositivo">Zona Dispositivo:</label>
+        <input id="zona_dispositivo" formControlName="zona_dispositivo" type="text">
+      </div>
+      <div>
+        <label for="alergias">Alergias:</label>
+        <input id="alergias" formControlName="alergias" type="text">
+      </div>
+      <div>
+        <label for="color_piel">Color de Piel:</label>
+        <input id="color_piel" formControlName="color_piel" type="text">
+      </div>
+      <div>
+        <label for="pecas">Pecas:</label>
+        <input id="pecas" formControlName="pecas" type="number">
+      </div>
+      <div>
+        <label for="color_pelo">Color de Pelo:</label>
+        <input id="color_pelo" formControlName="color_pelo" type="number">
+      </div>
+      <div>
+        <label for="color_ojos">Color de Ojos:</label>
+        <input id="color_ojos" formControlName="color_ojos" type="number">
+      </div>
+      <div>
+        <label for="raza">Raza:</label>
+        <input id="raza" formControlName="raza" type="number">
+      </div>
+      <div>
+        <label for="potencial_quemadura">Potencial de Quemadura:</label>
+        <input id="potencial_quemadura" formControlName="potencial_quemadura" type="number">
+      </div>
+      <div>
+        <label for="potencial_bronceado">Potencial de Bronceado:</label>
+        <input id="potencial_bronceado" formControlName="potencial_bronceado" type="number">
+      </div>
+      <div>
+        <label for="fototipo_piel">Fototipo de Piel:</label>
+        <input id="fototipo_piel" formControlName="fototipo_piel" type="number">
+      </div>
+      <div>
+        <label for="medicacion">Medicación:</label>
+        <input id="medicacion" formControlName="medicacion" type="number">
+      </div>
+      <div>
+        <label for="fecha_medicacion">Fecha de Medicación:</label>
+        <input id="fecha_medicacion" formControlName="fecha_medicacion" type="date">
+      </div>
+      <button type="submit" [disabled]="historiaClinicaForm.invalid">Guardar Historia Clínica</button>
+    </form>
+  
+    <h2>Agregar Tratamiento</h2>
+    <form [formGroup]="tratamientoForm" (ngSubmit)="agregarTratamiento()">
+      <!-- Campos de Tratamiento -->
+      <div>
+        <label for="descripcionTratamiento">Descripción:</label>
+        <input id="descripcionTratamiento" formControlName="descripcion" type="text">
+      </div>
+      <div>
+        <label for="observacionTratamiento">Observación:</label>
+        <textarea id="observacionTratamiento" formControlName="observacion"></textarea>
+      </div>
+      <div>
+        <label for="antecedente">ID Antecedente:</label>
+        <input id="antecedente" formControlName="antecedente" type="number">
+      </div>
+      <div>
+        <label for="tipo_tratamiento">Tipo de Tratamiento:</label>
+        <input id="tipo_tratamiento" formControlName="tipo_tratamiento" type="number">
+      </div>
+      <div>
+        <label for="zonas_tratar">Zonas a Tratar:</label>
+        <input id="zonas_tratar" formControlName="zonas_tratar" type="text">
+      </div>
+      <div>
+        <label for="fecha_tratamiento">Fecha del Tratamiento:</label>
+        <input id="fecha_tratamiento" formControlName="fecha_tratamiento" type="date">
+      </div>
+      <div>
+        <label for="firma">Firma:</label>
+        <input id="firma" formControlName="firma" type="file">
+      </div>
+      <button type="submit" [disabled]="tratamientoForm.invalid">Agregar Tratamiento</button>
+    </form>
+  </div>
+  

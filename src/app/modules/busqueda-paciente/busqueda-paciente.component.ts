@@ -1,100 +1,92 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PacienteService } from '../../core/paciente.service';
+import { Paciente } from '../../model/vo/paciente';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-export interface Paciente {
-  cedula: string;
-  nombre: string;
-  apellido: string;
-  direccion: string;
-  telefono: string;
-  ocupacion: string;
-  genero: string;
-  email: string;
-  edad: number;
-  nacimiento: Date;
-}
+
 @Component({
   selector: 'app-busqueda-paciente',
   templateUrl: './busqueda-paciente.component.html',
   styleUrls: ['./busqueda-paciente.component.css']
 })
 export class BusquedaPacienteComponent implements OnInit {
-  paciente: Paciente = {
-    nombre: '',
-    edad: 0,
-    genero: '',
-    cedula: '',
-    apellido: '',
-    direccion: '',
-    telefono: '',
-    ocupacion: '',
-    email: '',
-    nacimiento: new Date
-  };
+  pacientes: Paciente[] = [];
+  selectedPaciente: Paciente | null = null;
+  pacienteForm: FormGroup;
 
-  public pacientes:[] = [];
-
-  constructor(
-    private router: Router,
-    private http: HttpClient,
-  ) {}
-
-  ngOnInit() {
-    this.http
-      .get('http://localhost:8080/example-assets/small-row-data.json')
-      .subscribe(data => {
-        console.log('buscar pacientes TODOS: ', data);
-      });
-  }
-
-  buscarPaciente() {
-    let paciente = new Paciente(
-      111111111111,
-      'asidhaosudhais',
-      'sdfghsdfgfgh',
-      'sdfgdfgdfg',
-      654654,
-      'sdfgsdfg',
-      'sdfgsdfgdfg',
-      'sdfgdfgsd',
-      'dfgsdfgsdf'
-    );
-    let paciente2 = new Paciente(
-      222222,
-      'dddddd',
-      'ddddd',
-      'dddd',
-      654654,
-      'ddd',
-      'ddd',
-      'email',
-      'nacime'
-    );
-    this.pacientes.push(paciente);
-    this.pacientes.push(paciente2);
-    console.log('buscar paciente', this.pacientes);
-    this.http
-      .get('http://localhost:8080/example-assets/small-row-data.json')
-      .subscribe(data => {
-        console.log('buscar pacientes TODOS1: ', data);
-      });
-  }
-
-  limpiarFiltros() {
-    console.log('limpiar filtros', this.paciente);
-  }
-
-  editarPaciente(pacienteEdit:Paciente) {
-    console.log('editar ', pacienteEdit);
-    this.router.navigate(['paciente-form'], {
-      queryParams: { nombre: pacienteEdit.nombre, paciente: pacienteEdit }
+  constructor(private fb: FormBuilder, private pacienteService: PacienteService, private router: Router) {
+    this.pacienteForm = this.fb.group({
+      identificador: [null, Validators.required],
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      nombre_completo: ['', Validators.required],
+      cedula: ['', Validators.required],
+      direccion: ['', Validators.required],
+      telefono: [null, Validators.required],
+      ocupacion: ['', Validators.required],
+      genero: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      nacimiento: [null, Validators.required],
     });
-
   }
-  /**newPaciente() {
-    this.router.navigate([
-      "/busqueda",
-      { outlets: { detail: ["pacienteform", "1"] } }
-    ]);
-  }*/
+
+  ngOnInit(): void {
+    // Cargar pacientes iniciales (esto podría ser reemplazado por una llamada a un servicio)
+    
+    this.cargarPacientes();
+    this.pacientes = [
+      {
+        identificador: 1,
+        nombre: 'Juan',
+        apellido: 'Perez',
+        nombre_completo: 'Juan Perez',
+        cedula: '1234567890',
+        direccion: 'Calle Falsa 123',
+        telefono: 987654321,
+        ocupacion: 'Ingeniero',
+        genero: 'Masculino',
+        email: 'juan.perez@example.com',
+        nacimiento: new Date('1990-01-01')
+      },
+      // Otros pacientes...
+    ];
+  }
+
+  cargarPacientes(): void {
+    this.pacienteService.getPacientes().subscribe(pacientes => {
+      this.pacientes = pacientes;
+    });
+  }
+
+  seleccionarPaciente(paciente: Paciente): void {
+    this.selectedPaciente = paciente;
+    this.pacienteForm.patchValue(paciente);
+  }
+
+  guardarCambios(): void {
+    if (this.pacienteForm.valid && this.selectedPaciente) {
+      const index = this.pacientes.findIndex(p => p.identificador === this.selectedPaciente!.identificador);
+      this.pacientes[index] = this.pacienteForm.value;
+      this.selectedPaciente = null;
+    }
+  }
+
+  cancelarEdicion(): void {
+    this.selectedPaciente = null;
+    this.pacienteForm.reset();
+  }
+
+
+  // Métodos de navegación
+verHistoriaClinica(paciente: Paciente): void {
+  this.router.navigate(['/historia-clinica', paciente.identificador]);
+}
+
+nuevoTratamiento(paciente: Paciente): void {
+  this.router.navigate(['/tratamiento-paciente', paciente.identificador]);
+}
+
+verTratamientos(paciente: Paciente): void {
+  this.router.navigate(['/lista-tratamientos', paciente.identificador]);
+}
 }

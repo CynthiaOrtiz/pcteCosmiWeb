@@ -1,0 +1,27 @@
+<div class="tratamiento-paciente-container">
+    <h2>Nuevo Tratamiento</h2>
+    <form [formGroup]="tratamientoForm" (ngSubmit)="guardarTratamiento()">
+      <div>
+        <label for="descripcion">Descripción:</label>
+        <input id="descripcion" formControlName="descripcion" type="text">
+      </div>
+      <div>
+        <label for="observacion">Observación:</label>
+        <input id="observacion" formControlName="observacion" type="text">
+      </div>
+      <div>
+        <label for="tipoTratamiento">Tipo de Tratamiento:</label>
+        <input id="tipoTratamiento" formControlName="tipoTratamiento" type="text">
+      </div>
+      <div>
+        <label for="fecha">Fecha:</label>
+        <input id="fecha" formControlName="fecha" type="date">
+      </div>
+      <div>
+        <label for="antecedente">Antecedente:</label>
+        <input id="antecedente" formControlName="antecedente" type="text">
+      </div>
+      <button type="submit" [disabled]="tratamientoForm.invalid">Guardar Tratamiento</button>
+    </form>
+  </div>
+  

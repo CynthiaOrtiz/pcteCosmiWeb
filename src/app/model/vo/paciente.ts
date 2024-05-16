@@ -1,13 +1,14 @@
 export interface Paciente {
-  cedula: string;
+  identificador: number;
   nombre: string;
   apellido: string;
+  nombre_completo: string;
+  cedula: string;
   direccion: string;
-  telefono: string;
+  telefono: number;
   ocupacion: string;
   genero: string;
   email: string;
-  edad: number;
   nacimiento: Date;
 }
 
