@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Registro de Nuevo Paciente</h2>
+    <form [formGroup]="formularioPaciente" (ngSubmit)="guardarPaciente()">
+      <div>
+        <label for="cedula">Cédula:</label>
+        <input type="text" id="cedula" formControlName="cedula" required>
+      </div>
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" formControlName="nombre" required>
+      </div>
+      <div>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" formControlName="apellido" required>
+      </div>
+      <div>
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" formControlName="direccion">
+      </div>
+      <div>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" formControlName="telefono">
+      </div>
+      <div>
+        <label for="ocupacion">Ocupación:</label>
+        <input type="text" id="ocupacion" formControlName="ocupacion">
+      </div>
+      <div>
+        <label for="genero">Género:</label>
+        <select id="genero" formControlName="genero">
+          <option value="masculino">Masculino</option>
+          <option value="femenino">Femenino</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+      </div>
+      <div>
+        <label for="nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="nacimiento" formControlName="nacimiento">
+      </div>
+      <button type="submit" [disabled]="formularioPaciente.invalid">Guardar Paciente</button>
+    </form>    
+  </div>

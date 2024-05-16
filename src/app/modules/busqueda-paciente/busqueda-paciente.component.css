@@ -1,0 +1,11 @@
+.table-header {
+  background-color: #e3b6ff;
+  text-align: center;
+  border-bottom-width: 3px;
+}
+.table-body {
+  text-align: left;
+}
+.seleccionado {
+  background-color: blue;
+}

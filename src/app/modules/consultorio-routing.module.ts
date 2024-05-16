@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConsultorioContentComponent } from './components/consultorio-content/consultorio-content.component';
+import { ConsultorioContentComponent } from './consultorio-content/consultorio-content.component';
 
 /**
  * consultorio module routing.
