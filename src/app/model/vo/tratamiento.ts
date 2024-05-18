@@ -6,6 +6,6 @@ export interface Tratamiento {
   tipo_tratamiento: number;
   zonas_tratar: string;
   fecha_tratamiento: Date;
-  firma: Blob;
+  firma: string | null;
   pacienteId: number; // Agrega el campo pacienteId para relacionar el tratamiento con el paciente
 }

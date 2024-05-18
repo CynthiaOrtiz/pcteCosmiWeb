@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PacienteService } from '../../core/paciente.service';
 import { HistoriaClinica } from '../../model/vo/historiaClinica';
 import { Tratamiento } from '../../model/vo/tratamiento';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-historia-paciente',
@@ -10,13 +11,19 @@ import { Tratamiento } from '../../model/vo/tratamiento';
   styleUrls: ['./historia-paciente.component.css']
 })
 export class HistoriaPacienteComponent implements OnInit {
+
   historiaClinicaForm!: FormGroup;
   tratamientoForm!: FormGroup;
+  pacienteId: number = 0;
 
-  constructor(private formBuilder: FormBuilder, private pacienteService: PacienteService) { }
+  constructor(private formBuilder: FormBuilder, private pacienteService: PacienteService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.inicializarFormularios();
+    this.pacienteId = +this.route.snapshot.paramMap.get('id')!;
   }
 
   inicializarFormularios(): void {
@@ -90,5 +97,13 @@ export class HistoriaPacienteComponent implements OnInit {
     } else {
       console.log('Formulario de tratamiento no válido');
     }
+  }
+
+  regresar() {
+    window.history.back();
+  }
+  
+  nuevoTratamiento() {
+    this.router.navigate(['/tratamiento-paciente', this.pacienteId]);
   }
 }

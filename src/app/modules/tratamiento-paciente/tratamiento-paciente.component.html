@@ -2,26 +2,36 @@
     <h2>Nuevo Tratamiento</h2>
     <form [formGroup]="tratamientoForm" (ngSubmit)="guardarTratamiento()">
       <div>
-        <label for="descripcion">Descripción:</label>
-        <input id="descripcion" formControlName="descripcion" type="text">
+        <label for="descripcionTratamiento">Descripción:</label>
+        <input id="descripcionTratamiento" formControlName="descripcion" type="text">
       </div>
       <div>
-        <label for="observacion">Observación:</label>
-        <input id="observacion" formControlName="observacion" type="text">
+        <label for="observacionTratamiento">Observación:</label>
+        <textarea id="observacionTratamiento" formControlName="observacion"></textarea>
+      </div>
+      <!-- <div>
+        <label for="antecedente">ID Antecedente:</label>
+        <input id="antecedente" formControlName="antecedente" type="number">
+      </div> -->
+      <div>
+        <label for="tipo_tratamiento">Tipo de Tratamiento:</label>
+        <input id="tipo_tratamiento" formControlName="tipo_tratamiento" type="number">
       </div>
       <div>
-        <label for="tipoTratamiento">Tipo de Tratamiento:</label>
-        <input id="tipoTratamiento" formControlName="tipoTratamiento" type="text">
+        <label for="zonas_tratar">Zonas a Tratar:</label>
+        <input id="zonas_tratar" formControlName="zonas_tratar" type="text">
       </div>
       <div>
-        <label for="fecha">Fecha:</label>
-        <input id="fecha" formControlName="fecha" type="date">
+        <label for="fecha_tratamiento">Fecha del Tratamiento:</label>
+        <input id="fecha_tratamiento" formControlName="fecha_tratamiento" type="date">
       </div>
-      <div>
-        <label for="antecedente">Antecedente:</label>
-        <input id="antecedente" formControlName="antecedente" type="text">
+      <div class="signature-container">
+        <label>Firma:</label>
+        <signature-pad [options]="signaturePadOptions" (onEnd)="drawComplete()" #signaturePad></signature-pad>
+        <button type="button" (click)="clearSignature()">Borrar Firma</button>
       </div>
       <button type="submit" [disabled]="tratamientoForm.invalid">Guardar Tratamiento</button>
+      <button (click)="regresar()">Cancelar</button>
     </form>
   </div>
   

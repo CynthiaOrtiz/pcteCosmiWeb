@@ -125,38 +125,8 @@
       <button type="submit" [disabled]="historiaClinicaForm.invalid">Guardar Historia Clínica</button>
     </form>
   
-    <h2>Agregar Tratamiento</h2>
-    <form [formGroup]="tratamientoForm" (ngSubmit)="agregarTratamiento()">
-      <!-- Campos de Tratamiento -->
-      <div>
-        <label for="descripcionTratamiento">Descripción:</label>
-        <input id="descripcionTratamiento" formControlName="descripcion" type="text">
-      </div>
-      <div>
-        <label for="observacionTratamiento">Observación:</label>
-        <textarea id="observacionTratamiento" formControlName="observacion"></textarea>
-      </div>
-      <div>
-        <label for="antecedente">ID Antecedente:</label>
-        <input id="antecedente" formControlName="antecedente" type="number">
-      </div>
-      <div>
-        <label for="tipo_tratamiento">Tipo de Tratamiento:</label>
-        <input id="tipo_tratamiento" formControlName="tipo_tratamiento" type="number">
-      </div>
-      <div>
-        <label for="zonas_tratar">Zonas a Tratar:</label>
-        <input id="zonas_tratar" formControlName="zonas_tratar" type="text">
-      </div>
-      <div>
-        <label for="fecha_tratamiento">Fecha del Tratamiento:</label>
-        <input id="fecha_tratamiento" formControlName="fecha_tratamiento" type="date">
-      </div>
-      <div>
-        <label for="firma">Firma:</label>
-        <input id="firma" formControlName="firma" type="file">
-      </div>
-      <button type="submit" [disabled]="tratamientoForm.invalid">Agregar Tratamiento</button>
-    </form>
+    <button (click)="nuevoTratamiento()">Agregar Tratamiento</button>
+    <button (click)="regresar()">Cancelar</button>
+    
   </div>
   

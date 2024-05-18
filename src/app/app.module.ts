@@ -5,7 +5,7 @@ import { PacienteService } from './core/paciente.service';
 import { ConsultorioModule } from './modules/consultorio.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +19,8 @@ import { AppComponent } from './app.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SignaturePadModule
   ],
   providers: [PacienteService],
   bootstrap: [AppComponent]
