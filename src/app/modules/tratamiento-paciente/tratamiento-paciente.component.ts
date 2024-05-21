@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
@@ -18,10 +18,11 @@ export class TratamientoPacienteComponent implements OnInit {
     id: 0,
     descripcion: '',
     observacion: '',
-    tipoTratamiento: 0,
-    fecha: '',
+    tipo_tratamiento: 0,
+    fecha_tratamiento: new Date,
     antecedente: 0,
     pacienteId: 0,
+    zonas_tratar: '',
     firma: null
   };
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;

@@ -8,7 +8,7 @@ import { BusquedaPacienteComponent } from './busqueda-paciente/busqueda-paciente
 import { HistoriaPacienteComponent } from './historia-paciente/historia-paciente.component';
 import { TratamientoPacienteComponent } from './tratamiento-paciente/tratamiento-paciente.component';
 import { ListaTratamientoPacienteComponent } from './lista-tratamiento-paciente/lista-tratamiento-paciente.component';
-
+import { SignaturePadModule } from 'angular2-signaturepad';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -29,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     ConsultorioRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SignaturePadModule
   ],
   exports: [
   ],
