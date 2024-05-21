@@ -29,7 +29,7 @@ export class TratamientoPacienteComponent implements OnInit {
 
   signaturePadOptions: Object = {
     'minWidth': 2,
-    'canvasWidth': 500,
+    'canvasWidth': 800,
     'canvasHeight': 300
   };
 

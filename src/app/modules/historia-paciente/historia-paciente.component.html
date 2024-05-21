@@ -123,10 +123,9 @@
         <input id="fecha_medicacion" formControlName="fecha_medicacion" type="date">
       </div>
       <button type="submit" [disabled]="historiaClinicaForm.invalid">Guardar Historia Clínica</button>
+      <button type="button" (click)="nuevoTratamiento()">Agregar Tratamiento</button>
+      <button type="button" (click)="regresar()">Cancelar</button>
     </form>
   
-    <button (click)="nuevoTratamiento()">Agregar Tratamiento</button>
-    <button (click)="regresar()">Cancelar</button>
-    
   </div>
   

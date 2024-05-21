@@ -10,6 +10,7 @@ import { Paciente } from '../../model/vo/paciente';
   styleUrls: ['./registro-paciente.component.css']
 })
 export class RegistroPacienteComponent implements OnInit {
+
   formularioPaciente!: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private pacienteService: PacienteService) { }
@@ -46,5 +47,9 @@ export class RegistroPacienteComponent implements OnInit {
       console.log('Formulario no válido');
     }
   }
+
+  cancelar() {
+    window.history.back();
+    }
 
 }

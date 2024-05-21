@@ -6,11 +6,16 @@
       <button (click)="verHistoriaClinica(paciente)">
         <i class="fas fa-file-medical"></i> Historia Clínica
       </button>
+
       <button (click)="nuevoTratamiento(paciente)">
         <i class="fas fa-plus-circle"></i> Nuevo Tratamiento
       </button>
+      
       <button (click)="verTratamientos(paciente)">
         <i class="fas fa-list"></i> Tratamientos
+      </button>
+      <button (click)="regresar(paciente)">
+        <span class="fa-solid fa-arrow-left"></span> Atras
       </button>
     </li>
     
@@ -49,7 +54,10 @@
       </div>
       <div>
         <label for="genero">Género:</label>
-        <input id="genero" formControlName="genero" type="text">
+        <select id="genero" formControlName="genero">
+          <option value="masculino">Masculino</option>
+          <option value="femenino">Femenino</option>
+        </select>
       </div>
       <div>
         <label for="email">Email:</label>

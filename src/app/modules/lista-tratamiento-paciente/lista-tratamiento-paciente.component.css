@@ -26,4 +26,17 @@
   .lista-tratamientos-container li div {
     margin-bottom: 5px;
   }
+  .lista-tratamientos-container button {
+    padding: 10px 15px;
+    background-color: #ff69b4;  /* Color femenino */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
   
+  .lista-tratamientos-container button:hover {
+    background-color: #ff1493;  /* Color más oscuro para hover */
+  }

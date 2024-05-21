@@ -1,29 +1,33 @@
-<div class="container">
+<div class="registro-paciente">
     <h2>Registro de Nuevo Paciente</h2>
     <form [formGroup]="formularioPaciente" (ngSubmit)="guardarPaciente()">
       <div>
-        <label for="cedula">Cédula:</label>
-        <input type="text" id="cedula" formControlName="cedula" required>
-      </div>
-      <div>
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" formControlName="nombre" required>
+        <input id="nombre" formControlName="nombre" type="text">
       </div>
       <div>
         <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" formControlName="apellido" required>
+        <input id="apellido" formControlName="apellido" type="text">
+      </div>
+      <div>
+        <label for="nombre_completo">Nombre Completo:</label>
+        <input id="nombre_completo" formControlName="nombre_completo" type="text">
+      </div>
+      <div>
+        <label for="cedula">Cédula:</label>
+        <input id="cedula" formControlName="cedula" type="text">
       </div>
       <div>
         <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion" formControlName="direccion">
+        <input id="direccion" formControlName="direccion" type="text">
       </div>
       <div>
         <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" formControlName="telefono">
+        <input id="telefono" formControlName="telefono" type="number">
       </div>
       <div>
         <label for="ocupacion">Ocupación:</label>
-        <input type="text" id="ocupacion" formControlName="ocupacion">
+        <input id="ocupacion" formControlName="ocupacion" type="text">
       </div>
       <div>
         <label for="genero">Género:</label>
@@ -34,12 +38,14 @@
       </div>
       <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email">
+        <input id="email" formControlName="email" type="email">
       </div>
       <div>
         <label for="nacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="nacimiento" formControlName="nacimiento">
+        <input id="nacimiento" formControlName="nacimiento" type="date">
       </div>
-      <button type="submit" [disabled]="formularioPaciente.invalid">Guardar Paciente</button>
-    </form>    
+      <button type="submit" [disabled]="formularioPaciente.invalid">Guardar paciente</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </form>
+
   </div>

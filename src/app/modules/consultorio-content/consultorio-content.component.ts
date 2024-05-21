@@ -16,8 +16,12 @@ export class ConsultorioContentComponent implements OnInit {
     this.router.navigate([`/${seccion}`]);
   }
 
-  verListaPacientes() {
-    this.router.navigate(['/busqueda-paciente']);
+  navigate(route: string) {
+    this.router.navigate([route]);
+}
+
+nuevoPaciente() {
+  this.router.navigate(['/registro-paciente']);
 }
 
 }

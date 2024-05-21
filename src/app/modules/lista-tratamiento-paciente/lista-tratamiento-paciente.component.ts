@@ -29,4 +29,7 @@ export class ListaTratamientoPacienteComponent implements OnInit {
     );
   }
 
+  regresar() {
+    window.history.back();
+  }
 }

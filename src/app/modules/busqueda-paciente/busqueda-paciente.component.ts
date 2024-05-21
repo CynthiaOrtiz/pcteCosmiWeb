@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./busqueda-paciente.component.css']
 })
 export class BusquedaPacienteComponent implements OnInit {
+
   pacientes: Paciente[] = [];
   selectedPaciente: Paciente | null = null;
   pacienteForm: FormGroup;
@@ -89,4 +90,8 @@ nuevoTratamiento(paciente: Paciente): void {
 verTratamientos(paciente: Paciente): void {
   this.router.navigate(['/lista-tratamientos', paciente.identificador]);
 }
+
+regresar(_t6: Paciente) {
+  window.history.back();
+  }
 }

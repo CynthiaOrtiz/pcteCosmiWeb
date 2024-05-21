@@ -6,6 +6,7 @@ import { ConsultorioModule } from './modules/consultorio.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +21,8 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SignaturePadModule
+    SignaturePadModule,
+    FontAwesomeModule
   ],
   providers: [PacienteService],
   bootstrap: [AppComponent],
