@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { Tratamiento } from '../../model/vo/tratamiento';
@@ -12,7 +12,7 @@ import { SignaturePad } from 'angular2-signaturepad';
 })
 export class TratamientoPacienteComponent implements OnInit {
 
-  tratamientoForm: FormGroup;
+  tratamientoForm: UntypedFormGroup;
   pacienteId: number = 0;
   tratamiento: Tratamiento = {
     id: 0,
@@ -34,7 +34,7 @@ export class TratamientoPacienteComponent implements OnInit {
   };
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private pacienteService: PacienteService

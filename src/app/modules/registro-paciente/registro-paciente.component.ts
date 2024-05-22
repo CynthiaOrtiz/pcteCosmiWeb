@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { PacienteService } from '../../core/paciente.service';
 import { Paciente } from '../../model/vo/paciente';
 
@@ -11,9 +11,9 @@ import { Paciente } from '../../model/vo/paciente';
 })
 export class RegistroPacienteComponent implements OnInit {
 
-  formularioPaciente!: FormGroup;
+  formularioPaciente!: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder, private pacienteService: PacienteService) { }
+  constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService) { }
 
   ngOnInit(): void {
     this.inicializarFormulario();

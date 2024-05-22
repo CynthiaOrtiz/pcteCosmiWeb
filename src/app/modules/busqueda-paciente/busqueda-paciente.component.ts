@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PacienteService } from '../../core/paciente.service';
 import { Paciente } from '../../model/vo/paciente';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,9 +13,9 @@ export class BusquedaPacienteComponent implements OnInit {
 
   pacientes: Paciente[] = [];
   selectedPaciente: Paciente | null = null;
-  pacienteForm: FormGroup;
+  pacienteForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder, private pacienteService: PacienteService, private router: Router) {
+  constructor(private fb: UntypedFormBuilder, private pacienteService: PacienteService, private router: Router) {
     this.pacienteForm = this.fb.group({
       identificador: [null, Validators.required],
       nombre: ['', Validators.required],

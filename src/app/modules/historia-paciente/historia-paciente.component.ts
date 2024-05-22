@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { PacienteService } from '../../core/paciente.service';
 import { HistoriaClinica } from '../../model/vo/historiaClinica';
 import { Tratamiento } from '../../model/vo/tratamiento';
@@ -12,11 +12,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HistoriaPacienteComponent implements OnInit {
 
-  historiaClinicaForm!: FormGroup;
-  tratamientoForm!: FormGroup;
+  historiaClinicaForm!: UntypedFormGroup;
+  tratamientoForm!: UntypedFormGroup;
   pacienteId: number = 0;
 
-  constructor(private formBuilder: FormBuilder, private pacienteService: PacienteService,
+  constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }

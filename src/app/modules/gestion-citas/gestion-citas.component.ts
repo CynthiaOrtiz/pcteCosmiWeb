@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CitasService } from '../../core/citas.service';
 import { Paciente } from '../../model/vo/paciente';
 
@@ -9,12 +9,12 @@ import { Paciente } from '../../model/vo/paciente';
   styleUrls: ['./gestion-citas.component.css']
 })
 export class GestionCitasComponent implements OnInit {
-  citaForm: FormGroup;
+  citaForm: UntypedFormGroup;
   pacientes: Paciente[] = [];
   citas: any[] = []; // Array para almacenar las citas
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private citasService: CitasService
   ) {
     this.citaForm = this.fb.group({
