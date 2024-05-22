@@ -1,1 +1,31 @@
-<p>gestion-citas works!</p>
+<div class="gestion-citas">
+    <h2>Gestión de Citas</h2>
+    <form [formGroup]="citaForm" (ngSubmit)="agendarCita()">
+      <div>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" formControlName="fecha">
+      </div>
+      <div>
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" formControlName="hora">
+      </div>
+      <div>
+        <label for="paciente">Paciente:</label>
+        <select id="paciente" formControlName="pacienteId">
+          <option *ngFor="let paciente of pacientes" [value]="paciente.identificador">{{ paciente.nombre }} {{ paciente.apellido }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="medico">Médico:</label>
+        <select id="medico" formControlName="medicoId">
+          <!-- Aquí se debe llenar la lista de médicos disponibles -->
+        </select>
+      </div>
+      <button type="submit" [disabled]="citaForm.invalid">Agendar Cita</button>
+    </form>
+  
+    <h3>Citas Agendadas</h3>
+    <div *ngFor="let cita of citas">
+      <p>{{ cita.fecha }} {{ cita.hora }} - {{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</p>
+    </div>
+  </div>

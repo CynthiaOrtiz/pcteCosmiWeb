@@ -5,7 +5,7 @@
   
 <nav class="consultorio-content">
     <ul>
-        <li><button><i class="fas fa-calendar-alt"></i> Agendar Citas</button></li>
+        <li><button (click)="navigate('/agendar-citas')"><i class="fas fa-calendar-alt"></i> Agendar Citas</button></li>
         <li><button (click)="navigate('/busqueda-paciente')"><i class="fas fa-user-friends"></i> Pacientes</button></li>
         <li><button (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button></li>
         <li><button (click)="navigate('/historia-clinica')"><i class="fas fa-heartbeat"></i> Historia Clínica</button></li>
