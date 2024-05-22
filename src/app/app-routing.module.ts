@@ -6,6 +6,7 @@ import { TratamientoPacienteComponent } from './modules/tratamiento-paciente/tra
 import { HistoriaPacienteComponent } from './modules/historia-paciente/historia-paciente.component';
 import { ListaTratamientoPacienteComponent } from './modules/lista-tratamiento-paciente/lista-tratamiento-paciente.component';
 import { RegistroPacienteComponent } from './modules/registro-paciente/registro-paciente.component';
+import { GestionCitasComponent } from './modules/gestion-citas/gestion-citas.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'tratamiento-paciente/:id', component: TratamientoPacienteComponent },
   { path: 'historia-clinica/:id', component: HistoriaPacienteComponent },
   { path: 'lista-tratamientos/:id', component: ListaTratamientoPacienteComponent },
-  { path: 'registro-paciente', component: RegistroPacienteComponent }
+  { path: 'registro-paciente', component: RegistroPacienteComponent },
+  { path: 'agendar-citas', component: GestionCitasComponent },
 ];
 
 @NgModule({

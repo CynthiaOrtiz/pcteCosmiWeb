@@ -1,0 +1,61 @@
+.gestion-citas {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gestion-citas h2 {
+    text-align: center;
+    color: #d18ca4;
+  }
+  
+  .gestion-citas form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .gestion-citas form div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .gestion-citas form label {
+    color: #d18ca4;
+  }
+  
+  .gestion-citas form input, .gestion-citas form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .gestion-citas form button {
+    background-color: #d18ca4;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .gestion-citas form button:disabled {
+    background-color: #ccc;
+  }
+  
+  .gestion-citas h3 {
+    margin-top: 20px;
+    color: #d18ca4;
+  }
+  
+  .gestion-citas div p {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  

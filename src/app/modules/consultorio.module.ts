@@ -11,6 +11,7 @@ import { ListaTratamientoPacienteComponent } from './lista-tratamiento-paciente/
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { GestionCitasComponent } from './gestion-citas/gestion-citas.component';
 
 
 //import { PacienteService } from '../core/paciente.service';
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     BusquedaPacienteComponent,
     HistoriaPacienteComponent,
     TratamientoPacienteComponent,
-    ListaTratamientoPacienteComponent
+    ListaTratamientoPacienteComponent,
+    GestionCitasComponent
   ],
   imports: [
     CommonModule,
