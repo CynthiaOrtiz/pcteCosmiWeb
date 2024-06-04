@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Paciente } from '../model/vo/paciente';
+import { Cita } from '../model/vo/cita';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,8 @@ export class CitasService {
 
   agendarCita(cita: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/citas`, cita);
+  }
+  crearCita(cita: Cita): Observable<Cita> {
+    return this.http.post<Cita>(`${this.apiUrl}/citas`, cita);
   }
 }

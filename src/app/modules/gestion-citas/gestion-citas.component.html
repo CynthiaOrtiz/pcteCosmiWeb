@@ -29,3 +29,34 @@
       <p>{{ cita.fecha }} {{ cita.hora }} - {{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</p>
     </div>
   </div>
+
+  <div class="container">
+    <h1>Gestión de Citas</h1>
+    <div class="calendar">
+      <mwl-calendar-month-view
+      [viewDate]="viewDate"
+      [events]="events"
+      (dayClicked)="dayClicked({ date: $event.day.date, events: $event.day.events })"
+      (eventTimesChanged)="eventTimesChanged($event)"
+      (eventClicked)="handleEvent('Clicked', $event.event)">
+    </mwl-calendar-month-view>
+    </div>
+    <button (click)="addEvent()">Agregar Cita</button>
+    <ng-template #modalContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Cita</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Acción:</strong> {{ modalData.action }}</p>
+        <p><strong>Título:</strong> {{ modalData.event.title }}</p>
+        <p><strong>Inicio:</strong> {{ modalData.event.start | date: 'medium' }}</p>
+        <p><strong>Fin:</strong> {{ modalData.event.end | date: 'medium' }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cerrar</button>
+      </div>
+    </ng-template>
+  </div>

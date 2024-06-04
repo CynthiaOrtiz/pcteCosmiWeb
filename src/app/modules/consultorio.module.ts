@@ -12,7 +12,11 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GestionCitasComponent } from './gestion-citas/gestion-citas.component';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 //import { PacienteService } from '../core/paciente.service';
 
@@ -32,7 +36,14 @@ import { GestionCitasComponent } from './gestion-citas/gestion-citas.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SignaturePadModule
+    SignaturePadModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    NgbModalModule,
   ],
   exports: [
   ],
