@@ -1,62 +1,48 @@
 <div class="gestion-citas">
-    <h2>Gestión de Citas</h2>
-    <form [formGroup]="citaForm" (ngSubmit)="agendarCita()">
-      <div>
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" formControlName="fecha">
-      </div>
-      <div>
-        <label for="hora">Hora:</label>
-        <input type="time" id="hora" formControlName="hora">
-      </div>
-      <div>
-        <label for="paciente">Paciente:</label>
-        <select id="paciente" formControlName="pacienteId">
-          <option *ngFor="let paciente of pacientes" [value]="paciente.identificador">{{ paciente.nombre }} {{ paciente.apellido }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="medico">Médico:</label>
-        <select id="medico" formControlName="medicoId">
-          <!-- Aquí se debe llenar la lista de médicos disponibles -->
-        </select>
-      </div>
-      <button type="submit" [disabled]="citaForm.invalid">Agendar Cita</button>
-    </form>
-  
-    <h3>Citas Agendadas</h3>
-    <div *ngFor="let cita of citas">
-      <p>{{ cita.fecha }} {{ cita.hora }} - {{ cita.paciente.nombre }} {{ cita.paciente.apellido }}</p>
-    </div>
-  </div>
-
   <div class="container">
     <h1>Gestión de Citas</h1>
     <div class="calendar">
+      <div class="navigation">
+        <button (click)="previousMonth()" class="btn btn-secondary">&lt; Mes Anterior</button>
+        <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
+        <button (click)="nextMonth()" class="btn btn-secondary">Mes Siguiente &gt;</button>
+      </div>
       <mwl-calendar-month-view
       [viewDate]="viewDate"
       [events]="events"
       (dayClicked)="dayClicked({ date: $event.day.date, events: $event.day.events })"
-      (eventTimesChanged)="eventTimesChanged($event)"
-      (eventClicked)="handleEvent('Clicked', $event.event)">
+      >
     </mwl-calendar-month-view>
+    <div *ngIf="selectedDay">
+      <h3>Citas para {{ selectedDay | date: 'fullDate' }}</h3>
+      <ul>
+        <li *ngFor="let event of selectedEvents">{{ event.title }} - {{ event.start | date: 'shortTime' }}</li>
+      </ul>
     </div>
-    <button (click)="addEvent()">Agregar Cita</button>
-    <ng-template #modalContent let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title">Cita</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Acción:</strong> {{ modalData.action }}</p>
-        <p><strong>Título:</strong> {{ modalData.event.title }}</p>
-        <p><strong>Inicio:</strong> {{ modalData.event.start | date: 'medium' }}</p>
-        <p><strong>Fin:</strong> {{ modalData.event.end | date: 'medium' }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cerrar</button>
-      </div>
-    </ng-template>
+    <!-- Modal para agendar una nueva cita -->
+  <ng-template #modalContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Agendar Nueva Cita</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="addEvent()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required>
+        </div>
+        <div class="mb-3">
+          <label for="patient" class="form-label">Paciente</label>
+          <select class="form-control" id="patient" [(ngModel)]="newEvent.patient" name="patient" required>
+            <option *ngFor="let patient of pacientes" [value]="patient.cedula">{{ patient.nombre }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="hour" class="form-label">Hora</label>
+          <input type="time" class="form-control" id="hour" [(ngModel)]="newEvent.hour" name="hour" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+    </div>
+  </ng-template>
   </div>
