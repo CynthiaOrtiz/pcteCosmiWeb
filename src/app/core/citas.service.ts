@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Paciente } from '../model/vo/paciente';
 import { Cita } from '../model/vo/cita';
+import { CalendarEvent } from 'angular-calendar';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,12 @@ export class CitasService {
   }
   crearCita(cita: Cita): Observable<Cita> {
     return this.http.post<Cita>(`${this.apiUrl}/citas`, cita);
+  }
+  updateCita(event: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${event.id}`, event);
+  }
+
+  deleteCita(event: any): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${event.id}`);
   }
 }

@@ -4,29 +4,38 @@
     <div class="calendar">
       <div class="navigation">
         <button (click)="previousMonth()" class="btn btn-secondary">&lt; Mes Anterior</button>
-        <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
+        <button (click)="viewToday()" class="btn btn-secondary btn-sm">Hoy</button>
         <button (click)="nextMonth()" class="btn btn-secondary">Mes Siguiente &gt;</button>
       </div>
+      <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
       <mwl-calendar-month-view
       [viewDate]="viewDate"
       [events]="events"
-      (dayClicked)="dayClicked({ date: $event.day.date, events: $event.day.events })"
+      (dayClicked)="dayClicked($event)"
       >
     </mwl-calendar-month-view>
-    <div *ngIf="selectedDay">
+    <div *ngIf="selectedDay" class="slide-in show" id="citasDia">
       <h3>Citas para {{ selectedDay | date: 'fullDate' }}</h3>
-      <ul>
-        <li *ngFor="let event of selectedEvents">{{ event.title }} - {{ event.start | date: 'shortTime' }}</li>
+      <ul *ngIf="selectedEvents.length > 0; else noEvents">
+        <li *ngFor="let event of selectedEvents">
+          {{ event.title }} - {{ event.start | date: 'shortTime' }}
+          <button (click)="editEvent(event)">Editar</button>
+          <button (click)="deleteEvent(event)">Eliminar</button>
+        </li>
       </ul>
+      <ng-template #noEvents>
+        <p>No hay citas para este día.</p>
+      </ng-template>
+      <button (click)="openAddModal()" class="btn btn-primary btn-sm">Agregar Cita</button>
     </div>
     <!-- Modal para agendar una nueva cita -->
   <ng-template #modalContent let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">Agendar Nueva Cita</h4>
+      <h4 class="modal-title">{{ isEdit ? 'Editar' : 'Agendar' }} Cita</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <form (ngSubmit)="addEvent()">
+      <form (ngSubmit)="saveEvent()">
         <div class="mb-3">
           <label for="title" class="form-label">Descripción</label>
           <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required>
@@ -41,7 +50,7 @@
           <label for="hour" class="form-label">Hora</label>
           <input type="time" class="form-control" id="hour" [(ngModel)]="newEvent.hour" name="hour" required>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary" on>{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
       </form>
     </div>
   </ng-template>
