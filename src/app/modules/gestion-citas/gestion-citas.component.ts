@@ -4,7 +4,7 @@ import { CitasService } from '../../core/citas.service';
 import { Paciente } from '../../model/vo/paciente';
 
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, subMonths, addMonths, setMinutes, setHours } from 'date-fns';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarMonthViewDay, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -19,6 +19,8 @@ export class GestionCitasComponent implements OnInit {
   pacientes: Paciente[] = [];
   citas: any[] = []; // Array para almacenar las citas
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+  view: CalendarView = CalendarView.Month;
+  CalendarView = CalendarView;
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
   newEvent: any = { title: '', patient: '', start: new Date(), hour: '' };
@@ -40,7 +42,11 @@ export class GestionCitasComponent implements OnInit {
     email: 'prueba@gmail.com',
     nacimiento: new Date()
   };
-  constructor(private modal: NgbModal,
+
+  refresh: Subject<any> = new Subject();
+  activeDayIsOpen: boolean = false;
+
+  constructor(protected modal: NgbModal,
     private http: HttpClient,
     private citasService: CitasService
   ) {
@@ -80,12 +86,17 @@ export class GestionCitasComponent implements OnInit {
     if (isSameMonth(day.date, this.viewDate)) {
       this.selectedDay = day.date;
       this.selectedEvents = day.events;
-      if (day.events.length > 0) {
+       if (
+        (isSameDay(this.viewDate, this.selectedDay) && this.activeDayIsOpen === true) ||
+        day.events.length > 0) {
         document.querySelector('.slide-in')?.classList.add('show');
+        this.activeDayIsOpen = true;
       } else {
         document.querySelector('.slide-in')?.classList.remove('show');
+        this.activeDayIsOpen = false;
       }
     }
+    this.openAddModal();
   }
 
   addEvent(): void {
@@ -112,11 +123,20 @@ export class GestionCitasComponent implements OnInit {
   }
 
   previousMonth(): void {
-    this.viewDate = subMonths(this.viewDate, 1);
+    this.viewDate = this.changePeriod(-1);
   }
 
   nextMonth(): void {
-    this.viewDate = addMonths(this.viewDate, 1);
+    this.viewDate = this.changePeriod(1);
+  }
+  changePeriod(amount: number): Date {
+    if (this.view === CalendarView.Month) {
+      return addMonths(this.viewDate, amount);
+    } else if (this.view === CalendarView.Week) {
+      return addMonths(this.viewDate, amount);
+    } else {
+      return addMonths(this.viewDate, amount);
+    }
   }
 
   saveEvent(): void {
@@ -126,11 +146,17 @@ export class GestionCitasComponent implements OnInit {
     const newStartDate = new Date(this.selectedDay);
     newStartDate.setHours(hour, minute);
 
+    // Validate that the new event is not in the past
+    if (newStartDate < new Date()) {
+      alert('No se puede agendar una cita en el pasado.');
+      return;
+    }
+
     if (this.isEdit && this.eventToEdit) {
       this.eventToEdit.title = this.newEvent.title;
       this.eventToEdit.start = newStartDate;
       // this.citasService.updateCita(this.eventToEdit).subscribe(() => {
-        this.loadCitas();
+        // this.loadCitas();
         this.modal.dismissAll();
       // });
     } else {
@@ -142,6 +168,7 @@ export class GestionCitasComponent implements OnInit {
 
       // this.citasService.agendarCita(newEvent).subscribe(() => {
         this.events = [...this.events, newEvent];
+        // this.loadCitas();
         this.modal.dismissAll();
       // });
     }
@@ -165,8 +192,18 @@ export class GestionCitasComponent implements OnInit {
   }
 
   openAddModal(): void {
+    if(!this.selectedDay) return;
+    const newStartDate = new Date(this.selectedDay)
+    newStartDate.setHours(23, 99);
+    if (newStartDate < new Date()) {
+      alert('No se puede agendar una cita en el pasado.');
+      return;
+    }
     this.isEdit = false;
     this.newEvent = { title: '', patient: '', start: new Date(), hour: '' };
-    this.modal.open(this.modalContent, { size: 'lg', centered: true });
+    this.modal.open(this.modalContent, { size: 'sm', centered: true });
+  }
+  setView(view: CalendarView) {
+    this.view = view;
   }
 }

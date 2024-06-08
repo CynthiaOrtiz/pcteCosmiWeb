@@ -135,7 +135,19 @@
   .navigation button:hover {
     background-color: #d85683;
   }
+    
+  .view-buttons button {
+    background-color: #d18ca4;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   
+  .view-buttons button:hover {
+    background-color: #d85683;
+  }
   .slide-in {
     transition: all 0.5s ease;
     overflow: hidden;
@@ -170,4 +182,10 @@ li button {
 }
 .li button:hover {
   background-color: #d85683;
+}
+.cal-month-view .cal-open-day-events {
+  color: #5D3FD3 !important;
+  background-color: #FFF5F7 !important;
+  border: 1px solid #FFD1DC !important;
+  box-shadow: inset 0 0 15px 0 rgb(0 0 0 / 34%) !important;
 }
