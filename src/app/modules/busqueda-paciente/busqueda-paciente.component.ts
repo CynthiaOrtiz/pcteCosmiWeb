@@ -94,4 +94,8 @@ verTratamientos(paciente: Paciente): void {
 regresar(_t6: Paciente) {
   window.history.back();
   }
+
+  home() {
+    this.router.navigate(['/hom']);
+    }
 }

@@ -2,126 +2,155 @@
     <h2>Historia Clínica</h2>
     <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()">
       <!-- Campos de Historia Clínica -->
-      <div>
-        <label for="descripcion">Descripción:</label>
-        <input id="descripcion" formControlName="descripcion" type="text">
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input id="descripcion" formControlName="descripcion" type="text" class="form-control">
       </div>
-      <div>
-        <label for="observacion">Observación:</label>
-        <textarea id="observacion" formControlName="observacion"></textarea>
+  
+      <div class="form-group">
+        <label for="observacion">Observación</label>
+        <input id="observacion" formControlName="observacion" type="text" class="form-control">
       </div>
-      <div>
-        <label for="paciente">ID Paciente:</label>
-        <input id="paciente" formControlName="paciente" type="number">
+  
+      <div class="form-group">
+        <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nombre_completo}}</label>
       </div>
-      <div>
-        <label for="embarazo">Embarazo:</label>
-        <input id="embarazo" formControlName="embarazo" type="number">
+      <div class="checkbox-group">
+        <div>
+          <label>
+          <input id="embarazo" formControlName="embarazo" type="checkbox" class="form-check-input">Embarazo
+        </label>
+        </div>
+    
+        <div >
+          <label>
+          <input id="lactancia" formControlName="lactancia" type="checkbox" class="form-check-input">
+          Lactancia</label>
+        </div>
+    
+        <div >
+          <label>
+          <input id="depilacion" formControlName="depilacion" type="checkbox" class="form-check-input">Depilación</label>
+        </div>
       </div>
-      <div>
-        <label for="lactancia">Lactancia:</label>
-        <input id="lactancia" formControlName="lactancia" type="number">
+        <div class="form-group">
+          <label for="metodo">Método</label>
+          <input id="metodo" formControlName="metodo" type="text" class="form-control">
+        </div>
+      
+      <div class="checkbox-group">
+        <div class="form-check">
+          <input id="bronceado" formControlName="bronceado" type="checkbox" class="form-check-input">
+          <label for="bronceado" class="form-check-label">Bronceado</label>
+        </div>
+    
+        <div class="form-group">
+          <label for="fecha_bronceado">Fecha de Bronceado</label>
+          <input id="fecha_bronceado" formControlName="fecha_bronceado" type="date" class="form-control" style="width: 50%;">
+        </div>
       </div>
-      <div>
-        <label for="depilacion">Depilación:</label>
-        <input id="depilacion" formControlName="depilacion" type="number">
+  
+      <div class="form-check">
+        <input id="queloides" formControlName="queloides" type="checkbox" class="form-check-input">
+        <label for="queloides" class="form-check-label">Queloides</label>
       </div>
-      <div>
-        <label for="metodo">Método:</label>
-        <input id="metodo" formControlName="metodo" type="text">
+  
+      <div class="form-check">
+        <input id="problemas_hormonales" formControlName="problemas_hormonales" type="checkbox" class="form-check-input">
+        <label for="problemas_hormonales" class="form-check-label">Problemas Hormonales</label>
       </div>
-      <div>
-        <label for="bronceado">Bronceado:</label>
-        <input id="bronceado" formControlName="bronceado" type="number">
+  
+      <div class="form-check">
+        <input id="enfermedad_cutanea" formControlName="enfermedad_cutanea" type="checkbox" class="form-check-input">
+        <label for="enfermedad_cutanea" class="form-check-label">Enfermedad Cutánea</label>
       </div>
-      <div>
-        <label for="fecha_bronceado">Fecha Bronceado:</label>
-        <input id="fecha_bronceado" formControlName="fecha_bronceado" type="date">
+  
+      <div class="form-check">
+        <input id="hipertricosis" formControlName="hipertricosis" type="checkbox" class="form-check-input">
+        <label for="hipertricosis" class="form-check-label">Hipertricosis</label>
       </div>
-      <div>
-        <label for="queloides">Queloides:</label>
-        <input id="queloides" formControlName="queloides" type="number">
+  
+      <div class="form-check">
+        <input id="epilepsia" formControlName="epilepsia" type="checkbox" class="form-check-input">
+        <label for="epilepsia" class="form-check-label">Epilepsia</label>
       </div>
-      <div>
-        <label for="problemas_hormonales">Problemas Hormonales:</label>
-        <input id="problemas_hormonales" formControlName="problemas_hormonales" type="number">
+  
+      <div class="form-check">
+        <input id="tatuaje" formControlName="tatuaje" type="checkbox" class="form-check-input">
+        <label for="tatuaje" class="form-check-label">Tatuaje</label>
       </div>
-      <div>
-        <label for="enfermedad_cutanea">Enfermedad Cutánea:</label>
-        <input id="enfermedad_cutanea" formControlName="enfermedad_cutanea" type="text">
+  
+      <div class="form-group">
+        <label for="coagulacion">Coagulación</label>
+        <input id="coagulacion" formControlName="coagulacion" type="number" class="form-control">
       </div>
-      <div>
-        <label for="hipertricosis">Hipertricosis:</label>
-        <input id="hipertricosis" formControlName="hipertricosis" type="text">
+  
+      <div class="form-check">
+        <input id="herpes" formControlName="herpes" type="checkbox" class="form-check-input">
+        <label for="herpes" class="form-check-label">Herpes</label>
       </div>
-      <div>
-        <label for="epilepsia">Epilepsia:</label>
-        <input id="epilepsia" formControlName="epilepsia" type="number">
+  
+      <div class="form-check">
+        <input id="dispositivo_interno" formControlName="dispositivo_interno" type="checkbox" class="form-check-input">
+        <label for="dispositivo_interno" class="form-check-label">Dispositivo Interno</label>
       </div>
-      <div>
-        <label for="tatuaje">Tatuaje:</label>
-        <input id="tatuaje" formControlName="tatuaje" type="text">
+  
+      <div class="form-group">
+        <label for="zona_dispositivo">Zona del Dispositivo</label>
+        <input id="zona_dispositivo" formControlName="zona_dispositivo" type="text" class="form-control">
       </div>
-      <div>
-        <label for="coagulacion">Coagulación:</label>
-        <input id="coagulacion" formControlName="coagulacion" type="number">
+  
+      <div class="form-group">
+        <label for="alergias">Alergias</label>
+        <input id="alergias" formControlName="alergias" type="text" class="form-control">
       </div>
-      <div>
-        <label for="herpes">Herpes:</label>
-        <input id="herpes" formControlName="herpes" type="number">
+  
+      <div class="form-group">
+        <label for="color_piel">Color de Piel</label>
+        <input id="color_piel" formControlName="color_piel" type="text" class="form-control">
       </div>
-      <div>
-        <label for="dispositivo_interno">Dispositivo Interno:</label>
-        <input id="dispositivo_interno" formControlName="dispositivo_interno" type="text">
+  
+      <div class="form-check">
+        <input id="pecas" formControlName="pecas" type="checkbox" class="form-check-input">
+        <label for="pecas" class="form-check-label">Pecas</label>
       </div>
-      <div>
-        <label for="zona_dispositivo">Zona Dispositivo:</label>
-        <input id="zona_dispositivo" formControlName="zona_dispositivo" type="text">
+  
+      <div class="form-group">
+        <label for="color_pelo">Color de Pelo</label>
+        <input id="color_pelo" formControlName="color_pelo" type="text" class="form-control">
       </div>
-      <div>
-        <label for="alergias">Alergias:</label>
-        <input id="alergias" formControlName="alergias" type="text">
+  
+      <div class="form-group">
+        <label for="color_ojos">Color de Ojos</label>
+        <input id="color_ojos" formControlName="color_ojos" type="text" class="form-control">
       </div>
-      <div>
-        <label for="color_piel">Color de Piel:</label>
-        <input id="color_piel" formControlName="color_piel" type="text">
+  
+      <div class="form-group">
+        <label for="potencial_quemadura">Potencial de Quemadura</label>
+        <input id="potencial_quemadura" formControlName="potencial_quemadura" type="number" class="form-control">
       </div>
-      <div>
-        <label for="pecas">Pecas:</label>
-        <input id="pecas" formControlName="pecas" type="number">
+  
+      <div class="form-group">
+        <label for="potencial_bronceado">Potencial de Bronceado</label>
+        <input id="potencial_bronceado" formControlName="potencial_bronceado" type="number" class="form-control">
       </div>
-      <div>
-        <label for="color_pelo">Color de Pelo:</label>
-        <input id="color_pelo" formControlName="color_pelo" type="number">
+  
+      <div class="form-group">
+        <label for="fototipo_piel">Fototipo de Piel</label>
+        <input id="fototipo_piel" formControlName="fototipo_piel" type="number" class="form-control">
       </div>
-      <div>
-        <label for="color_ojos">Color de Ojos:</label>
-        <input id="color_ojos" formControlName="color_ojos" type="number">
+  
+      <div class="form-group">
+        <label for="medicacion">Medicación</label>
+        <input id="medicacion" formControlName="medicacion" type="number" class="form-control">
       </div>
-      <div>
-        <label for="raza">Raza:</label>
-        <input id="raza" formControlName="raza" type="number">
+  
+      <div class="form-group">
+        <label for="fecha_medicacion">Fecha de Medicación</label>
+        <input id="fecha_medicacion" formControlName="fecha_medicacion" type="date" class="form-control">
       </div>
-      <div>
-        <label for="potencial_quemadura">Potencial de Quemadura:</label>
-        <input id="potencial_quemadura" formControlName="potencial_quemadura" type="number">
-      </div>
-      <div>
-        <label for="potencial_bronceado">Potencial de Bronceado:</label>
-        <input id="potencial_bronceado" formControlName="potencial_bronceado" type="number">
-      </div>
-      <div>
-        <label for="fototipo_piel">Fototipo de Piel:</label>
-        <input id="fototipo_piel" formControlName="fototipo_piel" type="number">
-      </div>
-      <div>
-        <label for="medicacion">Medicación:</label>
-        <input id="medicacion" formControlName="medicacion" type="number">
-      </div>
-      <div>
-        <label for="fecha_medicacion">Fecha de Medicación:</label>
-        <input id="fecha_medicacion" formControlName="fecha_medicacion" type="date">
-      </div>
+  
+      
       <button type="submit" [disabled]="historiaClinicaForm.invalid">Guardar Historia Clínica</button>
       <button type="button" (click)="nuevoTratamiento()">Agregar Tratamiento</button>
       <button type="button" (click)="regresar()">Cancelar</button>

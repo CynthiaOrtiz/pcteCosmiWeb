@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef  } f
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CitasService } from '../../core/citas.service';
 import { Paciente } from '../../model/vo/paciente';
-
+import { Router } from '@angular/router';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, subMonths, addMonths, setMinutes, setHours } from 'date-fns';
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarMonthViewDay, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GestionCitasComponent implements OnInit {
+
   pacientes: Paciente[] = [];
   citas: any[] = []; // Array para almacenar las citas
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
@@ -48,7 +49,8 @@ export class GestionCitasComponent implements OnInit {
 
   constructor(protected modal: NgbModal,
     private http: HttpClient,
-    private citasService: CitasService
+    private citasService: CitasService,
+    private router: Router
   ) {
   }
 
@@ -90,13 +92,12 @@ export class GestionCitasComponent implements OnInit {
         (isSameDay(this.viewDate, this.selectedDay) && this.activeDayIsOpen === true) ||
         day.events.length > 0) {
         document.querySelector('.slide-in')?.classList.add('show');
-        this.activeDayIsOpen = true;
+        // this.activeDayIsOpen = true;
       } else {
         document.querySelector('.slide-in')?.classList.remove('show');
-        this.activeDayIsOpen = false;
+        // this.activeDayIsOpen = false;
       }
     }
-    this.openAddModal();
   }
 
   addEvent(): void {
@@ -116,6 +117,7 @@ export class GestionCitasComponent implements OnInit {
       this.events = [...this.events, newEvent];
       this.modal.dismissAll();
     // });
+    document.querySelector('.slide-in')?.classList.add('show');
   }
 
   viewToday(): void {
@@ -172,6 +174,7 @@ export class GestionCitasComponent implements OnInit {
         this.modal.dismissAll();
       // });
     }
+    document.querySelector('.slide-in')?.classList.add('show');
   }
 
   editEvent(event: CalendarEvent): void {
@@ -182,7 +185,7 @@ export class GestionCitasComponent implements OnInit {
       patient: event.meta?.patient || '',
       hour: event.start.getHours().toString().padStart(2, '0') + ':' + event.start.getMinutes().toString().padStart(2, '0')
     };
-    this.modal.open(this.modalContent, { size: 'lg', centered: true });
+    this.modal.open(this.modalContent, { size: 'sm', centered: true });
   }
   deleteEvent(event: CalendarEvent): void {
     // this.citasService.deleteCita(event).subscribe(() => {
@@ -203,7 +206,16 @@ export class GestionCitasComponent implements OnInit {
     this.newEvent = { title: '', patient: '', start: new Date(), hour: '' };
     this.modal.open(this.modalContent, { size: 'sm', centered: true });
   }
+  registerTreatment(event: CalendarEvent): void {
+    this.eventToEdit = event;
+    this.router.navigate(['/tratamiento-paciente', event.meta?.patient.identificador]);
+  }
+
   setView(view: CalendarView) {
     this.view = view;
   }
+
+  home() {
+    this.router.navigate(['/hom']);
+    }
 }

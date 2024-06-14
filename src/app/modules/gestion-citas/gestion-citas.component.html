@@ -1,16 +1,17 @@
 <div class="gestion-citas">
   <div class="container">
+    <button type="button" (click)="home()"> <i class="fas fa-home"></i>  </button>
     <h1>Gestión de Citas</h1>
     <div class="calendar">
       <div class="navigation">
         <button (click)="previousMonth()" class="btn btn-secondary"
         ngbPopover="Mes Anterior" poppoverTitle="Popover on top">
-          <i class="fa-solid fa-angles-left"></i></button>
+          <i class="fas fa-arrow-left"></i></button>
         <button (click)="viewToday()" class="btn btn-secondary btn-sm"
-        ngbPopover="Hoy" poppoverTitle="Popover on top" >Hoy</button>
+        ngbPopover="Hoy" poppoverTitle="Popover on top" ><i class="fas fa-calendar-alt"></i>  Hoy</button>
         <button (click)="nextMonth()" class="btn btn-secondary"
         ngbPopover="Mes Siguiente" poppoverTitle="Popover on top">
-        <i class="fa-solid fa-angles-right"></i></button>
+        <i class="fas fa-arrow-right"></i></button>
       </div>
       <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
       <div class="view-buttons">
@@ -46,10 +47,11 @@
     <div *ngIf="selectedDay" class="slide-in show" id="citasDia">
       <h3>Citas para {{ selectedDay | date: 'fullDate' }}</h3>
       <ul *ngIf="selectedEvents.length > 0; else noEvents">
-        <li *ngFor="let event of selectedEvents">
+        <li *ngFor="let event of selectedEvents" [ngClass]="{'text-danger': event.meta?.status === 'cancelled'}">
           {{ event.title }} - {{ event.start | date: 'shortTime' }}
           <button (click)="editEvent(event)" class="btn btn-primary btn-sm">Editar</button>
           <button (click)="deleteEvent(event)" class="btn btn-danger btn-sm">Eliminar</button>
+          <button (click)="registerTreatment(event)" class="btn btn-success btn-sm">Registrar Tratamiento</button>
         </li>
       </ul>
       <ng-template #noEvents>
@@ -79,6 +81,13 @@
         <div class="mb-3">
           <label for="hour" class="form-label">Hora</label>
           <input type="time" class="form-control" id="hour" [(ngModel)]="newEvent.hour" name="hour" required>
+        </div>
+        <div class="mb-3">
+          <label for="status" class="form-label">Estado</label>
+          <select class="form-control" id="status" [(ngModel)]="newEvent.status" name="status">
+            <option value="active">Activo</option>
+            <option value="cancelled">Cancelado</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary" on>{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
       </form>

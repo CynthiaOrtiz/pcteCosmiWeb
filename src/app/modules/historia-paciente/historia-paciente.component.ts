@@ -4,6 +4,7 @@ import { PacienteService } from '../../core/paciente.service';
 import { HistoriaClinica } from '../../model/vo/historiaClinica';
 import { Tratamiento } from '../../model/vo/tratamiento';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Paciente } from 'src/app/model/vo/paciente';
 
 @Component({
   selector: 'app-historia-paciente',
@@ -15,6 +16,7 @@ export class HistoriaPacienteComponent implements OnInit {
   historiaClinicaForm!: UntypedFormGroup;
   tratamientoForm!: UntypedFormGroup;
   pacienteId: number = 0;
+  paciente!: Paciente;
 
   constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService,
     private route: ActivatedRoute,
@@ -24,41 +26,48 @@ export class HistoriaPacienteComponent implements OnInit {
   ngOnInit(): void {
     this.inicializarFormularios();
     this.pacienteId = +this.route.snapshot.paramMap.get('id')!;
+    this.pacienteService.getPacienteById(this.pacienteId).subscribe((response) => {
+      console.log('Se obtuvo el paciente:', response);
+      this.paciente = response;
+    }, error => {
+      console.error('Error al obtener el paciente:', error);
+    });
+
   }
 
   inicializarFormularios(): void {
     this.historiaClinicaForm = this.formBuilder.group({
       id: [null],
       descripcion: ['', Validators.required],
-      observacion: [''],
+      observacion: ['', Validators.required],
       paciente: [null, Validators.required],
-      embarazo: [0],
-      lactancia: [0],
-      depilacion: [0],
+      embarazo: [false],
+      lactancia: [false],
+      depilacion: [false],
       metodo: [''],
-      bronceado: [0],
-      fecha_bronceado: [null],
-      queloides: [0],
-      problemas_hormonales: [0],
-      enfermedad_cutanea: [''],
-      hipertricosis: [''],
-      epilepsia: [0],
-      tatuaje: [''],
-      coagulacion: [0],
-      herpes: [0],
-      dispositivo_interno: [''],
+      bronceado: [false],
+      fecha_bronceado: [''],
+      queloides: [false],
+      problemas_hormonales: [false],
+      enfermedad_cutanea: [false],
+      hipertricosis: [false],
+      epilepsia: [false],
+      tatuaje: [false],
+      coagulacion: [0, Validators.required],
+      herpes: [false],
+      dispositivo_interno: [false],
       zona_dispositivo: [''],
       alergias: [''],
       color_piel: [''],
-      pecas: [0],
-      color_pelo: [0],
-      color_ojos: [0],
-      raza: [0],
-      potencial_quemadura: [0],
-      potencial_bronceado: [0],
-      fototipo_piel: [0],
-      medicacion: [0],
-      fecha_medicacion: [null]
+      pecas: [false],
+      color_pelo: [''],
+      color_ojos: [''],
+      raza: [''],
+      potencial_quemadura: [0, Validators.required],
+      potencial_bronceado: [0, Validators.required],
+      fototipo_piel: [0, Validators.required],
+      medicacion: [0, Validators.required],
+      fecha_medicacion: ['']
     });
 
     this.tratamientoForm = this.formBuilder.group({

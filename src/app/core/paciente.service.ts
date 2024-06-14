@@ -11,32 +11,28 @@ import { Paciente } from '../model/vo/paciente';
   providedIn: 'root'
 })
 export class PacienteService {
-  private apiUrl = 'http://localhost:8080/api/pacientes';
-  private tratamientosUrl = 'http://tu-api-url/api/tratamientos'; // URL para tratamientos
+  private apiUrl = 'http://localhost:8082/api/public/adminpaciente';
+  private tratamientosUrl = 'http://localhost:8082/api/public/tratamientos'; // URL para tratamientos
   
   constructor(private http: HttpClient) { }
 
   guardarPaciente(paciente: Paciente): Observable<any> {
-    return this.http.post(`${this.apiUrl}/paciente`, paciente);
+    return this.http.post(`${this.apiUrl}/guardarPaciente`, paciente);
   }
   getPacientes(): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>(this.apiUrl);
+    return this.http.get<Paciente[]>(`${this.apiUrl}/buscarPacientes`);
   }
 
   getPacienteById(id: number): Observable<Paciente> {
-    return this.http.get<Paciente>(`${this.apiUrl}/${id}`);
-  }
-
-  addPaciente(paciente: Paciente): Observable<Paciente> {
-    return this.http.post<Paciente>(this.apiUrl, paciente);
+    return this.http.get<Paciente>(`${this.apiUrl}/getPaciente/${id}`);
   }
 
   updatePaciente(paciente: Paciente): Observable<Paciente> {
-    return this.http.put<Paciente>(`${this.apiUrl}/${paciente.identificador}`, paciente);
+    return this.http.post<Paciente>(`${this.apiUrl}/updatePaciente`, paciente);
   }
 
-  deletePaciente(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deletePaciente(paciente: Paciente): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/deletePaciente`, paciente);
   }
 
   guardarHistoriaClinica(historiaClinica: HistoriaClinica): Observable<any> {

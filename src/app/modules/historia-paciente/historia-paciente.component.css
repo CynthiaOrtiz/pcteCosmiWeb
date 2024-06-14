@@ -56,4 +56,22 @@
   .historia-clinica-container form button:hover {
     background-color: #ff1493;  /* Color más oscuro para hover */
   }
+
+  .historia-clinica-container form .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre los elementos */
+    margin-bottom: 15px; /* Espacio inferior entre grupos */
+    align-content: stretch;
+    flex-direction: row;
+  }
   
+  .historia-clinica-container form .checkbox-group > div {
+    flex: 1 1 calc(33.333% - 10px); /* Tres elementos en una línea */
+    min-width: 150px; /* Ancho mínimo para cada checkbox */
+    box-sizing: border-box;
+  }
+  .historia-clinica-container form .checkbox-group label {
+    display: flex;
+    align-items: center;
+  }
