@@ -11,8 +11,9 @@ import { Paciente } from '../model/vo/paciente';
   providedIn: 'root'
 })
 export class PacienteService {
-  private apiUrl = 'http://localhost:8082/api/public/adminpaciente';
-  private tratamientosUrl = 'http://localhost:8082/api/public/tratamientos'; // URL para tratamientos
+  private apiUrl = 'http://localhost:8082/api/adminpaciente';
+  private tratamientosUrl = 'http://localhost:8082/api/tratamientos'; // URL para tratamientos
+  private historia = 'http://localhost:8082/api/historia'; // URL para tratamientos
   
   constructor(private http: HttpClient) { }
 
@@ -36,11 +37,11 @@ export class PacienteService {
   }
 
   guardarHistoriaClinica(historiaClinica: HistoriaClinica): Observable<any> {
-    return this.http.post(`${this.apiUrl}/historias-clinicas`, historiaClinica);
+    return this.http.post(`${this.historia}/historias-clinicas`, historiaClinica);
   }
 
   agregarTratamiento(tratamiento: Tratamiento): Observable<any> {
-    return this.http.post(`${this.apiUrl}/tratamientos`, tratamiento);
+    return this.http.post(`${this.tratamientosUrl}/tratamientos`, tratamiento);
   }
 
   // Métodos para tratamientos
