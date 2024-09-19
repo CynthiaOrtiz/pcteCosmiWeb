@@ -37,7 +37,7 @@ export class PacienteService {
   }
 
   guardarHistoriaClinica(historiaClinica: HistoriaClinica): Observable<any> {
-    return this.http.post(`${this.historia}/historias-clinicas`, historiaClinica);
+    return this.http.post(`${this.historia}/guardarHistoria`, historiaClinica);
   }
 
   agregarTratamiento(tratamiento: Tratamiento): Observable<any> {
