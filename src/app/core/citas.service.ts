@@ -9,12 +9,13 @@ import { CalendarEvent } from 'angular-calendar';
   providedIn: 'root'
 })
 export class CitasService {
-  private apiUrl = 'http://localhost:3000/api'; // URL del servicio web
+  private apiUrl = 'http://localhost:3000/api/citas'; // URL del servicio web
+  private apiUrlPaciente = 'http://localhost:8082/api/adminpaciente';
 
   constructor(private http: HttpClient) { }
 
   getPacientes(): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>(`${this.apiUrl}/pacientes`);
+    return this.http.get<Paciente[]>(`${this.apiUrlPaciente}/buscarPacientes`);
   }
 
   getCitas(): Observable<any[]> {
@@ -22,7 +23,7 @@ export class CitasService {
   }
 
   agendarCita(cita: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/citas`, cita);
+    return this.http.post<any>(`${this.apiUrl}/agendarCita`, cita);
   }
   crearCita(cita: Cita): Observable<Cita> {
     return this.http.post<Cita>(`${this.apiUrl}/citas`, cita);

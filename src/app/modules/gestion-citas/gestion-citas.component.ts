@@ -157,10 +157,10 @@ export class GestionCitasComponent implements OnInit {
     if (this.isEdit && this.eventToEdit) {
       this.eventToEdit.title = this.newEvent.title;
       this.eventToEdit.start = newStartDate;
-      // this.citasService.updateCita(this.eventToEdit).subscribe(() => {
-        // this.loadCitas();
+      this.citasService.updateCita(this.eventToEdit).subscribe(() => {
+         this.loadCitas();
         this.modal.dismissAll();
-      // });
+       });
     } else {
       const newEvent: CalendarEvent = {
         title: this.newEvent.title,
@@ -168,11 +168,11 @@ export class GestionCitasComponent implements OnInit {
         color: { primary: '#e3bc08', secondary: '#FDF1BA' }
       };
 
-      // this.citasService.agendarCita(newEvent).subscribe(() => {
+       this.citasService.agendarCita(newEvent).subscribe(() => {
         this.events = [...this.events, newEvent];
-        // this.loadCitas();
+         this.loadCitas();
         this.modal.dismissAll();
-      // });
+       });
     }
     document.querySelector('.slide-in')?.classList.add('show');
   }
@@ -188,10 +188,10 @@ export class GestionCitasComponent implements OnInit {
     this.modal.open(this.modalContent, { size: 'sm', centered: true });
   }
   deleteEvent(event: CalendarEvent): void {
-    // this.citasService.deleteCita(event).subscribe(() => {
+     this.citasService.deleteCita(event).subscribe(() => {
       this.events = this.events.filter(e => e !== event);
       this.selectedEvents = this.selectedEvents.filter(e => e !== event);
-    // });
+     });
   }
 
   openAddModal(): void {
