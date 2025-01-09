@@ -91,6 +91,10 @@ verTratamientos(paciente: Paciente): void {
   this.router.navigate(['/lista-tratamientos', paciente.identificador]);
 }
 
+nuevoPaciente() {
+  this.router.navigate(['/registro-paciente']);
+}
+
 regresar(_t6: Paciente) {
   window.history.back();
   }

@@ -1,5 +1,6 @@
 <div class="busqueda-paciente-container">
   <button type="button" (click)="home()"> <i class="fas fa-home"></i>  </button>
+  <button type="button" (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button>
   <h2>Lista de Pacientes</h2>
   <ul>
     <li *ngFor="let paciente of pacientes" (click)="seleccionarPaciente(paciente)">

@@ -25,14 +25,11 @@ export class CitasService {
   agendarCita(cita: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/agendarCita`, cita);
   }
-  crearCita(cita: Cita): Observable<Cita> {
-    return this.http.post<Cita>(`${this.apiUrl}/citas`, cita);
-  }
-  updateCita(event: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${event.id}`, event);
+  updateCita(cita: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/actualizarCita`, cita);
   }
 
   deleteCita(event: any): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${event.id}`);
+    return this.http.delete(`${this.apiUrl}/borrarCita/${event.id}`);
   }
 }

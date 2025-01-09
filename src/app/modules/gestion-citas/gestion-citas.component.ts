@@ -28,7 +28,7 @@ export class GestionCitasComponent implements OnInit {
   selectedDay: Date | null = null;
   selectedEvents: CalendarEvent[] = [];
   isEdit: boolean = false;
-  eventToEdit: CalendarEvent | null = null;
+  eventToEdit: any | null = null;
   
   paciente: Paciente = {
     identificador: 1714807766,
