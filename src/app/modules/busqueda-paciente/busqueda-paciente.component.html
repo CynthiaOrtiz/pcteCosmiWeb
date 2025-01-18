@@ -1,5 +1,7 @@
 <div class="busqueda-paciente-container">
-  <button type="button" (click)="home()"> <i class="fas fa-home"></i>  </button>
+  <div class="buttonhom">
+    <button type="button" (click)="home()" style="text-align: center;"> <i class="fas fa-home"></i>  </button>
+  </div>
   <button type="button" (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button>
   <h2>Lista de Pacientes</h2>
   <ul>
@@ -12,15 +14,14 @@
       <button (click)="nuevoTratamiento(paciente)">
         <i class="fas fa-plus-circle"></i> Nuevo Tratamiento
       </button>
-      
+
       <button (click)="verTratamientos(paciente)">
         <i class="fas fa-list"></i> Tratamientos
       </button>
-      <button (click)="regresar(paciente)">
-        <span class="fas fa-arrow-left"></span> Atras
-      </button>
     </li>
-    
+    <button (click)="regresar()">
+      <span class="fas fa-arrow-left"></span> Atras
+    </button>
   </ul>
 
   <div *ngIf="selectedPaciente" class="editar-paciente">

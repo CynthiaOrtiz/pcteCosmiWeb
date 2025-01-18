@@ -1,17 +1,17 @@
 <div class="historia-clinica-container">
     <h2>Historia Clínica</h2>
-    <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()">
+    <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()" *ngIf = "esCreacion">
       <!-- Campos de Historia Clínica -->
       <div class="form-group">
         <label for="descripcion">Descripción</label>
         <input id="descripcion" formControlName="descripcion" type="text" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="observacion">Observación</label>
         <input id="observacion" formControlName="observacion" type="text" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nombre_completo}}</label>
       </div>
@@ -21,13 +21,13 @@
           <input id="embarazo" formControlName="embarazo" type="checkbox" class="form-check-input">Embarazo
         </label>
         </div>
-    
+
         <div >
           <label>
           <input id="lactancia" formControlName="lactancia" type="checkbox" class="form-check-input">
           Lactancia</label>
         </div>
-    
+
         <div >
           <label>
           <input id="depilacion" formControlName="depilacion" type="checkbox" class="form-check-input">Depilación</label>
@@ -37,124 +37,196 @@
           <label for="metodo">Método</label>
           <input id="metodo" formControlName="metodo" type="text" class="form-control">
         </div>
-      
+
       <div class="checkbox-group">
         <div class="form-check">
           <input id="bronceado" formControlName="bronceado" type="checkbox" class="form-check-input">
           <label for="bronceado" class="form-check-label">Bronceado</label>
         </div>
-    
+
         <div class="form-group">
           <label for="fecha_bronceado">Fecha de Bronceado</label>
           <input id="fecha_bronceado" formControlName="fecha_bronceado" type="date" class="form-control" style="width: 50%;">
         </div>
       </div>
-  
+
       <div class="form-check">
         <input id="queloides" formControlName="queloides" type="checkbox" class="form-check-input">
         <label for="queloides" class="form-check-label">Queloides</label>
       </div>
-  
+
       <div class="form-check">
         <input id="problemas_hormonales" formControlName="problemas_hormonales" type="checkbox" class="form-check-input">
         <label for="problemas_hormonales" class="form-check-label">Problemas Hormonales</label>
       </div>
-  
+
       <div class="form-check">
         <input id="enfermedad_cutanea" formControlName="enfermedad_cutanea" type="checkbox" class="form-check-input">
         <label for="enfermedad_cutanea" class="form-check-label">Enfermedad Cutánea</label>
       </div>
-  
+
       <div class="form-check">
         <input id="hipertricosis" formControlName="hipertricosis" type="checkbox" class="form-check-input">
         <label for="hipertricosis" class="form-check-label">Hipertricosis</label>
       </div>
-  
+
       <div class="form-check">
         <input id="epilepsia" formControlName="epilepsia" type="checkbox" class="form-check-input">
         <label for="epilepsia" class="form-check-label">Epilepsia</label>
       </div>
-  
+
       <div class="form-check">
         <input id="tatuaje" formControlName="tatuaje" type="checkbox" class="form-check-input">
         <label for="tatuaje" class="form-check-label">Tatuaje</label>
       </div>
-  
+
       <div class="form-group">
         <label for="coagulacion">Coagulación</label>
         <input id="coagulacion" formControlName="coagulacion" type="number" class="form-control">
       </div>
-  
+
       <div class="form-check">
         <input id="herpes" formControlName="herpes" type="checkbox" class="form-check-input">
         <label for="herpes" class="form-check-label">Herpes</label>
       </div>
-  
+
       <div class="form-check">
         <input id="dispositivo_interno" formControlName="dispositivo_interno" type="checkbox" class="form-check-input">
         <label for="dispositivo_interno" class="form-check-label">Dispositivo Interno</label>
       </div>
-  
+
       <div class="form-group">
         <label for="zona_dispositivo">Zona del Dispositivo</label>
         <input id="zona_dispositivo" formControlName="zona_dispositivo" type="text" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="alergias">Alergias</label>
         <input id="alergias" formControlName="alergias" type="text" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="color_piel">Color de Piel</label>
         <input id="color_piel" formControlName="color_piel" type="text" class="form-control">
       </div>
-  
+
       <div class="form-check">
         <input id="pecas" formControlName="pecas" type="checkbox" class="form-check-input">
         <label for="pecas" class="form-check-label">Pecas</label>
       </div>
-  
+
       <div class="form-group">
         <label for="color_pelo">Color de Pelo</label>
         <input id="color_pelo" formControlName="color_pelo" type="text" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="color_ojos">Color de Ojos</label>
         <input id="color_ojos" formControlName="color_ojos" type="text" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="potencial_quemadura">Potencial de Quemadura</label>
         <input id="potencial_quemadura" formControlName="potencial_quemadura" type="number" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="potencial_bronceado">Potencial de Bronceado</label>
         <input id="potencial_bronceado" formControlName="potencial_bronceado" type="number" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="fototipo_piel">Fototipo de Piel</label>
         <input id="fototipo_piel" formControlName="fototipo_piel" type="number" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="medicacion">Medicación</label>
         <input id="medicacion" formControlName="medicacion" type="number" class="form-control">
       </div>
-  
+
       <div class="form-group">
         <label for="fecha_medicacion">Fecha de Medicación</label>
         <input id="fecha_medicacion" formControlName="fecha_medicacion" type="date" class="form-control">
       </div>
-  
-      
+
+
       <button type="submit" [disabled]="historiaClinicaForm.invalid">Guardar Historia Clínica</button>
       <button type="button" (click)="nuevoTratamiento()">Agregar Tratamiento</button>
       <button type="button" (click)="regresar()">Cancelar</button>
     </form>
-  
+
+
+    <div class="historia-clinica" *ngIf = "!esCreacion">
+      <div class="section">
+        <h3>Información General</h3>
+        <p><strong>Descripción:</strong> {{ historiaClinica.descripcion }}</p>
+        <p><strong>Observación:</strong> {{ historiaClinica.observacion }}</p>
+        <p><strong>Paciente ID:</strong> {{ historiaClinica.paciente }}</p>
+      </div>
+
+      <div class="section">
+        <h3>Antecedentes Personales</h3>
+        <div class="checkbox-group">
+          <div><strong>Embarazo:</strong> {{ historiaClinica.embarazo ? 'Sí' : 'No' }}</div>
+          <div><strong>Lactancia:</strong> {{ historiaClinica.lactancia ? 'Sí' : 'No' }}</div>
+          <div><strong>Depilación:</strong> {{ historiaClinica.depilacion ? 'Sí' : 'No' }}</div>
+          <div><strong>Método:</strong> {{ historiaClinica.metodo }}</div>
+        </div>
+        <div>
+          <strong>Bronceado:</strong> {{ historiaClinica.bronceado ? 'Sí' : 'No' }}
+          <span *ngIf="historiaClinica.bronceado">({{ historiaClinica.fecha_bronceado | date:'longDate' }})</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Historial Médico</h3>
+        <div class="checkbox-group">
+          <div><strong>Queloides:</strong> {{ historiaClinica.queloides ? 'Sí' : 'No' }}</div>
+          <div><strong>Problemas Hormonales:</strong> {{ historiaClinica.problemas_hormonales ? 'Sí' : 'No' }}</div>
+          <div><strong>Enfermedad Cutánea:</strong> {{ historiaClinica.enfermedad_cutanea ? 'Sí' : 'No' }}</div>
+          <div><strong>Hipertricosis:</strong> {{ historiaClinica.hipertricosis ? 'Sí' : 'No' }}</div>
+          <div><strong>Epilepsia:</strong> {{ historiaClinica.epilepsia ? 'Sí' : 'No' }}</div>
+          <div><strong>Tatuaje:</strong> {{ historiaClinica.tatuaje ? 'Sí' : 'No' }}</div>
+          <div><strong>Herpes:</strong> {{ historiaClinica.herpes ? 'Sí' : 'No' }}</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Detalles Adicionales</h3>
+        <p><strong>Coagulación:</strong> {{ historiaClinica.coagulacion }}</p>
+        <p><strong>Dispositivo Interno:</strong> {{ historiaClinica.dispositivo_interno ? 'Sí' : 'No' }}</p>
+        <p *ngIf="historiaClinica.dispositivo_interno">
+          <strong>Zona del Dispositivo:</strong> {{ historiaClinica.zona_dispositivo }}
+        </p>
+        <p><strong>Alergias:</strong> {{ historiaClinica.alergias }}</p>
+      </div>
+
+      <div class="section">
+        <h3>Características Físicas</h3>
+        <p><strong>Color de Piel:</strong> {{ historiaClinica.color_piel }}</p>
+        <p><strong>Pecas:</strong> {{ historiaClinica.pecas ? 'Sí' : 'No' }}</p>
+        <p><strong>Color de Pelo:</strong> {{ historiaClinica.color_pelo }}</p>
+        <p><strong>Color de Ojos:</strong> {{ historiaClinica.color_ojos }}</p>
+        <p><strong>Raza:</strong> {{ historiaClinica.raza }}</p>
+      </div>
+
+      <div class="section">
+        <h3>Fototipo y Potenciales</h3>
+        <p><strong>Potencial de Quemadura:</strong> {{ historiaClinica.potencial_quemadura }}</p>
+        <p><strong>Potencial de Bronceado:</strong> {{ historiaClinica.potencial_bronceado }}</p>
+        <p><strong>Fototipo de Piel:</strong> {{ historiaClinica.fototipo_piel }}</p>
+      </div>
+
+      <div class="section">
+        <h3>Medicación</h3>
+        <p><strong>Medicación:</strong> {{ historiaClinica.medicacion }}</p>
+        <p><strong>Fecha de Medicación:</strong> {{ historiaClinica.fecha_medicacion | date:'longDate' }}</p>
+      </div>
+      <button (click)="regresar()">
+        <span class="fas fa-arrow-left"></span> Atras
+      </button>
+    </div>
+
   </div>
-  
+

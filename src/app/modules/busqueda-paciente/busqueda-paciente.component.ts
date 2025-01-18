@@ -33,7 +33,7 @@ export class BusquedaPacienteComponent implements OnInit {
 
   ngOnInit(): void {
     // Cargar pacientes iniciales (esto podría ser reemplazado por una llamada a un servicio)
-    
+
     this.cargarPacientes();
     this.pacientes = [
       {
@@ -78,9 +78,9 @@ export class BusquedaPacienteComponent implements OnInit {
   }
 
 
-  // Métodos de navegación
+  // historias clinicas del paciente
 verHistoriaClinica(paciente: Paciente): void {
-  this.router.navigate(['/historia-clinica', paciente.identificador]);
+  this.router.navigate(['/historias-clinicas', paciente.identificador]);
 }
 
 nuevoTratamiento(paciente: Paciente): void {
@@ -95,7 +95,7 @@ nuevoPaciente() {
   this.router.navigate(['/registro-paciente']);
 }
 
-regresar(_t6: Paciente) {
+regresar() {
   window.history.back();
   }
 

@@ -5,6 +5,7 @@ import { HistoriaClinica } from '../../model/vo/historiaClinica';
 import { Tratamiento } from '../../model/vo/tratamiento';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Paciente } from 'src/app/model/vo/paciente';
+import { parse } from 'path';
 
 @Component({
   selector: 'app-historia-paciente',
@@ -12,11 +13,13 @@ import { Paciente } from 'src/app/model/vo/paciente';
   styleUrls: ['./historia-paciente.component.css']
 })
 export class HistoriaPacienteComponent implements OnInit {
-
+  historiaClinica!: HistoriaClinica;
   historiaClinicaForm!: UntypedFormGroup;
   tratamientoForm!: UntypedFormGroup;
   pacienteId: number = 0;
   paciente!: Paciente;
+  esCreacion: Boolean = false;
+  historiaId: number = 0;
 
   constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService,
     private route: ActivatedRoute,
@@ -24,8 +27,18 @@ export class HistoriaPacienteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.inicializarFormularios();
-    this.pacienteId = +this.route.snapshot.paramMap.get('id')!;
+    const idPaciente = parseInt(this.route.snapshot.paramMap.get('idPaciente')!);
+    const idHistoria = parseInt(this.route.snapshot.paramMap.get('idHistoria')!);
+    if(idHistoria === 0 && idPaciente !== 0){
+      this.esCreacion = true;
+      this.pacienteId = idPaciente;
+      this.inicializarFormularios();
+    }
+    if(idHistoria !== null){
+      this.historiaId = idHistoria;
+      this.cargarHistoriaClinica(this.historiaId);
+    }
+
     this.pacienteService.getPacienteById(this.pacienteId).subscribe((response) => {
       console.log('Se obtuvo el paciente:', response);
       this.paciente = response;
@@ -33,6 +46,16 @@ export class HistoriaPacienteComponent implements OnInit {
       console.error('Error al obtener el paciente:', error);
     });
 
+  }
+
+  cargarHistoriaClinica(idHistoria: number): void {
+    this.pacienteService.getHistoriaClinicaById(idHistoria).subscribe(response => {
+        this.historiaClinica = response;
+      },
+      (error) => {
+        console.error('Error al cargar la historia clínica', error);
+      }
+    );
   }
 
   inicializarFormularios(): void {
@@ -111,7 +134,7 @@ export class HistoriaPacienteComponent implements OnInit {
   regresar() {
     window.history.back();
   }
-  
+
   nuevoTratamiento() {
     this.router.navigate(['/tratamiento-paciente', this.pacienteId]);
   }

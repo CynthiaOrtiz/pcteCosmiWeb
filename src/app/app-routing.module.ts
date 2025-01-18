@@ -7,6 +7,7 @@ import { HistoriaPacienteComponent } from './modules/historia-paciente/historia-
 import { ListaTratamientoPacienteComponent } from './modules/lista-tratamiento-paciente/lista-tratamiento-paciente.component';
 import { RegistroPacienteComponent } from './modules/registro-paciente/registro-paciente.component';
 import { GestionCitasComponent } from './modules/gestion-citas/gestion-citas.component';
+import { ListaHistoriasClinicasComponent } from './modules/lista-historias-clinicas/lista-historias-clinicas.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'hom', component: ConsultorioContentComponent },
   { path: 'busqueda-paciente', component: BusquedaPacienteComponent },
   { path: 'tratamiento-paciente/:id', component: TratamientoPacienteComponent },
-  { path: 'historia-clinica/:id', component: HistoriaPacienteComponent },
+  { path: 'historias-clinicas/:id', component: ListaHistoriasClinicasComponent },
+  { path: 'historia-clinica/:idHistoria/:idPaciente', component: HistoriaPacienteComponent },
   { path: 'lista-tratamientos/:id', component: ListaTratamientoPacienteComponent },
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'agendar-citas', component: GestionCitasComponent },

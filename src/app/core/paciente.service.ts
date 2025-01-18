@@ -14,7 +14,7 @@ export class PacienteService {
   private apiUrl = 'http://localhost:8082/api/adminpaciente';
   private tratamientosUrl = 'http://localhost:8082/api/tratamientos'; // URL para tratamientos
   private historia = 'http://localhost:8082/api/historia'; // URL para tratamientos
-  
+
   constructor(private http: HttpClient) { }
 
   guardarPaciente(paciente: Paciente): Observable<any> {
@@ -36,21 +36,25 @@ export class PacienteService {
     return this.http.post<void>(`${this.apiUrl}/deletePaciente`, paciente);
   }
 
+  getHistoriasClinicas(pacienteId: number): Observable<HistoriaClinica[]> {
+    return this.http.get<any[]>(`${this.historia}/historias-clinicas?pacienteId=${pacienteId}` );
+  }
+
+  getHistoriaClinicaById(historiaId: number): Observable<any>{
+    return this.http.post(`${this.historia}/getHisotriaClinica`, historiaId);
+  }
+
   guardarHistoriaClinica(historiaClinica: HistoriaClinica): Observable<any> {
     return this.http.post(`${this.historia}/guardarHistoria`, historiaClinica);
   }
 
   agregarTratamiento(tratamiento: Tratamiento): Observable<any> {
-    return this.http.post(`${this.tratamientosUrl}/tratamientos`, tratamiento);
+    return this.http.post(`${this.tratamientosUrl}/agregarTratamiento`, tratamiento);
   }
 
   // Métodos para tratamientos
   getTratamientosByPacienteId(pacienteId: number): Observable<Tratamiento[]> {
-    return this.http.get<Tratamiento[]>(`${this.tratamientosUrl}?pacienteId=${pacienteId}`);
-  }
-
-  addTratamiento(tratamiento: Tratamiento): Observable<Tratamiento> {
-    return this.http.post<Tratamiento>(this.tratamientosUrl, tratamiento);
+    return this.http.get<Tratamiento[]>(`${this.tratamientosUrl}/getTratamientosByPacienteId?pacienteId=${pacienteId}`);
   }
 
 }

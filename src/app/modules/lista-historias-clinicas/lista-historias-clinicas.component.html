@@ -1,0 +1,36 @@
+<div class="lista-historias-clinicas">
+    <div class="buttonhom">
+        <button type="button" (click)="home()" style="text-align: center;"> <i class="fas fa-home"></i>  </button>
+      </div>
+      <button type="button" (click)="nuevaHistoria()"><i class="fas fa-user-plus"></i> Crear Historia</button>
+      <button (click)="regresar()">
+        <span class="fas fa-arrow-left"></span> Atras
+      </button>
+    <h2>Historias Clínicas del Paciente</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="headerColumn">#</th>
+          <th class="headerColumn">Descripción</th>
+          <th class="headerColumn">Observación</th>
+          <th class="headerColumn">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let historia of historiasClinicas; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ historia.descripcion }}</td>
+          <td>{{ historia.observacion }}</td>
+          <td>
+            <button
+              class="btn btn-primary"
+              (click)="verHistoriaClinica(historia.id)"
+            >
+              Ver Detalle
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

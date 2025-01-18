@@ -62,7 +62,7 @@ export class TratamientoPacienteComponent implements OnInit {
       const tratamiento: Tratamiento = this.tratamientoForm.value;
       tratamiento.pacienteId = this.pacienteId;
       tratamiento.firma = this.tratamiento.firma;
-      this.pacienteService.addTratamiento(tratamiento).subscribe(() => {
+      this.pacienteService.agregarTratamiento(tratamiento).subscribe(() => {
         this.router.navigate(['/lista-tratamientos', this.pacienteId]);
       });
     }
@@ -71,7 +71,7 @@ export class TratamientoPacienteComponent implements OnInit {
   regresar() {
     window.history.back();
   }
-  
+
   clearSignature(): void {
     this.signaturePad.clear();
   }

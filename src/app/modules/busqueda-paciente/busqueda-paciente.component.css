@@ -92,3 +92,9 @@
 .busqueda-paciente-container button:hover {
   background-color: #ff1493;  /* Color más oscuro para hover */
 }
+
+.busqueda-paciente-container .buttonhom {
+
+  text-align: center;
+
+}
