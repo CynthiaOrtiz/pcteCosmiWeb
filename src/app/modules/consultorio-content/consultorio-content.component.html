@@ -2,17 +2,18 @@
     <h1>Bienvenida a la Página del Consultorio</h1>
     <img src="assets/images/Logo.png" alt="Logo">
 </header>
-  
+
 <nav class="consultorio-content">
     <ul>
         <li><button (click)="navigate('/agendar-citas')"><i class="fas fa-calendar-alt"></i> Agendar Citas</button></li>
         <li><button (click)="navigate('/busqueda-paciente')"><i class="fas fa-user-friends"></i> Pacientes</button></li>
         <li><button (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button></li>
+        <li><button (click)="catalogos()"><i class="fas fa-file-invoice"></i> Gestion Catalogos</button></li>
         <li><button (click)="navigate('/facturacion')"><i class="fas fa-file-invoice"></i> Facturación</button></li>
          <!--<li><a routerLink="/facturacion"><i class="fas fa-file-invoice"></i> Facturación</a></li>
         <button (click)="navigateTo('facturacion')">
             <i class="fa fa-file-invoice-dollar"></i> Facturación
           </button> -->
     </ul>
-    
+
   </nav>

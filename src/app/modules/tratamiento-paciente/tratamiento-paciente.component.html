@@ -1,5 +1,9 @@
 <div class="tratamiento-paciente-container">
     <h2>Nuevo Tratamiento</h2>
+    <button (click)="regresar()">
+      <span class="fas fa-arrow-left"></span> Atras
+    </button>
+    <div><br></div>
     <form [formGroup]="tratamientoForm" (ngSubmit)="guardarTratamiento()">
       <div>
         <label for="descripcionTratamiento">Descripción:</label>
@@ -34,4 +38,3 @@
       <button (click)="regresar()">Cancelar</button>
     </form>
   </div>
-  

@@ -3,9 +3,21 @@
     <button type="button" (click)="home()" style="text-align: center;"> <i class="fas fa-home"></i>  </button>
   </div>
   <button type="button" (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button>
+  <button (click)="regresar()">
+    <span class="fas fa-arrow-left"></span> Atras
+  </button>
   <h2>Lista de Pacientes</h2>
+  <div class="filtro-container">
+    <input
+      type="text"
+      placeholder="Buscar por cédula, nombre o apellido"
+      [(ngModel)]="filtro"
+      (input)="filtrarPacientes()"
+      class="input-filtro"
+    />
+  </div>
   <ul>
-    <li *ngFor="let paciente of pacientes" (click)="seleccionarPaciente(paciente)">
+    <li *ngFor="let paciente of pacientesFiltrados" (click)="seleccionarPaciente(paciente)">
       {{ paciente.nombre_completo }} - {{ paciente.cedula }}
       <button (click)="verHistoriaClinica(paciente)">
         <i class="fas fa-file-medical"></i> Historia Clínica
@@ -18,6 +30,9 @@
       <button (click)="verTratamientos(paciente)">
         <i class="fas fa-list"></i> Tratamientos
       </button>
+    </li>
+    <li *ngIf="pacientesFiltrados.length === 0">
+      <td colspan="3" class="sin-resultados">No se encontraron resultados</td>
     </li>
     <button (click)="regresar()">
       <span class="fas fa-arrow-left"></span> Atras

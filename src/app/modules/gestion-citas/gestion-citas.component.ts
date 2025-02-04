@@ -9,6 +9,8 @@ import { CalendarEvent, CalendarMonthViewDay, CalendarEventTimesChangedEvent, Ca
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+import { NotificacionService } from '../../core/notificacion.service';
+
 @Component({
   selector: 'app-gestion-citas',
   templateUrl: './gestion-citas.component.html',
@@ -29,7 +31,7 @@ export class GestionCitasComponent implements OnInit {
   selectedEvents: CalendarEvent[] = [];
   isEdit: boolean = false;
   eventToEdit: any | null = null;
-  
+
   paciente: Paciente = {
     identificador: 1714807766,
     nombre: 'Ceeol',
@@ -50,7 +52,8 @@ export class GestionCitasComponent implements OnInit {
   constructor(protected modal: NgbModal,
     private http: HttpClient,
     private citasService: CitasService,
-    private router: Router
+    private router: Router,
+    private notificacion: NotificacionService,
   ) {
   }
 
@@ -68,22 +71,28 @@ export class GestionCitasComponent implements OnInit {
 
   loadPacientes(): void {
     // Llama al servicio para cargar la lista de pacientes
-    // this.citasService.getPacientes().subscribe(pacientes => {
-    //   this.pacientes = pacientes;
-    // });
+     this.citasService.getPacientes().subscribe(pacientes => {
+       this.pacientes = pacientes;
+     }, (error: any) => {
+      console.error('Error al obtener los pacientes:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener los pacientes', 'error');
+    });
     this.pacientes = [this.paciente];
   }
 
   loadCitas(): void {
     // Llama al servicio para cargar la lista de citas
-    // this.citasService.getCitas().subscribe((events: CalendarEvent[]) => {
-    //   this.events = events;
-    //   console.log('citas', this.events);
-    // });
+     this.citasService.getCitas().subscribe((events: CalendarEvent[]) => {
+       this.events = events;
+       console.log('citas', this.events);
+     }, error => {
+      console.error('Error al obtener las citas:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener las citas', 'error');
+    });
     this.events = [];
   }
 
-  
+
   dayClicked({ day }: { day: CalendarMonthViewDay }): void {
     if (isSameMonth(day.date, this.viewDate)) {
       this.selectedDay = day.date;
@@ -92,10 +101,10 @@ export class GestionCitasComponent implements OnInit {
         (isSameDay(this.viewDate, this.selectedDay) && this.activeDayIsOpen === true) ||
         day.events.length > 0) {
         document.querySelector('.slide-in')?.classList.add('show');
-        // this.activeDayIsOpen = true;
+         this.activeDayIsOpen = true;
       } else {
         document.querySelector('.slide-in')?.classList.remove('show');
-        // this.activeDayIsOpen = false;
+         this.activeDayIsOpen = false;
       }
     }
   }
@@ -113,10 +122,10 @@ export class GestionCitasComponent implements OnInit {
       color: { primary: '#e3bc08', secondary: '#FDF1BA' }
     };
     console.log('guardar cita', newEvent);
-    // this.citasService.agendarCita(newEvent).subscribe(() => {
+     this.citasService.agendarCita(newEvent).subscribe(() => {
       this.events = [...this.events, newEvent];
       this.modal.dismissAll();
-    // });
+     });
     document.querySelector('.slide-in')?.classList.add('show');
   }
 

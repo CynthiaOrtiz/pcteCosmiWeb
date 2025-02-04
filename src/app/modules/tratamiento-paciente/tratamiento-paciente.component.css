@@ -6,29 +6,29 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   .tratamiento-paciente-container h2 {
     text-align: center;
     color: #ff69b4;  /* Color femenino */
     font-family: 'Cursive', sans-serif;  /* Fuente coquette */
   }
-  
+
   .tratamiento-paciente-container form {
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .tratamiento-paciente-container form div {
     display: flex;
     flex-direction: column;
   }
-  
+
   .tratamiento-paciente-container form label {
     font-weight: bold;
     color: #ff69b4;  /* Color femenino */
   }
-  
+
   .tratamiento-paciente-container form input,
   .tratamiento-paciente-container form textarea,
   .tratamiento-paciente-container form select {
@@ -37,8 +37,8 @@
     border-radius: 4px;
     font-size: 16px;
   }
-  
-  .tratamiento-paciente-container form button {
+
+  .tratamiento-paciente-container  button {
     padding: 10px 15px;
     background-color: #ff69b4;  /* Color femenino */
     color: #fff;
@@ -48,25 +48,25 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
-  .tratamiento-paciente-container form button:hover {
+
+  .tratamiento-paciente-container  button:hover {
     background-color: #ff1493;  /* Color más oscuro para hover */
   }
 
   .signature-container {
     margin-top: 20px;
   }
-  
+
   .signature-container label {
     margin-bottom: 5px;
     color: #555;
   }
-  
+
   .signature-container signature-pad {
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  
+
   .signature-container button {
     margin-top: 10px;
     padding: 10px;
@@ -76,8 +76,7 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   .signature-container button:hover {
     background-color: #ff1493;
   }
-  

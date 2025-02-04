@@ -98,3 +98,28 @@
   text-align: center;
 
 }
+
+.filtro-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.input-filtro {
+  width: 50%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #d9d9d9;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-filtro:focus {
+  border-color: #6c63ff;
+}
+.sin-resultados {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+}

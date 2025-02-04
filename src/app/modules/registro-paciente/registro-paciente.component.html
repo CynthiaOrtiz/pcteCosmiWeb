@@ -1,6 +1,10 @@
 <div class="registro-paciente">
     <h2>Registro de Nuevo Paciente</h2>
+    <button (click)="cancelar()">
+      <span class="fas fa-arrow-left"></span> Atras
+    </button>
     <form [formGroup]="formularioPaciente" (ngSubmit)="guardarPaciente()">
+
       <div>
         <label for="nombre">Nombre:</label>
         <input id="nombre" formControlName="nombre" type="text">

@@ -1,6 +1,10 @@
 <div class="historia-clinica-container">
     <h2>Historia Clínica</h2>
+
     <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()" *ngIf = "esCreacion">
+      <button (click)="regresar()">
+        <span class="fas fa-arrow-left"></span> Atras
+      </button>
       <!-- Campos de Historia Clínica -->
       <div class="form-group">
         <label for="descripcion">Descripción</label>
@@ -158,6 +162,10 @@
 
 
     <div class="historia-clinica" *ngIf = "!esCreacion">
+      <button (click)="regresar()">
+        <span class="fas fa-arrow-left"></span> Atras
+      </button>
+      <div><br></div>
       <div class="section">
         <h3>Información General</h3>
         <p><strong>Descripción:</strong> {{ historiaClinica.descripcion }}</p>

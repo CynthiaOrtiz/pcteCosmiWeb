@@ -24,4 +24,7 @@ nuevoPaciente() {
   this.router.navigate(['/registro-paciente']);
 }
 
+catalogos() {
+  this.router.navigate(['/catalogos']);
+  }
 }

@@ -1,0 +1,87 @@
+.container.coquette {
+    max-width: 600px;
+    margin: auto;
+    background: #fffaf0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn.primary {
+    background: #ff69b4;
+    color: white;
+  }
+
+  .btn.secondary {
+    background: #d3d3d3;
+  }
+
+  .btn.edit {
+    background: #ffa500;
+    color: white;
+  }
+
+  .btn.delete {
+    background: #dc143c;
+    color: white;
+  }
+
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .styled-table th, .styled-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  .styled-table th {
+    background: #ffb6c1;
+  }
+
+  h1 {
+    text-align: center;
+    /* color: #5D3FD3; */
+    color: #d18ca4;
+    /* text-align: center; */
+    /* color: #E75480; */
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  button {
+    background-color: #ff69b4;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+  }
+

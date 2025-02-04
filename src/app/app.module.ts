@@ -12,11 +12,15 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TipoTratamientoComponent } from './modules/tipo-tratamiento/tipo-tratamiento.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    TipoTratamientoComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ import { AppComponent } from './app.component';
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    BrowserAnimationsModule,
+    MatSnackBarModule,
   ],
   providers: [PacienteService],
   bootstrap: [AppComponent],

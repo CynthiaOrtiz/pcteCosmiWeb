@@ -11,6 +11,7 @@ import { Paciente } from '../../model/vo/paciente';
 })
 export class RegistroPacienteComponent implements OnInit {
 
+
   formularioPaciente!: UntypedFormGroup;
 
   constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService) { }
@@ -51,5 +52,6 @@ export class RegistroPacienteComponent implements OnInit {
   cancelar() {
     window.history.back();
     }
+
 
 }

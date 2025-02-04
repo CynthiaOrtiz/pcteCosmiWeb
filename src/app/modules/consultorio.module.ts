@@ -19,6 +19,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListaHistoriasClinicasComponent } from './lista-historias-clinicas/lista-historias-clinicas.component';
 
+
 //import { PacienteService } from '../core/paciente.service';
 
 @NgModule({
@@ -30,7 +31,7 @@ import { ListaHistoriasClinicasComponent } from './lista-historias-clinicas/list
     TratamientoPacienteComponent,
     ListaTratamientoPacienteComponent,
     GestionCitasComponent,
-    ListaHistoriasClinicasComponent
+    ListaHistoriasClinicasComponent,
   ],
   imports: [
     CommonModule,

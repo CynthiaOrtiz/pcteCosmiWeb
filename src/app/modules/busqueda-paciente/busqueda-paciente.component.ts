@@ -14,6 +14,8 @@ export class BusquedaPacienteComponent implements OnInit {
   pacientes: Paciente[] = [];
   selectedPaciente: Paciente | null = null;
   pacienteForm: UntypedFormGroup;
+  pacientesFiltrados = [...this.pacientes];
+  filtro: string = '';
 
   constructor(private fb: UntypedFormBuilder, private pacienteService: PacienteService, private router: Router) {
     this.pacienteForm = this.fb.group({
@@ -51,11 +53,13 @@ export class BusquedaPacienteComponent implements OnInit {
       },
       // Otros pacientes...
     ];
+    this.pacientesFiltrados = this.pacientes;
   }
 
   cargarPacientes(): void {
     this.pacienteService.getPacientes().subscribe(pacientes => {
       this.pacientes = pacientes;
+      this.pacientesFiltrados = pacientes;
     });
   }
 
@@ -99,7 +103,18 @@ regresar() {
   window.history.back();
   }
 
-  home() {
+home() {
     this.router.navigate(['/hom']);
-    }
+ }
+
+filtrarPacientes(): void {
+  this.selectedPaciente = null;
+    const filtroLowerCase = this.filtro.toLowerCase();
+    this.pacientesFiltrados = this.pacientes.filter(
+      (paciente) =>
+       paciente.cedula.includes(this.filtro) ||
+        paciente.nombre.toLowerCase().includes(filtroLowerCase) ||
+        paciente.apellido.toLowerCase().includes(filtroLowerCase)
+    );
+  }
 }

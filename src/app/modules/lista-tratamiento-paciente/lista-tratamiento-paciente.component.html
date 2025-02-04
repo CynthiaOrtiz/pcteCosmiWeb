@@ -1,7 +1,29 @@
 <div class="lista-tratamientos-container">
     <h2>Tratamientos del Paciente</h2>
+    <button (click)="regresar()">
+      <span class="fas fa-arrow-left"></span> Atras
+    </button>
+
+  <!-- Barra de filtros -->
+  <div class="filtros-container">
+    <input
+      type="date"
+      [ngModel]="filtroFecha ? filtroFecha.toISOString().split('T')[0] : ''"
+      (ngModelChange)="actualizarFiltroFecha($event)"
+      class="input-filtro"
+      placeholder="Filtrar por fecha"
+    />
+
+    <input
+      type="text"
+      [(ngModel)]="filtroDescripcion"
+      (input)="filtrarTratamientos()"
+      class="input-filtro"
+      placeholder="Buscar por descripción"
+    />
+  </div>
     <ul>
-      <li *ngFor="let tratamiento of tratamientos">
+      <li *ngFor="let tratamiento of tratamientosFiltrados">
         <div>
           <strong>Descripción:</strong> {{ tratamiento.descripcion }}
         </div>
@@ -12,11 +34,15 @@
           <strong>Tipo de Tratamiento:</strong> {{ tratamiento.tipo_tratamiento }}
         </div>
         <div>
-          <strong>Fecha:</strong> {{ tratamiento.fecha_tratamiento }}
+          <strong>Fecha:</strong> {{ tratamiento.fecha_tratamiento.toISOString().split('T')[0] }}
         </div>
         <!-- Aquí puedes agregar botones para editar/eliminar el tratamiento -->
       </li>
+      <li *ngIf="tratamientosFiltrados.length === 0">
+        <td colspan="2" class="sin-resultados">No se encontraron resultados</td>
+      </li>
     </ul>
-    <button type="button" (click)="regresar()">Atras</button>
+    <button (click)="regresar()">
+      <span class="fas fa-arrow-left"></span> Atras
+    </button>
   </div>
-  
