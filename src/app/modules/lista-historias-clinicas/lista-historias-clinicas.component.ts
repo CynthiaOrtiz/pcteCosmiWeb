@@ -3,6 +3,7 @@ import { HistoriaClinica } from 'src/app/model/vo/historiaClinica';
 import { Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { ActivatedRoute } from '@angular/router';
+import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
   selector: 'app-lista-historias-clinicas',
@@ -13,7 +14,10 @@ export class ListaHistoriasClinicasComponent implements OnInit {
 
   historiasClinicas: HistoriaClinica[] = [];
   pacienteId: number = 0;
-  constructor(private pacienteService: PacienteService, private router: Router, private route: ActivatedRoute,) { }
+  constructor(private pacienteService: PacienteService, private router: Router,
+    private route: ActivatedRoute,
+    private notificacion: NotificacionService
+  ) { }
 
   ngOnInit(): void {
     this.pacienteId = +this.route.snapshot.paramMap.get('id')!;
@@ -59,11 +63,10 @@ export class ListaHistoriasClinicasComponent implements OnInit {
     this.pacienteService.getHistoriasClinicas(this.pacienteId).subscribe(
       (data) => {
         this.historiasClinicas = data;
-      },
-      (error) => {
-        console.error('Error al cargar las historias clínicas', error);
-      }
-    );
+      }, (error: any) => {
+          console.error('Error al cargar las historias clínicas', error);
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al cargar las hsiotrias clínicas', 'error');
+      });
   }
 
   verHistoriaClinica(idHistoria: number): void {

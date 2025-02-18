@@ -2,7 +2,7 @@ export interface Paciente {
   identificador: number;
   nombre: string;
   apellido: string;
-  nombre_completo: string;
+  nomCom: string;
   cedula: string;
   direccion: string;
   telefono: number;

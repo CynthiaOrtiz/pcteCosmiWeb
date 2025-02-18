@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TipoTratamientoService } from '../../core/tipo-tratamiento.service';
 import { Router } from '@angular/router';
+import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
   selector: 'app-tipo-tratamiento',
@@ -21,6 +22,7 @@ export class TipoTratamientoComponent implements OnInit {
     private tratamientoService: TipoTratamientoService,
     private snackBar: MatSnackBar,
     private router: Router,
+    private notificacion: NotificacionService,
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +40,11 @@ export class TipoTratamientoComponent implements OnInit {
 
   obtenerTratamientos(): void {
     this.tratamientoService.listar().subscribe(
-      (data) => { this.tratamientos = data; },
-      (error) => { this.mostrarMensaje('Error al cargar tratamientos', 'error'); }
-    );
+      (data) => { this.tratamientos = data; }
+      ,(error: any) => {
+        console.error('Error al cargar tratamientos:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al cargar los tratamientos', 'error');
+      });
   }
 
   guardar(): void {
@@ -53,8 +57,10 @@ export class TipoTratamientoComponent implements OnInit {
           this.mostrarMensaje('Tratamiento actualizado', 'info');
           this.obtenerTratamientos();
           this.cancelarEdicion();
-        },
-        () => { this.mostrarMensaje('Error al actualizar', 'error'); }
+        },(error: any) => {
+          console.error('Error al actualizar tratamiento:', error);
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar el tratamiento', 'error');
+        }
       );
     } else {
       this.tratamientoService.agregar(tratamiento).subscribe(
@@ -62,8 +68,10 @@ export class TipoTratamientoComponent implements OnInit {
           this.mostrarMensaje('Tratamiento agregado', 'info');
           this.obtenerTratamientos();
           this.formulario.reset();
-        },
-        () => { this.mostrarMensaje('Error al agregar', 'error'); }
+        },(error: any) => {
+          console.error('Error al agregar el tratamiento:', error);
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al agregar el tratamiento', 'error');
+        }
       );
     }
   }
@@ -79,8 +87,10 @@ export class TipoTratamientoComponent implements OnInit {
       () => {
         this.mostrarMensaje('Tratamiento eliminado', 'warn');
         this.obtenerTratamientos();
-      },
-      () => { this.mostrarMensaje('Error al eliminar', 'error'); }
+      },(error: any) => {
+        console.error('Error al eliminar el tratamiento:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el tratamiento', 'error');
+      }
     );
   }
 

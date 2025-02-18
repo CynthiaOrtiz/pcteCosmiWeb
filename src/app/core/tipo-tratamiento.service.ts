@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class TipoTratamientoService {
 
-  private apiUrl = 'http://localhost:8082/api/catalogo';
+  private apiUrl = 'http://localhost:8082/adminPacServ/api/catalogo';
 
   constructor(private http: HttpClient) {}
 

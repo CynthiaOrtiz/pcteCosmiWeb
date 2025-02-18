@@ -9,8 +9,8 @@ import { CalendarEvent } from 'angular-calendar';
   providedIn: 'root'
 })
 export class CitasService {
-  private apiUrl = 'http://localhost:3000/api/citas'; // URL del servicio web
-  private apiUrlPaciente = 'http://localhost:8082/api/adminpaciente';
+  private apiUrl = 'http://localhost:8082/adminPacServ/api/citas'; // URL del servicio web
+  private apiUrlPaciente = 'http://localhost:8082/adminPacServ/api/adminpaciente';
 
   constructor(private http: HttpClient) { }
 

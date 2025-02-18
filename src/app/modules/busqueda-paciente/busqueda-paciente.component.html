@@ -18,7 +18,7 @@
   </div>
   <ul>
     <li *ngFor="let paciente of pacientesFiltrados" (click)="seleccionarPaciente(paciente)">
-      {{ paciente.nombre_completo }} - {{ paciente.cedula }}
+      {{ paciente.nomCom }} - {{ paciente.cedula }}
       <button (click)="verHistoriaClinica(paciente)">
         <i class="fas fa-file-medical"></i> Historia Clínica
       </button>
@@ -52,7 +52,7 @@
       </div>
       <div>
         <label for="nombre_completo">Nombre Completo:</label>
-        <input id="nombre_completo" formControlName="nombre_completo" type="text">
+        <input id="nombre_completo" formControlName="nomCom" type="text">
       </div>
       <div>
         <label for="cedula">Cédula:</label>

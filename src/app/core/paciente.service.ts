@@ -11,9 +11,9 @@ import { Paciente } from '../model/vo/paciente';
   providedIn: 'root'
 })
 export class PacienteService {
-  private apiUrl = 'http://localhost:8082/api/adminpaciente';
-  private tratamientosUrl = 'http://localhost:8082/api/tratamientos'; // URL para tratamientos
-  private historia = 'http://localhost:8082/api/historia'; // URL para tratamientos
+  private apiUrl = 'http://localhost:8082/adminPacServ/api/adminpaciente';
+  private tratamientosUrl = 'http://localhost:8082/adminPacServ/api/tratamientos'; // URL para tratamientos
+  private historia = 'http://localhost:8082/adminPacServ/api/historia'; // URL para tratamientos
 
   constructor(private http: HttpClient) { }
 

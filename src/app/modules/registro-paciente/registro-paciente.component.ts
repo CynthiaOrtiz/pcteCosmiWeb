@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { PacienteService } from '../../core/paciente.service';
 import { Paciente } from '../../model/vo/paciente';
+import { NotificacionService } from '../../core/notificacion.service';
 
 
 @Component ({
@@ -14,7 +15,10 @@ export class RegistroPacienteComponent implements OnInit {
 
   formularioPaciente!: UntypedFormGroup;
 
-  constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService) { }
+  constructor(private formBuilder: UntypedFormBuilder,
+    private pacienteService: PacienteService,
+    private notificacion: NotificacionService,
+  ) { }
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -41,8 +45,9 @@ export class RegistroPacienteComponent implements OnInit {
       const paciente: Paciente = this.formularioPaciente.value;
       this.pacienteService.guardarPaciente(paciente).subscribe(response => {
         console.log('Paciente guardado:', response);
-      }, error => {
-        console.error('Error al guardar el paciente:', error);
+      }, (error: any) => {
+        console.error('Error al guardar los pacientes:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al guardar los pacientes', 'error');
       });
     } else {
       console.log('Formulario no válido');

@@ -36,7 +36,7 @@ export class GestionCitasComponent implements OnInit {
     identificador: 1714807766,
     nombre: 'Ceeol',
     apellido: 'orlo',
-    nombre_completo: 'ceol orlo',
+    nomCom: 'ceol orlo',
     cedula: '1714807766',
     direccion: 'aumaria del quito',
     telefono: 0,
@@ -125,7 +125,10 @@ export class GestionCitasComponent implements OnInit {
      this.citasService.agendarCita(newEvent).subscribe(() => {
       this.events = [...this.events, newEvent];
       this.modal.dismissAll();
-     });
+     }, (error: any) => {
+      console.error('Error al agendar las citas:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al agendar la cita', 'error');
+    });
     document.querySelector('.slide-in')?.classList.add('show');
   }
 
@@ -169,7 +172,10 @@ export class GestionCitasComponent implements OnInit {
       this.citasService.updateCita(this.eventToEdit).subscribe(() => {
          this.loadCitas();
         this.modal.dismissAll();
-       });
+       }, (error: any) => {
+        console.error('Error al actualizar la cita:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar la cita', 'error');
+      });
     } else {
       const newEvent: CalendarEvent = {
         title: this.newEvent.title,
@@ -181,7 +187,10 @@ export class GestionCitasComponent implements OnInit {
         this.events = [...this.events, newEvent];
          this.loadCitas();
         this.modal.dismissAll();
-       });
+       }, (error: any) => {
+        console.error('Error al agendar la cita:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar las citas', 'error');
+      });
     }
     document.querySelector('.slide-in')?.classList.add('show');
   }
@@ -200,7 +209,10 @@ export class GestionCitasComponent implements OnInit {
      this.citasService.deleteCita(event).subscribe(() => {
       this.events = this.events.filter(e => e !== event);
       this.selectedEvents = this.selectedEvents.filter(e => e !== event);
-     });
+     }, (error: any) => {
+      console.error('Error al borrar la cita:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al borrar la cita', 'error');
+    });
   }
 
   openAddModal(): void {

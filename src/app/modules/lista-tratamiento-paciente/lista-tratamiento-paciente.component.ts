@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { Tratamiento } from '../../model/vo/tratamiento';
-
+import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
   selector: 'app-lista-tratamiento-paciente',
@@ -19,7 +19,8 @@ export class ListaTratamientoPacienteComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pacienteService: PacienteService
+    private pacienteService: PacienteService,
+    private notificacion: NotificacionService
   ) {
   }
 
@@ -28,8 +29,10 @@ export class ListaTratamientoPacienteComponent implements OnInit {
     this.pacienteService.getTratamientosByPacienteId(this.pacienteId).subscribe(
       (tratamientos: Tratamiento[]) => {
         this.tratamientos = tratamientos;
-      }
-    );
+      }, (error: any) => {
+      console.error('Error al cargar los tratamientos del paciente', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al cargar los tratamientos del paciente', 'error');
+  });
     this.tratamientos = [{
       id:54684321,
   descripcion: 'Terapia láser',

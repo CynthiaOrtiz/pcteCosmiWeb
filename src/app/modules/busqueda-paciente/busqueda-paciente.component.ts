@@ -3,6 +3,7 @@ import { PacienteService } from '../../core/paciente.service';
 import { Paciente } from '../../model/vo/paciente';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
   selector: 'app-busqueda-paciente',
@@ -17,12 +18,14 @@ export class BusquedaPacienteComponent implements OnInit {
   pacientesFiltrados = [...this.pacientes];
   filtro: string = '';
 
-  constructor(private fb: UntypedFormBuilder, private pacienteService: PacienteService, private router: Router) {
+  constructor(private fb: UntypedFormBuilder, private pacienteService: PacienteService,
+    private notificacion: NotificacionService,
+    private router: Router) {
     this.pacienteForm = this.fb.group({
       identificador: [null, Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
-      nombre_completo: ['', Validators.required],
+      nomCom: ['', Validators.required],
       cedula: ['', Validators.required],
       direccion: ['', Validators.required],
       telefono: [null, Validators.required],
@@ -42,7 +45,7 @@ export class BusquedaPacienteComponent implements OnInit {
         identificador: 1,
         nombre: 'Juan',
         apellido: 'Perez',
-        nombre_completo: 'Juan Perez',
+        nomCom: 'Juan Perez',
         cedula: '1234567890',
         direccion: 'Calle Falsa 123',
         telefono: 987654321,
@@ -60,6 +63,9 @@ export class BusquedaPacienteComponent implements OnInit {
     this.pacienteService.getPacientes().subscribe(pacientes => {
       this.pacientes = pacientes;
       this.pacientesFiltrados = pacientes;
+    }, (error: any) => {
+      console.error('Error al cargar los pacientes:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al cargar los pacientes', 'error');
     });
   }
 
