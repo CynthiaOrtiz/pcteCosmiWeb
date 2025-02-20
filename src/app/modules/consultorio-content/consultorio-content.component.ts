@@ -18,13 +18,14 @@ export class ConsultorioContentComponent implements OnInit {
 
   navigate(route: string) {
     this.router.navigate([route]);
-}
+  }
 
-nuevoPaciente() {
-  this.router.navigate(['/registro-paciente']);
-}
+  nuevoPaciente() {
+    this.router.navigate(['/registro-paciente']);
+  }
 
-catalogos() {
-  this.router.navigate(['/catalogos']);
+  catalogos() {
+    this.router.navigate(['/catalogos']);
+
   }
 }
