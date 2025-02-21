@@ -8,7 +8,7 @@
       <label>Descripción:</label>
       <input formControlName="descripcion" type="text">
       <label>Tipo:</label>
-      <input formControlName="tipo" type="text">
+      <input formControlName="tipo" type="text" appUppercase >
       <div class="buttons">
         <button type="submit" class="btn primary">{{ editando ? 'Actualizar' : 'Guardar' }}</button>
         <button type="button" *ngIf="editando" (click)="cancelarEdicion()" class="btn secondary">Cancelar</button>
@@ -29,8 +29,8 @@
           <td>{{ t.descripcion }}</td>
           <td>{{ t.tipo }}</td>
           <td>
-            <button (click)="editar(t)" class="btn edit">Editar</button>
-            <button (click)="eliminar(t.id)" class="btn delete">Eliminar</button>
+            <button (click)="editar(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
+            <button (click)="eliminar(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
           </td>
         </tr>
       </tbody>

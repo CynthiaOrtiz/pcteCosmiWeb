@@ -7,19 +7,19 @@
 
       <div>
         <label for="nombre">Nombre:</label>
-        <input id="nombre" formControlName="nombre" type="text">
+        <input id="nombre" formControlName="nombre" type="text" (blur)="llenarNomCom()" required="true">
       </div>
       <div>
         <label for="apellido">Apellido:</label>
-        <input id="apellido" formControlName="apellido" type="text">
+        <input id="apellido" formControlName="apellido" type="text" (blur)="llenarNomCom()" required="true">
       </div>
       <div>
         <label for="nombre_completo">Nombre Completo:</label>
-        <input id="nombre_completo" formControlName="nombre_completo" type="text">
+        <input id="nombre_completo" formControlName="nomCom" type="text" >
       </div>
       <div>
         <label for="cedula">Cédula:</label>
-        <input id="cedula" formControlName="cedula" type="text">
+        <input id="cedula" formControlName="cedula" type="text" required="true">
       </div>
       <div>
         <label for="direccion">Dirección:</label>
@@ -27,7 +27,7 @@
       </div>
       <div>
         <label for="telefono">Teléfono:</label>
-        <input id="telefono" formControlName="telefono" type="number">
+        <input id="telefono" formControlName="telefono" type="number" required="true">
       </div>
       <div>
         <label for="ocupacion">Ocupación:</label>
@@ -46,9 +46,13 @@
       </div>
       <div>
         <label for="nacimiento">Fecha de Nacimiento:</label>
-        <input id="nacimiento" formControlName="nacimiento" type="date">
+        <input id="nacimiento" formControlName="nacimiento" type="date" (blur)="calcularEdad()">
       </div>
-      <button type="submit" [disabled]="formularioPaciente.invalid">Guardar paciente</button>
+      <div>
+        <label for="edad">Edad:</label>
+        <input id="edad" formControlName="edad" type="number">
+      </div>
+      <button type="submit" >Guardar paciente</button>
       <button type="button" (click)="cancelar()">Cancelar</button>
     </form>
 

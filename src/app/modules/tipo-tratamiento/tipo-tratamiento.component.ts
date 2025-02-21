@@ -48,8 +48,13 @@ export class TipoTratamientoComponent implements OnInit {
   }
 
   guardar(): void {
-    if (this.formulario.invalid) return;
-    const tratamiento = this.formulario.value;
+    if (this.formulario.invalid) {
+      this.notificacion.mostrarMensaje('Todos los campos deben estar llenos.', 'error');
+      return;
+    }
+    let trat = this.formulario.value;
+    trat.tipo = trat.tipo.toUpperCase();
+    const tratamiento = trat;
 
     if (this.editando && this.idEditando) {
       this.tratamientoService.actualizar(this.idEditando, tratamiento).subscribe(

@@ -13,6 +13,7 @@ import { NotificacionService } from '../../core/notificacion.service';
 export class RegistroPacienteComponent implements OnInit {
 
 
+
   formularioPaciente!: UntypedFormGroup;
 
   constructor(private formBuilder: UntypedFormBuilder,
@@ -29,6 +30,7 @@ export class RegistroPacienteComponent implements OnInit {
       cedula: ['', Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
+      nomCom: ['', Validators.required],
       direccion: [''],
       telefono: [''],
       ocupacion: [''],
@@ -41,22 +43,39 @@ export class RegistroPacienteComponent implements OnInit {
 
 
   guardarPaciente(): void {
+    console.log('Guardando paciente...');
     if (this.formularioPaciente.valid) {
       const paciente: Paciente = this.formularioPaciente.value;
       this.pacienteService.guardarPaciente(paciente).subscribe(response => {
         console.log('Paciente guardado:', response);
+        window.history.back();
+        this.notificacion.mostrarMensaje('El paciente se ha guardado exitosamente.', 'info');
       }, (error: any) => {
         console.error('Error al guardar los pacientes:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al guardar los pacientes', 'error');
       });
     } else {
       console.log('Formulario no válido');
+      this.notificacion.mostrarMensaje('No se ha llenado correctamente el formulario', 'error');
     }
+  }
+
+  llenarNomCom(){
+    let paciente: Paciente = this.formularioPaciente.value;
+    this.formularioPaciente.get('nomCom')?.setValue(paciente.nombre+" "+paciente.apellido);
   }
 
   cancelar() {
     window.history.back();
     }
 
-
+  calcularEdad() {
+    let paciente: Paciente = this.formularioPaciente.value;
+    let number = new Date().getFullYear() - new Date(paciente.nacimiento).getFullYear();
+    let month = new Date().getMonth() - new Date(paciente.nacimiento).getMonth();
+    if(month < 0){
+      number = number-1;
+    }
+    this.formularioPaciente.get('edad')?.setValue(number);
+    }
 }
