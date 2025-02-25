@@ -17,18 +17,27 @@
     <table class="styled-table">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Tipo</th>
-          <th>Acciones</th>
+          <th style=" max-width: 50px;">Nombre</th>
+          <th style=" max-width: 100px;">Descripción</th>
+          <th style=" max-width: 50px;">Tipo</th>
+          <th style=" max-width: 50px;">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let t of tratamientos">
-          <td>{{ t.nombre }}</td>
-          <td>{{ t.descripcion }}</td>
-          <td>{{ t.tipo }}</td>
-          <td>
+          <td style=" max-width: 50px;"><div class="tooltip-container">
+            {{ t.nombre }}
+            <span>{{ t.nombre }}</span>
+          </div></td>
+          <td style=" max-width: 100px;" ><div class="tooltip-container">
+            {{ t.descripcion }}
+            <span>{{ t.descripcion }}</span>
+          </div></td>
+          <td style=" max-width: 50px;" ><div class="tooltip-container">
+            {{ t.tipo }}
+            <span>{{ t.tipo }}</span>
+          </div></td>
+          <td style=" max-width: 70px;">
             <button (click)="editar(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
             <button (click)="eliminar(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
           </td>

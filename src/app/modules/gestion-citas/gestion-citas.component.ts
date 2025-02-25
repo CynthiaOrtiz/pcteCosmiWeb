@@ -33,7 +33,7 @@ export class GestionCitasComponent implements OnInit {
   eventToEdit: any | null = null;
 
   paciente: Paciente = {
-    identificador: 1714807766,
+    id: 1714807766,
     nombre: 'Ceeol',
     apellido: 'orlo',
     nomCom: 'ceol orlo',

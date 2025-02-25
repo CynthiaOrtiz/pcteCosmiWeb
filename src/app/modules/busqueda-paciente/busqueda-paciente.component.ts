@@ -40,22 +40,6 @@ export class BusquedaPacienteComponent implements OnInit {
     // Cargar pacientes iniciales (esto podría ser reemplazado por una llamada a un servicio)
 
     this.cargarPacientes();
-    this.pacientes = [
-      {
-        identificador: 1,
-        nombre: 'Juan',
-        apellido: 'Perez',
-        nomCom: 'Juan Perez',
-        cedula: '1234567890',
-        direccion: 'Calle Falsa 123',
-        telefono: 987654321,
-        ocupacion: 'Ingeniero',
-        genero: 'Masculino',
-        email: 'juan.perez@example.com',
-        nacimiento: new Date('1990-01-01')
-      },
-      // Otros pacientes...
-    ];
     this.pacientesFiltrados = this.pacientes;
   }
 
@@ -72,11 +56,12 @@ export class BusquedaPacienteComponent implements OnInit {
   seleccionarPaciente(paciente: Paciente): void {
     this.selectedPaciente = paciente;
     this.pacienteForm.patchValue(paciente);
+    this.pacienteForm.get('nacimiento')?.setValue(this.selectedPaciente.nacimiento.toString);
   }
 
   guardarCambios(): void {
     if (this.pacienteForm.valid && this.selectedPaciente) {
-      const index = this.pacientes.findIndex(p => p.identificador === this.selectedPaciente!.identificador);
+      const index = this.pacientes.findIndex(p => p.id === this.selectedPaciente!.id);
       this.pacientes[index] = this.pacienteForm.value;
       this.selectedPaciente = null;
     }
@@ -90,15 +75,15 @@ export class BusquedaPacienteComponent implements OnInit {
 
   // historias clinicas del paciente
 verHistoriaClinica(paciente: Paciente): void {
-  this.router.navigate(['/historias-clinicas', paciente.identificador]);
+  this.router.navigate(['/historias-clinicas', paciente.id]);
 }
 
 nuevoTratamiento(paciente: Paciente): void {
-  this.router.navigate(['/tratamiento-paciente', paciente.identificador]);
+  this.router.navigate(['/tratamiento-paciente', paciente.id]);
 }
 
 verTratamientos(paciente: Paciente): void {
-  this.router.navigate(['/lista-tratamientos', paciente.identificador]);
+  this.router.navigate(['/lista-tratamientos', paciente.id]);
 }
 
 nuevoPaciente() {
@@ -118,7 +103,7 @@ filtrarPacientes(): void {
     const filtroLowerCase = this.filtro.toLowerCase();
     this.pacientesFiltrados = this.pacientes.filter(
       (paciente) =>
-       paciente.cedula.includes(this.filtro) ||
+       paciente.cedula.toString().includes(this.filtro) ||
         paciente.nombre.toLowerCase().includes(filtroLowerCase) ||
         paciente.apellido.toLowerCase().includes(filtroLowerCase)
     );

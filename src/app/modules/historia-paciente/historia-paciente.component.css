@@ -51,6 +51,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 5px;
   }
 
   .historia-clinica-container form button:hover {
@@ -131,6 +132,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 5px;
   }
 
   .historia-clinica button:hover {

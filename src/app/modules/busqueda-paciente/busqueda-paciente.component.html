@@ -18,18 +18,20 @@
   </div>
   <ul>
     <li *ngFor="let paciente of pacientesFiltrados" (click)="seleccionarPaciente(paciente)">
-      {{ paciente.nomCom }} - {{ paciente.cedula }}
-      <button (click)="verHistoriaClinica(paciente)">
-        <i class="fas fa-file-medical"></i> Historia Clínica
-      </button>
 
-      <button (click)="nuevoTratamiento(paciente)">
-        <i class="fas fa-plus-circle"></i> Nuevo Tratamiento
+       <div class="column-count: 5; column-gap: 20px; ">
+        {{ paciente.cedula }} - {{ paciente.nomCom }}
+      <button (click)="verHistoriaClinica(paciente)" title="Historia Clínica">
+        <i class="fas fa-file-medical"></i>
       </button>
+      <button (click)="nuevoTratamiento(paciente)" title="Nuevo Tratamiento">
+        <i class="fas fa-plus-circle"></i>
+      </button>
+      <button (click)="verTratamientos(paciente)" title="Tratamientos">
+        <i class="fas fa-list"></i>
+      </button>
+    </div>
 
-      <button (click)="verTratamientos(paciente)">
-        <i class="fas fa-list"></i> Tratamientos
-      </button>
     </li>
     <li *ngIf="pacientesFiltrados.length === 0">
       <td colspan="3" class="sin-resultados">No se encontraron resultados</td>

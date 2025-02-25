@@ -47,6 +47,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 5px;
   }
 
   .tratamiento-paciente-container  button:hover {
@@ -75,6 +76,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin: 5px;
   }
 
   .signature-container button:hover {
