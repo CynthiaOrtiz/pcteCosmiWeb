@@ -25,19 +25,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let t of tratamientos">
-          <td style=" max-width: 50px;"><div class="tooltip-container">
+          <td style=" max-width: 50px;" [attr.data-tooltip]="t.nombre">
             {{ t.nombre }}
-            <span>{{ t.nombre }}</span>
-          </div></td>
-          <td style=" max-width: 100px;" ><div class="tooltip-container">
+          </td>
+          <td style=" max-width: 100px;" >
             {{ t.descripcion }}
-            <span>{{ t.descripcion }}</span>
-          </div></td>
-          <td style=" max-width: 50px;" ><div class="tooltip-container">
+          </td>
+          <td style=" max-width: 50px;" >
             {{ t.tipo }}
-            <span>{{ t.tipo }}</span>
-          </div></td>
-          <td style=" max-width: 70px;">
+          </td>
+          <td class="no-tooltip" style=" max-width: 60px;">
             <button (click)="editar(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
             <button (click)="eliminar(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
           </td>

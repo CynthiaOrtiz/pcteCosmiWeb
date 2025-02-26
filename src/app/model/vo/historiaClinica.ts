@@ -1,5 +1,5 @@
 export interface HistoriaClinica {
-    id: number;
+    identificador: number;
     descripcion: string;
     observacion: string;
     paciente: number;
@@ -8,26 +8,26 @@ export interface HistoriaClinica {
     depilacion: boolean;
     metodo: string;
     bronceado: boolean;
-    fecha_bronceado: Date;
+    fechaBronceado: Date;
     queloides: boolean;
-    problemas_hormonales: boolean;
-    enfermedad_cutanea: boolean;
+    problemasHormonales: boolean;
+    enfermedadCutanea: boolean;
     hipertricosis: boolean;
     epilepsia: boolean;
     tatuaje: boolean;
     coagulacion: number;
     herpes: boolean;
-    dispositivo_interno: boolean;
-    zona_dispositivo: string;
+    dispositivoInterno: boolean;
+    zonaDispositivo: string;
     alergias: string;
-    color_piel: string;
+    colorPiel: string;
     pecas: boolean;
-    color_pelo: string;
-    color_ojos: string;
+    colorPelo: string;
+    colorOjos: string;
     raza: string;
-    potencial_quemadura: number;
-    potencial_bronceado: number;
-    fototipo_piel: number;
+    potencialQuemadura: number;
+    potencialBronceado: number;
+    fototipoPiel: number;
     medicacion: number;
-    fecha_medicacion: Date;
+    fechaMedicacion: Date;
   }

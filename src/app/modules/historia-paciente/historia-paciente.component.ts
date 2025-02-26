@@ -65,34 +65,34 @@ export class HistoriaPacienteComponent implements OnInit {
       id: [null],
       descripcion: ['', Validators.required],
       observacion: ['', Validators.required],
-      paciente: [null, Validators.required],
+      paciente: [null],
       embarazo: [false],
       lactancia: [false],
       depilacion: [false],
       metodo: [''],
       bronceado: [false],
-      fecha_bronceado: [''],
+      fechaBronceado: [''],
       queloides: [false],
-      problemas_hormonales: [false],
-      enfermedad_cutanea: [false],
+      problemasHormonales: [false],
+      enfermedadCutanea: [false],
       hipertricosis: [false],
       epilepsia: [false],
       tatuaje: [false],
       coagulacion: [0, Validators.required],
       herpes: [false],
-      dispositivo_interno: [false],
-      zona_dispositivo: [''],
+      dispositivoInterno: [false],
+      zonaDispositivo: [''],
       alergias: [''],
-      color_piel: [''],
+      colorPiel: [''],
       pecas: [false],
-      color_pelo: [''],
-      color_ojos: [''],
+      colorPelo: [''],
+      colorOjos: [''],
       raza: [''],
-      potencial_quemadura: [0, Validators.required],
-      potencial_bronceado: [0, Validators.required],
-      fototipo_piel: [0, Validators.required],
-      medicacion: [0, Validators.required],
-      fecha_medicacion: ['']
+      potencialQuemadura: [0, Validators.required],
+      potencialBronceado: [0, Validators.required],
+      fototipoPiel: [0, Validators.required],
+      medicacion: [''],
+      fechaMedicacion: ['']
     });
 
     this.tratamientoForm = this.formBuilder.group({
@@ -118,6 +118,7 @@ export class HistoriaPacienteComponent implements OnInit {
       });
     } else {
       console.log('Formulario de historia clínica no válido');
+      this.notificacion.mostrarMensaje('El formulario está incompleto', 'error');
     }
   }
 

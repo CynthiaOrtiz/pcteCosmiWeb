@@ -60,6 +60,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     position: relative;
+    max-width: 150px;
   }
 
   .styled-table th {
@@ -67,34 +68,25 @@
     padding: 8px;
     text-align: left;
     white-space: nowrap;
-    text-overflow: ellipsis;
     position: relative;
-    overflow: hidden;
   }
 
-  .tooltip-container {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-  }
-
-  .tooltip-container span {
-    visibility: hidden;
+  .styled-table td:hover {
+    content: attr(data-tooltip);
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 5px;
     border-radius: 5px;
     white-space: normal;
-    max-width: 300px;
-    left: 0;
-    top: 100%;
-    z-index: 10;
+    max-width: 300px !important;
     font-size: 12px;
+    display: block;
+    z-index: 1000;
   }
 
-  .tooltip-container:hover span {
-    visibility: visible;
+  .no-tooltip {
+    pointer-events: none;
   }
 
   h1 {
