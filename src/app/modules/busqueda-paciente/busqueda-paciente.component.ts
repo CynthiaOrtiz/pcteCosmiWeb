@@ -22,14 +22,14 @@ export class BusquedaPacienteComponent implements OnInit {
     private notificacion: NotificacionService,
     private router: Router) {
     this.pacienteForm = this.fb.group({
-      identificador: [null, Validators.required],
+      id: [null],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       nomCom: ['', Validators.required],
       cedula: ['', Validators.required],
-      direccion: ['', Validators.required],
+      direccion: [''],
       telefono: [null, Validators.required],
-      ocupacion: ['', Validators.required],
+      ocupacion: [''],
       genero: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       nacimiento: [null, Validators.required],
@@ -56,14 +56,28 @@ export class BusquedaPacienteComponent implements OnInit {
   seleccionarPaciente(paciente: Paciente): void {
     this.selectedPaciente = paciente;
     this.pacienteForm.patchValue(paciente);
-    this.pacienteForm.get('nacimiento')?.setValue(this.selectedPaciente.nacimiento.toString);
+    const fechaNacimiento = new Date(this.selectedPaciente.nacimiento).toISOString().split('T')[0];
+    this.pacienteForm.get('nacimiento')?.setValue(fechaNacimiento);
   }
 
   guardarCambios(): void {
     if (this.pacienteForm.valid && this.selectedPaciente) {
       const index = this.pacientes.findIndex(p => p.id === this.selectedPaciente!.id);
-      this.pacientes[index] = this.pacienteForm.value;
-      this.selectedPaciente = null;
+      const pacienteActualizado: Paciente = {
+        ...this.pacienteForm.value,
+        nacimiento: this.pacienteForm.get('nacimiento')?.value
+      };
+      this.pacienteService.updatePaciente(pacienteActualizado).subscribe(
+        response => {
+          console.log('Paciente actualizado:', response);
+          this.pacientes[index] = this.pacienteForm.value;
+          this.selectedPaciente = null;
+          this.notificacion.mostrarMensaje('Paciente actualizado', 'info');
+        }, (error: any) => {
+          console.error('Error al actualizar el paciente:', error);
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar el paciente', 'error');
+        });
+
     }
   }
 

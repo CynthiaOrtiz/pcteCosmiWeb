@@ -109,10 +109,12 @@ export class HistoriaPacienteComponent implements OnInit {
 
   guardarHistoriaClinica(): void {
     if (this.historiaClinicaForm.valid) {
-      let historiaClinica: HistoriaClinica = this.historiaClinicaForm.value;
-      historiaClinica.paciente = this.paciente.id;
+      this.historiaClinicaForm.value.paciente = this.paciente.id;
+      const historiaClinica: HistoriaClinica = this.historiaClinicaForm.value;
       this.pacienteService.guardarHistoriaClinica(historiaClinica).subscribe(response => {
         console.log('Historia clínica guardada:', response);
+        this.notificacion.mostrarMensaje('Se ha guardado la historia clinica', 'info');
+        window.history.back();
       }, (error: any) => {
           console.error('Error al guardar la historia clínica:', error);
           this.notificacion.mostrarMensaje('Ha ocurrido un error al guardar la historia clinica', 'error');
