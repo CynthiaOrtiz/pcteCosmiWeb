@@ -19,7 +19,7 @@ export interface HistoriaClinica {
     herpes: boolean;
     dispositivoInterno: boolean;
     zonaDispositivo: string;
-    alergias: string;
+    alergias: boolean;
     colorPiel: string;
     pecas: boolean;
     colorPelo: string;

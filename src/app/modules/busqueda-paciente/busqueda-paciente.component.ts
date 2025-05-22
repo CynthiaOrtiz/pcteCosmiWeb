@@ -89,7 +89,7 @@ export class BusquedaPacienteComponent implements OnInit {
 
   // historias clinicas del paciente
 verHistoriaClinica(paciente: Paciente): void {
-  this.router.navigate(['/historias-clinicas', paciente.id]);
+  this.router.navigate(['/historias-clinicas', paciente.id], { state: { paciente } });
 }
 
 nuevoTratamiento(paciente: Paciente): void {
@@ -105,7 +105,7 @@ nuevoPaciente() {
 }
 
 regresar() {
-  window.history.back();
+  this.router.navigate(['/hom']);
   }
 
 home() {

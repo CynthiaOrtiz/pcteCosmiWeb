@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificacionService } from '../../core/notificacion.service';
+import { Paciente } from 'src/app/model/vo/paciente';
 
 @Component({
   selector: 'app-lista-historias-clinicas',
@@ -14,6 +15,7 @@ export class ListaHistoriasClinicasComponent implements OnInit {
 
   historiasClinicas: HistoriaClinica[] = [];
   pacienteId: number = 0;
+  paciente!: Paciente;
   constructor(private pacienteService: PacienteService, private router: Router,
     private route: ActivatedRoute,
     private notificacion: NotificacionService
@@ -21,47 +23,30 @@ export class ListaHistoriasClinicasComponent implements OnInit {
 
   ngOnInit(): void {
     this.pacienteId = +this.route.snapshot.paramMap.get('id')!;
+    const navigation = this.router.getCurrentNavigation();
+    this.paciente = navigation?.extras.state?.['paciente'];
+    if (!this.paciente) {
+      this.cargarPaciente();
+    }
+    console.log('pacienteId:', this.pacienteId);
+    console.log('paciente:', this.paciente);
     this.cargarHistoriasClinicas();
-    this.historiasClinicas = [
-      {
-        descripcion: "string",
-        observacion: "string",
-        paciente: 6,
-        embarazo: false,
-        identificador: 0,
-        lactancia: false,
-        depilacion: false,
-        metodo: '',
-        bronceado: false,
-        fechaBronceado: new Date,
-        queloides: false,
-        problemasHormonales: false,
-        enfermedadCutanea: false,
-        hipertricosis: false,
-        epilepsia: false,
-        tatuaje: false,
-        coagulacion: 0,
-        herpes: false,
-        dispositivoInterno: false,
-        zonaDispositivo: '',
-        alergias: '',
-        colorPiel: '',
-        pecas: false,
-        colorPelo: '',
-        colorOjos: '',
-        raza: '',
-        potencialQuemadura: 0,
-        potencialBronceado: 0,
-        fototipoPiel: 0,
-        medicacion: 0,
-        fechaMedicacion: new Date
-      },
-  ];
+  }
+
+  private cargarPaciente() {
+    this.pacienteService.getPacienteById(this.pacienteId).subscribe((response) => {
+      console.log('Se obtuvo el paciente:', response);
+      this.paciente = response;
+    }, (error: any) => {
+      console.error('Error al obtener el paciente:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener el paciente', 'error');
+    });
   }
 
   cargarHistoriasClinicas(): void {
     this.pacienteService.getHistoriasClinicas(this.pacienteId).subscribe(
       (data) => {
+        console.log('Se obtuvieron las historias clínicas:', data);
         this.historiasClinicas = data;
       }, (error: any) => {
           console.error('Error al cargar las historias clínicas', error);
@@ -71,8 +56,7 @@ export class ListaHistoriasClinicasComponent implements OnInit {
 
   verHistoriaClinica(idHistoria: number): void {
     console.log('ver historia');
-    idHistoria = 6;
-    this.router.navigate(['/historia-clinica', idHistoria, 0]);
+    this.router.navigate(['/historia-clinica', idHistoria, this.pacienteId]);
   }
 
   home() {
@@ -86,6 +70,6 @@ export class ListaHistoriasClinicasComponent implements OnInit {
   }
 
   regresar() {
-    window.history.back();
+    this.router.navigate(['/busqueda-paciente']);
   }
 }

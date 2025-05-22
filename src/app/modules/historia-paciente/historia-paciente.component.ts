@@ -31,12 +31,13 @@ export class HistoriaPacienteComponent implements OnInit {
   ngOnInit(): void {
     const idPaciente = parseInt(this.route.snapshot.paramMap.get('idPaciente')!);
     const idHistoria = parseInt(this.route.snapshot.paramMap.get('idHistoria')!);
+    console.log('historia seleccionada paciente: {}, historia:{}', idPaciente, idHistoria);
+    this.pacienteId = idPaciente;
     if(idHistoria === 0 && idPaciente !== 0){
       this.esCreacion = true;
-      this.pacienteId = idPaciente;
       this.inicializarFormularios();
     }
-    if(idHistoria !== null){
+    if(idHistoria !== 0){
       this.historiaId = idHistoria;
       this.cargarHistoriaClinica(this.historiaId);
     }
@@ -53,6 +54,7 @@ export class HistoriaPacienteComponent implements OnInit {
 
   cargarHistoriaClinica(idHistoria: number): void {
     this.pacienteService.getHistoriaClinicaById(idHistoria).subscribe(response => {
+      console.log('Se obtuvo la historia clinica:', response);
         this.historiaClinica = response;
       }, (error: any) => {
         console.error('Error al obtener la historioa clinica:', error);
@@ -140,10 +142,12 @@ export class HistoriaPacienteComponent implements OnInit {
   }
 
   regresar() {
-    window.history.back();
+    console.log('regresar paciente: ', this.paciente.id);
+      this.router.navigate(['/historias-clinicas', this.paciente.id]);
   }
 
   nuevoTratamiento() {
-    this.router.navigate(['/tratamiento-paciente', this.pacienteId]);
+    console.log('regresar paciente: ', this.paciente.id);
+    this.router.navigate(['/tratamiento-paciente', this.paciente.id]);
   }
 }

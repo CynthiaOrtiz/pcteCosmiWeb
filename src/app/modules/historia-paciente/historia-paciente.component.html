@@ -9,7 +9,6 @@
       <div class="form-group" style="font-size: x-large;">
         <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nomCom}}</label>
       </div>
-
       <div class="form-group">
         <label for="descripcion">Descripción</label>
         <input id="descripcion" formControlName="descripcion" type="text" class="form-control" required="true">
@@ -50,8 +49,8 @@
         </div>
 
         <div class="form-group">
-          <label for="fecha_bronceado">Fecha de Bronceado</label>
-          <input id="fecha_bronceado" formControlName="fecha_bronceado" type="date" class="form-control" style="width: 50%;">
+          <label for="fechaBronceado">Fecha de Bronceado</label>
+          <input id="fechaBronceado" formControlName="fechaBronceado" type="date" class="form-control" style="width: 50%;">
         </div>
       </div>
 
@@ -62,8 +61,8 @@
       </div>
 
       <div class="form-check">
-        <input id="problemas_hormonales" formControlName="problemasHormonales" type="checkbox" class="form-check-input">
-        <label for="problemas_hormonales" class="form-check-label">Problemas Hormonales</label>
+        <input id="problemasHormonales" formControlName="problemasHormonales" type="checkbox" class="form-check-input">
+        <label for="problemasHormonales" class="form-check-label">Problemas Hormonales</label>
       </div>
 
       <div class="form-check">
@@ -172,7 +171,6 @@
       <button type="button" (click)="regresar()">Cancelar</button>
     </form>
 
-
     <div class="historia-clinica" *ngIf = "!esCreacion">
       <button (click)="regresar()">
         <span class="fas fa-arrow-left"></span> Atras
@@ -180,6 +178,9 @@
       <div><br></div>
       <div class="section">
         <h3>Información General</h3>
+        <div class="form-group" style="font-size: x-large;">
+          <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nomCom}}</label>
+        </div>
         <p><strong>Descripción:</strong> {{ historiaClinica.descripcion }}</p>
         <p><strong>Observación:</strong> {{ historiaClinica.observacion }}</p>
         <p><strong>Paciente ID:</strong> {{ historiaClinica.paciente }}</p>
