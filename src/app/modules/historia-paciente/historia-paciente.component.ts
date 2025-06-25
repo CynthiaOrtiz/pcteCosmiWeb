@@ -14,6 +14,7 @@ import { NotificacionService } from '../../core/notificacion.service';
   styleUrls: ['./historia-paciente.component.css']
 })
 export class HistoriaPacienteComponent implements OnInit {
+
   historiaClinica!: HistoriaClinica;
   historiaClinicaForm!: UntypedFormGroup;
   tratamientoForm!: UntypedFormGroup;
@@ -21,6 +22,7 @@ export class HistoriaPacienteComponent implements OnInit {
   paciente!: Paciente;
   esCreacion: Boolean = false;
   historiaId: number = 0;
+  esEdicion: Boolean = false;
 
   constructor(private formBuilder: UntypedFormBuilder, private pacienteService: PacienteService,
     private route: ActivatedRoute,
@@ -33,11 +35,11 @@ export class HistoriaPacienteComponent implements OnInit {
     const idHistoria = parseInt(this.route.snapshot.paramMap.get('idHistoria')!);
     console.log('historia seleccionada paciente: {}, historia:{}', idPaciente, idHistoria);
     this.pacienteId = idPaciente;
-    if(idHistoria === 0 && idPaciente !== 0){
+    if (idHistoria === 0 && idPaciente !== 0) {
       this.esCreacion = true;
       this.inicializarFormularios();
     }
-    if(idHistoria !== 0){
+    if (idHistoria !== 0) {
       this.historiaId = idHistoria;
       this.cargarHistoriaClinica(this.historiaId);
     }
@@ -46,8 +48,8 @@ export class HistoriaPacienteComponent implements OnInit {
       console.log('Se obtuvo el paciente:', response);
       this.paciente = response;
     }, (error: any) => {
-        console.error('Error al obtener el paciente:', error);
-        this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener el paciente', 'error');
+      console.error('Error al obtener el paciente:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener el paciente', 'error');
     });
 
   }
@@ -55,10 +57,10 @@ export class HistoriaPacienteComponent implements OnInit {
   cargarHistoriaClinica(idHistoria: number): void {
     this.pacienteService.getHistoriaClinicaById(idHistoria).subscribe(response => {
       console.log('Se obtuvo la historia clinica:', response);
-        this.historiaClinica = response;
-      }, (error: any) => {
-        console.error('Error al obtener la historioa clinica:', error);
-        this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener la historia clinica', 'error');
+      this.historiaClinica = response;
+    }, (error: any) => {
+      console.error('Error al obtener la historioa clinica:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener la historia clinica', 'error');
     });
   }
 
@@ -113,14 +115,29 @@ export class HistoriaPacienteComponent implements OnInit {
     if (this.historiaClinicaForm.valid) {
       this.historiaClinicaForm.value.paciente = this.paciente.id;
       const historiaClinica: HistoriaClinica = this.historiaClinicaForm.value;
-      this.pacienteService.guardarHistoriaClinica(historiaClinica).subscribe(response => {
-        console.log('Historia clínica guardada:', response);
-        this.notificacion.mostrarMensaje('Se ha guardado la historia clinica', 'info');
-        window.history.back();
-      }, (error: any) => {
+      if (this.esEdicion) {
+        historiaClinica.identificador = this.historiaClinica.identificador
+        this.pacienteService.updateHistoriaById(historiaClinica).subscribe(response => {
+          console.log('Historia clínica actualizada:', response);
+          this.notificacion.mostrarMensaje('Se ha actualizado la historia clínica', 'info');
+          this.historiaClinica = historiaClinica;
+          this.esCreacion = false;
+          this.esEdicion = false;
+          this.inicializarFormularios();
+        }, (error: any) => {
+          console.error('Error al actualizar la historia clinica:', error);
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar la historia clínica', 'error');
+        });
+      } else {
+        this.pacienteService.guardarHistoriaClinica(historiaClinica).subscribe(response => {
+          console.log('Historia clínica guardada:', response);
+          this.notificacion.mostrarMensaje('Se ha guardado la historia clínica', 'info');
+          window.history.back();
+        }, (error: any) => {
           console.error('Error al guardar la historia clínica:', error);
-          this.notificacion.mostrarMensaje('Ha ocurrido un error al guardar la historia clinica', 'error');
-      });
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al guardar la historia clínica', 'error');
+        });
+      }
     } else {
       console.log('Formulario de historia clínica no válido');
       this.notificacion.mostrarMensaje('El formulario está incompleto', 'error');
@@ -133,8 +150,8 @@ export class HistoriaPacienteComponent implements OnInit {
       this.pacienteService.agregarTratamiento(tratamiento).subscribe(response => {
         console.log('Tratamiento agregado:', response);
       }, (error: any) => {
-          console.error('Error al agregar el tratamiento:', error);
-          this.notificacion.mostrarMensaje('Ha ocurrido un error al agregar el tratamiento', 'error');
+        console.error('Error al agregar el tratamiento:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al agregar el tratamiento', 'error');
       });
     } else {
       console.log('Formulario de tratamiento no válido');
@@ -143,11 +160,26 @@ export class HistoriaPacienteComponent implements OnInit {
 
   regresar() {
     console.log('regresar paciente: ', this.paciente.id);
-      this.router.navigate(['/historias-clinicas', this.paciente.id]);
+    this.router.navigate(['/historias-clinicas', this.paciente.id]);
   }
 
   nuevoTratamiento() {
     console.log('regresar paciente: ', this.paciente.id);
     this.router.navigate(['/tratamiento-paciente', this.paciente.id]);
+  }
+
+  editar() {
+    console.log('editar historia: ', this.historiaId);
+    this.esCreacion = true;
+    this.esEdicion = true;
+    this.inicializarFormularios();
+    this.historiaClinicaForm.patchValue(this.historiaClinica);
+    this.historiaClinicaForm.value.paciente = this.paciente.id;
+  }
+
+  cancelarEdicion() {
+    this.esCreacion = false;
+    this.esEdicion = false;
+    this.inicializarFormularios();
   }
 }

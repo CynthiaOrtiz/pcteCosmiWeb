@@ -70,7 +70,7 @@ export class BusquedaPacienteComponent implements OnInit {
       this.pacienteService.updatePaciente(pacienteActualizado).subscribe(
         response => {
           console.log('Paciente actualizado:', response);
-          this.pacientes[index] = this.pacienteForm.value;
+          this.cargarPacientes();
           this.selectedPaciente = null;
           this.notificacion.mostrarMensaje('Paciente actualizado', 'info');
         }, (error: any) => {

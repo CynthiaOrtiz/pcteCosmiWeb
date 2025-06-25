@@ -48,6 +48,10 @@ export class PacienteService {
     return this.http.post(`${this.historia}/guardarHistoria`, historiaClinica);
   }
 
+  updateHistoriaById(historiaClinica: HistoriaClinica): Observable<any> {
+    return this.http.post(`${this.historia}/updateHistoriaById`, historiaClinica);
+  }
+
   agregarTratamiento(tratamiento: Tratamiento): Observable<any> {
     return this.http.post(`${this.tratamientosUrl}/agregarTratamiento`, tratamiento);
   }

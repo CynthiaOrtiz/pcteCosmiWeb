@@ -5,6 +5,9 @@
       <button (click)="regresar()">
         <span class="fas fa-arrow-left"></span> Atras
       </button>
+      <button (click)="cancelarEdicion()" *ngIf = "esEdicion">
+        <span class="fas fa fa-pencil-square-o text-info"></span> Cancelar
+      </button>
       <!-- Campos de Historia Clínica -->
       <div class="form-group" style="font-size: x-large;">
         <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nomCom}}</label>
@@ -174,6 +177,9 @@
     <div class="historia-clinica" *ngIf = "!esCreacion">
       <button (click)="regresar()">
         <span class="fas fa-arrow-left"></span> Atras
+      </button>
+      <button (click)="editar()">
+        <span class="fas fa fa-pencil-square-o text-info"></span> Editar
       </button>
       <div><br></div>
       <div class="section">
