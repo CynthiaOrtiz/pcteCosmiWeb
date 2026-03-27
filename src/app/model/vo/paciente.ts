@@ -10,5 +10,6 @@ export interface Paciente {
   genero: string;
   email: string;
   nacimiento: Date;
+  estado?: number;
 }
 

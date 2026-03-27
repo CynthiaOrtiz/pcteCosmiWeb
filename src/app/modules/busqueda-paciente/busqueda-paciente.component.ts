@@ -88,36 +88,52 @@ export class BusquedaPacienteComponent implements OnInit {
 
 
   // historias clinicas del paciente
-verHistoriaClinica(paciente: Paciente): void {
-  this.router.navigate(['/historias-clinicas', paciente.id], { state: { paciente } });
-}
-
-nuevoTratamiento(paciente: Paciente): void {
-  this.router.navigate(['/tratamiento-paciente', paciente.id]);
-}
-
-verTratamientos(paciente: Paciente): void {
-  this.router.navigate(['/lista-tratamientos', paciente.id]);
-}
-
-nuevoPaciente() {
-  this.router.navigate(['/registro-paciente']);
-}
-
-regresar() {
-  this.router.navigate(['/hom']);
+  verHistoriaClinica(paciente: Paciente): void {
+    this.router.navigate(['/historias-clinicas', paciente.id], { state: { paciente } });
   }
 
-home() {
-    this.router.navigate(['/hom']);
- }
+  nuevoTratamiento(paciente: Paciente): void {
+    this.router.navigate(['/tratamiento-paciente', paciente.id]);
+  }
 
-filtrarPacientes(): void {
-  this.selectedPaciente = null;
+  verTratamientos(paciente: Paciente): void {
+    this.router.navigate(['/lista-tratamientos', paciente.id]);
+  }
+
+  nuevoPaciente() {
+    this.router.navigate(['/registro-paciente']);
+  }
+
+  regresar() {
+    this.router.navigate(['/hom']);
+  }
+
+  home() {
+    this.router.navigate(['/hom']);
+  }
+
+  eliminarPaciente(paciente: Paciente): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar al paciente ${paciente.nomCom}?`)) {
+      this.pacienteService.deletePaciente(paciente).subscribe(
+        () => {
+          this.notificacion.mostrarMensaje('Paciente eliminado exitosamente', 'info');
+          this.selectedPaciente = null;
+          this.cargarPacientes();
+        },
+        (error: any) => {
+          console.error('Error al eliminar paciente:', error);
+          this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el paciente', 'error');
+        }
+      );
+    }
+  }
+
+  filtrarPacientes(): void {
+    this.selectedPaciente = null;
     const filtroLowerCase = this.filtro.toLowerCase();
     this.pacientesFiltrados = this.pacientes.filter(
       (paciente) =>
-       paciente.cedula.toString().includes(this.filtro) ||
+        paciente.cedula.toString().includes(this.filtro) ||
         paciente.nombre.toLowerCase().includes(filtroLowerCase) ||
         paciente.apellido.toLowerCase().includes(filtroLowerCase)
     );
