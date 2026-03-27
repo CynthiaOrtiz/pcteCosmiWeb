@@ -121,8 +121,18 @@ export class GestionCitasComponent implements OnInit {
       start: newStartDate,
       color: { primary: '#e3bc08', secondary: '#FDF1BA' }
     };
-    console.log('guardar cita', newEvent);
-     this.citasService.agendarCita(newEvent).subscribe(() => {
+    
+    // Mapeo correcto para el backend
+    const citaBackend = {
+      idPaciente: this.newEvent.patient ? (this.newEvent.patient.identificador || this.newEvent.patient.id || 1714807766) : 1714807766,
+      fecha: newStartDate.getTime(),
+      hora: newStartDate.getTime(),
+      estado: 1,
+      descripcion: this.newEvent.title
+    };
+    
+    console.log('guardar cita', citaBackend);
+     this.citasService.agendarCita(citaBackend).subscribe(() => {
       this.events = [...this.events, newEvent];
       this.modal.dismissAll();
      }, (error: any) => {
@@ -169,7 +179,17 @@ export class GestionCitasComponent implements OnInit {
     if (this.isEdit && this.eventToEdit) {
       this.eventToEdit.title = this.newEvent.title;
       this.eventToEdit.start = newStartDate;
-      this.citasService.updateCita(this.eventToEdit).subscribe(() => {
+      
+      const citaActualizar = {
+        id: this.eventToEdit.meta?.citaId || this.eventToEdit.id,
+        idPaciente: this.newEvent.patient ? (this.newEvent.patient.identificador || this.newEvent.patient.id || 1714807766) : 1714807766,
+        fecha: newStartDate.getTime(),
+        hora: newStartDate.getTime(),
+        estado: 1,
+        descripcion: this.newEvent.title
+      };
+      
+      this.citasService.updateCita(citaActualizar).subscribe(() => {
          this.loadCitas();
         this.modal.dismissAll();
        }, (error: any) => {
@@ -183,7 +203,15 @@ export class GestionCitasComponent implements OnInit {
         color: { primary: '#e3bc08', secondary: '#FDF1BA' }
       };
 
-       this.citasService.agendarCita(newEvent).subscribe(() => {
+      const citaBackend = {
+        idPaciente: this.newEvent.patient ? (this.newEvent.patient.identificador || this.newEvent.patient.id || 1714807766) : 1714807766,
+        fecha: newStartDate.getTime(),
+        hora: newStartDate.getTime(),
+        estado: 1,
+        descripcion: this.newEvent.title
+      };
+
+       this.citasService.agendarCita(citaBackend).subscribe(() => {
         this.events = [...this.events, newEvent];
          this.loadCitas();
         this.modal.dismissAll();
