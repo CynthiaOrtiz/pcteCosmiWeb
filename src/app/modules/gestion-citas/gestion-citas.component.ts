@@ -101,7 +101,14 @@ export class GestionCitasComponent implements OnInit {
         };
       });
       console.log('citas mapeadas', this.events);
-
+      this.refresh.next(null);
+      if (this.selectedDay) {
+        this.selectedEvents = this.events.filter(event => 
+          event.start.getDate() === (this.selectedDay as Date).getDate() &&
+          event.start.getMonth() === (this.selectedDay as Date).getMonth() &&
+          event.start.getFullYear() === (this.selectedDay as Date).getFullYear()
+        );
+      }
     }, error => {
       console.error('Error al obtener las citas:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener las citas', 'error');
@@ -111,18 +118,11 @@ export class GestionCitasComponent implements OnInit {
 
 
   dayClicked({ day }: { day: CalendarMonthViewDay }): void {
-    if (isSameMonth(day.date, this.viewDate)) {
+    if (day.date.getMonth() === this.viewDate.getMonth() && day.date.getFullYear() === this.viewDate.getFullYear()) {
       this.selectedDay = day.date;
       this.selectedEvents = day.events;
-      if (
-        (isSameDay(this.viewDate, this.selectedDay) && this.activeDayIsOpen === true) ||
-        day.events.length > 0) {
-        document.querySelector('.slide-in')?.classList.add('show');
-        this.activeDayIsOpen = true;
-      } else {
-        document.querySelector('.slide-in')?.classList.remove('show');
-        this.activeDayIsOpen = false;
-      }
+      document.querySelector('.slide-in')?.classList.add('show');
+      this.activeDayIsOpen = true;
     }
   }
 
@@ -195,13 +195,6 @@ export class GestionCitasComponent implements OnInit {
     const newStartDate = new Date(this.selectedDay);
     newStartDate.setHours(hour, minute);
 
-    // Validate that the new event is not in the past
-    if (newStartDate < new Date()) {
-      alert('No se puede agendar una cita en el pasado.');
-      this.notificacion.mostrarMensaje('No se puede agendar una cita en el pasado.', 'error');
-      return;
-    }
-
     if (!this.newEvent.patient) {
       alert('Se debe elegir un paciente para continuar y guardar la cita');
       this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
@@ -229,6 +222,12 @@ export class GestionCitasComponent implements OnInit {
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar la cita', 'error');
       });
     } else {
+      // Validate that the new event is not in the past
+      if (newStartDate < new Date()) {
+        alert('No se puede agendar una cita en el pasado.');
+        this.notificacion.mostrarMensaje('No se puede agendar una cita en el pasado.', 'error');
+        return;
+      }
       const newEvent: CalendarEvent = {
         title: this.newEvent.title,
         start: newStartDate,
