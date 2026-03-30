@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef  } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CitasService } from '../../core/citas.service';
 import { Paciente } from '../../model/vo/paciente';
@@ -26,7 +26,7 @@ export class GestionCitasComponent implements OnInit {
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
-  newEvent: any = { title: '', patient: '', start: new Date(), hour: '' };
+  newEvent: any = { title: '', patient: '', start: new Date(), hour: '', status: 'active' };
   selectedDay: Date | null = null;
   selectedEvents: CalendarEvent[] = [];
   isEdit: boolean = false;
@@ -71,9 +71,9 @@ export class GestionCitasComponent implements OnInit {
 
   loadPacientes(): void {
     // Llama al servicio para cargar la lista de pacientes
-     this.citasService.getPacientes().subscribe(pacientes => {
-       this.pacientes = pacientes;
-     }, (error: any) => {
+    this.citasService.getPacientes().subscribe(pacientes => {
+      this.pacientes = pacientes;
+    }, (error: any) => {
       console.error('Error al obtener los pacientes:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener los pacientes', 'error');
     });
@@ -82,10 +82,10 @@ export class GestionCitasComponent implements OnInit {
 
   loadCitas(): void {
     // Llama al servicio para cargar la lista de citas
-     this.citasService.getCitas().subscribe((events: CalendarEvent[]) => {
-       this.events = events;
-       console.log('citas', this.events);
-     }, error => {
+    this.citasService.getCitas().subscribe((events: CalendarEvent[]) => {
+      this.events = events;
+      console.log('citas', this.events);
+    }, error => {
       console.error('Error al obtener las citas:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener las citas', 'error');
     });
@@ -97,14 +97,14 @@ export class GestionCitasComponent implements OnInit {
     if (isSameMonth(day.date, this.viewDate)) {
       this.selectedDay = day.date;
       this.selectedEvents = day.events;
-       if (
+      if (
         (isSameDay(this.viewDate, this.selectedDay) && this.activeDayIsOpen === true) ||
         day.events.length > 0) {
         document.querySelector('.slide-in')?.classList.add('show');
-         this.activeDayIsOpen = true;
+        this.activeDayIsOpen = true;
       } else {
         document.querySelector('.slide-in')?.classList.remove('show');
-         this.activeDayIsOpen = false;
+        this.activeDayIsOpen = false;
       }
     }
   }
@@ -126,7 +126,7 @@ export class GestionCitasComponent implements OnInit {
       start: newStartDate,
       color: { primary: '#e3bc08', secondary: '#FDF1BA' }
     };
-    
+
     // Mapeo correcto para el backend
     const citaBackend = {
       idPaciente: this.newEvent.patient.id,
@@ -135,12 +135,12 @@ export class GestionCitasComponent implements OnInit {
       estado: 1,
       descripcion: this.newEvent.title
     };
-    
+
     console.log('guardar cita', citaBackend);
-     this.citasService.agendarCita(citaBackend).subscribe(() => {
+    this.citasService.agendarCita(citaBackend).subscribe(() => {
       this.events = [...this.events, newEvent];
       this.modal.dismissAll();
-     }, (error: any) => {
+    }, (error: any) => {
       console.error('Error al agendar las citas:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al agendar la cita', 'error');
     });
@@ -178,10 +178,12 @@ export class GestionCitasComponent implements OnInit {
     // Validate that the new event is not in the past
     if (newStartDate < new Date()) {
       alert('No se puede agendar una cita en el pasado.');
+      this.notificacion.mostrarMensaje('No se puede agendar una cita en el pasado.', 'error');
       return;
     }
 
     if (!this.newEvent.patient || !this.newEvent.patient.id) {
+      alert('Se debe elegir un paciente para continuar y guardar la cita');
       this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
       return;
     }
@@ -189,7 +191,7 @@ export class GestionCitasComponent implements OnInit {
     if (this.isEdit && this.eventToEdit) {
       this.eventToEdit.title = this.newEvent.title;
       this.eventToEdit.start = newStartDate;
-      
+
       const citaActualizar = {
         id: this.eventToEdit.meta?.citaId || this.eventToEdit.id,
         idPaciente: this.newEvent.patient.id,
@@ -198,11 +200,11 @@ export class GestionCitasComponent implements OnInit {
         estado: 1,
         descripcion: this.newEvent.title
       };
-      
+
       this.citasService.updateCita(citaActualizar).subscribe(() => {
-         this.loadCitas();
+        this.loadCitas();
         this.modal.dismissAll();
-       }, (error: any) => {
+      }, (error: any) => {
         console.error('Error al actualizar la cita:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar la cita', 'error');
       });
@@ -221,11 +223,11 @@ export class GestionCitasComponent implements OnInit {
         descripcion: this.newEvent.title
       };
 
-       this.citasService.agendarCita(citaBackend).subscribe(() => {
+      this.citasService.agendarCita(citaBackend).subscribe(() => {
         this.events = [...this.events, newEvent];
-         this.loadCitas();
+        this.loadCitas();
         this.modal.dismissAll();
-       }, (error: any) => {
+      }, (error: any) => {
         console.error('Error al agendar la cita:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar las citas', 'error');
       });
@@ -244,17 +246,17 @@ export class GestionCitasComponent implements OnInit {
     this.modal.open(this.modalContent, { size: 'sm', centered: true });
   }
   deleteEvent(event: CalendarEvent): void {
-     this.citasService.deleteCita(event).subscribe(() => {
+    this.citasService.deleteCita(event).subscribe(() => {
       this.events = this.events.filter(e => e !== event);
       this.selectedEvents = this.selectedEvents.filter(e => e !== event);
-     }, (error: any) => {
+    }, (error: any) => {
       console.error('Error al borrar la cita:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al borrar la cita', 'error');
     });
   }
 
   openAddModal(): void {
-    if(!this.selectedDay) return;
+    if (!this.selectedDay) return;
     const newStartDate = new Date(this.selectedDay)
     newStartDate.setHours(23, 99);
     if (newStartDate < new Date()) {
@@ -262,7 +264,7 @@ export class GestionCitasComponent implements OnInit {
       return;
     }
     this.isEdit = false;
-    this.newEvent = { title: '', patient: '', start: new Date(), hour: '' };
+    this.newEvent = { title: '', patient: '', start: new Date(), hour: '', status: 'active' };
     this.modal.open(this.modalContent, { size: 'sm', centered: true });
   }
   registerTreatment(event: CalendarEvent): void {
@@ -276,5 +278,5 @@ export class GestionCitasComponent implements OnInit {
 
   home() {
     this.router.navigate(['/hom']);
-    }
+  }
 }
