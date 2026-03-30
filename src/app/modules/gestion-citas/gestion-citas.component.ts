@@ -81,8 +81,10 @@ export class GestionCitasComponent implements OnInit {
   }
 
   loadCitas(): void {
+    const year = this.viewDate.getFullYear();
+    const month = this.viewDate.getMonth() + 1;
     // Llama al servicio para cargar la lista de citas
-    this.citasService.getCitas().subscribe((events: CalendarEvent[]) => {
+    this.citasService.getCitas(year, month).subscribe((events: CalendarEvent[]) => {
       this.events = events;
       console.log('citas', this.events);
     }, error => {
@@ -112,7 +114,7 @@ export class GestionCitasComponent implements OnInit {
   addEvent(): void {
     if (!this.selectedDay) return;
 
-    if (!this.newEvent.patient || !this.newEvent.patient.id) {
+    if (!this.newEvent.patient) {
       this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
       return;
     }
@@ -149,14 +151,17 @@ export class GestionCitasComponent implements OnInit {
 
   viewToday(): void {
     this.viewDate = new Date();
+    this.loadCitas();
   }
 
   previousMonth(): void {
     this.viewDate = this.changePeriod(-1);
+    this.loadCitas();
   }
 
   nextMonth(): void {
     this.viewDate = this.changePeriod(1);
+    this.loadCitas();
   }
   changePeriod(amount: number): Date {
     if (this.view === CalendarView.Month) {
@@ -182,7 +187,7 @@ export class GestionCitasComponent implements OnInit {
       return;
     }
 
-    if (!this.newEvent.patient || !this.newEvent.patient.id) {
+    if (!this.newEvent.patient) {
       alert('Se debe elegir un paciente para continuar y guardar la cita');
       this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
       return;
@@ -194,7 +199,7 @@ export class GestionCitasComponent implements OnInit {
 
       const citaActualizar = {
         id: this.eventToEdit.meta?.citaId || this.eventToEdit.id,
-        idPaciente: this.newEvent.patient.id,
+        idPaciente: this.newEvent.patient,
         fecha: newStartDate.getTime(),
         hora: newStartDate.getTime(),
         estado: 1,
@@ -216,7 +221,7 @@ export class GestionCitasComponent implements OnInit {
       };
 
       const citaBackend = {
-        idPaciente: this.newEvent.patient.id,
+        idPaciente: this.newEvent.patient,
         fecha: newStartDate.getTime(),
         hora: newStartDate.getTime(),
         estado: 1,

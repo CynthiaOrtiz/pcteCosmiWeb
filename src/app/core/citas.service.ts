@@ -18,8 +18,8 @@ export class CitasService {
     return this.http.get<Paciente[]>(`${this.apiUrlPaciente}/buscarPacientes`);
   }
 
-  getCitas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/citas`);
+  getCitas(year: number, month: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/citas/${year}/${month}`);
   }
 
   agendarCita(cita: any): Observable<any> {
