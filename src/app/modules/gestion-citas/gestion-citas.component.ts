@@ -217,7 +217,7 @@ export class GestionCitasComponent implements OnInit {
         idPaciente: this.newEvent.patient,
         fecha: newStartDate.getTime(),
         hora: newStartDate.getTime(),
-        estado: 1,
+        estado: this.newEvent.status === 'active' || this.newEvent.status === '1' || this.newEvent.status === 1 ? 1 : 0,
         descripcion: this.newEvent.title
       };
 
@@ -239,7 +239,7 @@ export class GestionCitasComponent implements OnInit {
         idPaciente: this.newEvent.patient,
         fecha: newStartDate.getTime(),
         hora: newStartDate.getTime(),
-        estado: 1,
+        estado: this.newEvent.status === 'active' || this.newEvent.status === '1' || this.newEvent.status === 1 ? 1 : 0,
         descripcion: this.newEvent.title
       };
 
@@ -259,8 +259,9 @@ export class GestionCitasComponent implements OnInit {
     this.isEdit = true;
     this.eventToEdit = event;
     this.newEvent = {
-      title: event.title,
-      patient: event.meta?.patient || '',
+      title: event.meta?.title || event.title,
+      patient: event.meta?.patient?.id || event.meta?.patient || '',
+      status: event.meta?.status === 1 ? 'active' : 'cancelled',
       hour: event.start.getHours().toString().padStart(2, '0') + ':' + event.start.getMinutes().toString().padStart(2, '0')
     };
     this.modal.open(this.modalContent, { size: 'sm', centered: true });

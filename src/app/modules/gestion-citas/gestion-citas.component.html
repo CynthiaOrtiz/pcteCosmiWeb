@@ -57,11 +57,11 @@
           <form (ngSubmit)="saveEvent()">
             <div class="mb-3">
               <label for="title" class="form-label">Descripción</label>
-              <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required>
+              <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required [disabled]="isEdit">
             </div>
             <div class="mb-3">
               <label for="patient" class="form-label">Paciente</label>
-              <select class="form-control" id="patient" [(ngModel)]="newEvent.patient" name="patient" required>
+              <select class="form-control" id="patient" [(ngModel)]="newEvent.patient" name="patient" required [disabled]="isEdit">
                 <option *ngFor="let patient of pacientes" [value]="patient.id">{{ patient.nombre }}</option>
               </select>
             </div>
