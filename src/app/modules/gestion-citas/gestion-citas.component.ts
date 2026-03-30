@@ -112,6 +112,11 @@ export class GestionCitasComponent implements OnInit {
   addEvent(): void {
     if (!this.selectedDay) return;
 
+    if (!this.newEvent.patient || !this.newEvent.patient.id) {
+      this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
+      return;
+    }
+
     const [hour, minute] = this.newEvent.hour.split(':').map((str: string) => parseInt(str, 10));
     const newStartDate = setMinutes(setHours(this.selectedDay, hour), minute);
 
@@ -124,7 +129,7 @@ export class GestionCitasComponent implements OnInit {
     
     // Mapeo correcto para el backend
     const citaBackend = {
-      idPaciente: this.newEvent.patient ? (this.newEvent.patient.identificador || this.newEvent.patient.id || 1714807766) : 1714807766,
+      idPaciente: this.newEvent.patient.id,
       fecha: newStartDate.getTime(),
       hora: newStartDate.getTime(),
       estado: 1,
@@ -176,13 +181,18 @@ export class GestionCitasComponent implements OnInit {
       return;
     }
 
+    if (!this.newEvent.patient || !this.newEvent.patient.id) {
+      this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
+      return;
+    }
+
     if (this.isEdit && this.eventToEdit) {
       this.eventToEdit.title = this.newEvent.title;
       this.eventToEdit.start = newStartDate;
       
       const citaActualizar = {
         id: this.eventToEdit.meta?.citaId || this.eventToEdit.id,
-        idPaciente: this.newEvent.patient ? (this.newEvent.patient.identificador || this.newEvent.patient.id || 1714807766) : 1714807766,
+        idPaciente: this.newEvent.patient.id,
         fecha: newStartDate.getTime(),
         hora: newStartDate.getTime(),
         estado: 1,
@@ -204,7 +214,7 @@ export class GestionCitasComponent implements OnInit {
       };
 
       const citaBackend = {
-        idPaciente: this.newEvent.patient ? (this.newEvent.patient.identificador || this.newEvent.patient.id || 1714807766) : 1714807766,
+        idPaciente: this.newEvent.patient.id,
         fecha: newStartDate.getTime(),
         hora: newStartDate.getTime(),
         estado: 1,
