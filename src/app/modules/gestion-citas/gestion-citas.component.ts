@@ -83,10 +83,25 @@ export class GestionCitasComponent implements OnInit {
   loadCitas(): void {
     const year = this.viewDate.getFullYear();
     const month = this.viewDate.getMonth() + 1;
-    // Llama al servicio para cargar la lista de citas
-    this.citasService.getCitas(year, month).subscribe((events: CalendarEvent[]) => {
-      this.events = events;
-      console.log('citas', this.events);
+    this.citasService.getCitas(year, month).subscribe((citas: any[]) => {
+      this.events = citas.map((cita: any) => {
+        const startDate = new Date(cita.hora);
+        const horaStr = startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const pacienteNombre = cita.paciente ? cita.paciente.nombre : 'Sin paciente';
+        return {
+          start: startDate,
+          title: `${horaStr} - ${cita.descripcion} - ${pacienteNombre}`,
+          meta: {
+            title: cita.descripcion,
+            citaId: cita.id,
+            patient: cita.paciente || null,
+            status: cita.estado
+          },
+          color: { primary: '#e3bc08', secondary: '#FDF1BA' }
+        };
+      });
+      console.log('citas mapeadas', this.events);
+
     }, error => {
       console.error('Error al obtener las citas:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al obtener las citas', 'error');

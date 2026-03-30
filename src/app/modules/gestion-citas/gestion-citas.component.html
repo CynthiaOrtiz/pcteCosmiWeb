@@ -35,7 +35,7 @@
         <h3>Citas para {{ selectedDay | date: 'fullDate' }}</h3>
         <ul *ngIf="selectedEvents.length > 0; else noEvents">
           <li *ngFor="let event of selectedEvents" [ngClass]="{'text-danger': event.meta?.status === 'cancelled'}">
-            {{ event.title }} - {{ event.start | date: 'shortTime' }}
+            {{ event.title }}
             <button (click)="editEvent(event)" class="btn btn-primary btn-sm">Editar</button>
             <button (click)="deleteEvent(event)" class="btn btn-danger btn-sm">Eliminar</button>
             <button (click)="registerTreatment(event)" class="btn btn-success btn-sm">Registrar Tratamiento</button>
