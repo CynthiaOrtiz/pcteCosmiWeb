@@ -103,7 +103,7 @@ export class GestionCitasComponent implements OnInit {
       console.log('citas mapeadas', this.events);
       this.refresh.next(null);
       if (this.selectedDay) {
-        this.selectedEvents = this.events.filter(event => 
+        this.selectedEvents = this.events.filter(event =>
           event.start.getDate() === (this.selectedDay as Date).getDate() &&
           event.start.getMonth() === (this.selectedDay as Date).getMonth() &&
           event.start.getFullYear() === (this.selectedDay as Date).getFullYear()
@@ -217,6 +217,7 @@ export class GestionCitasComponent implements OnInit {
       this.citasService.updateCita(citaActualizar).subscribe(() => {
         this.loadCitas();
         this.modal.dismissAll();
+        this.notificacion.mostrarMensaje('Cita actualizada', 'info');
       }, (error: any) => {
         console.error('Error al actualizar la cita:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar la cita', 'error');
@@ -246,6 +247,7 @@ export class GestionCitasComponent implements OnInit {
         this.events = [...this.events, newEvent];
         this.loadCitas();
         this.modal.dismissAll();
+        this.notificacion.mostrarMensaje('Cita agendada', 'info');
       }, (error: any) => {
         console.error('Error al agendar la cita:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar las citas', 'error');
