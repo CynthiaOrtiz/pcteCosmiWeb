@@ -158,9 +158,10 @@
   }
 
   .slide-in.show {
-    max-height: 300px; /* Adjust this as needed */
+    max-height: 800px; /* Adjust this as needed */
+    overflow-y: auto;
     opacity: 1;
-  transform: translateY(0);
+    transform: translateY(0);
   }
 
   .slide-in.hide {

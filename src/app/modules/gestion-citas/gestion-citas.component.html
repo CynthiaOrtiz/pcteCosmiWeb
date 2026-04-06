@@ -35,10 +35,16 @@
         <h3>Citas para {{ selectedDay | date: 'fullDate' }}</h3>
         <ul *ngIf="selectedEvents.length > 0; else noEvents">
           <li *ngFor="let event of selectedEvents" [ngClass]="{'text-danger': event.meta?.status === 'cancelled'}">
-            {{ event.title }}
-            <button (click)="editEvent(event)" class="btn btn-primary btn-sm">Editar</button>
-            <button (click)="deleteEvent(event)" class="btn btn-danger btn-sm">Eliminar</button>
-            <button (click)="registerTreatment(event)" class="btn btn-success btn-sm">Registrar Tratamiento</button>
+            <span *ngIf="event.meta?.status === 0 || event.meta?.status === 'cancelled' || event.meta?.status === '0'" style="color: red; text-transform: uppercase;">CANCELADO </span>{{ event.title }}
+            <button (click)="editEvent(event)" class="btn btn-primary btn-sm" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="deleteEvent(event)" class="btn btn-danger btn-sm" title="Eliminar">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <button (click)="registerTreatment(event)" class="btn btn-success btn-sm" title="Registrar Tratamiento">
+              <i class="fas fa-file-medical"></i>
+            </button>
           </li>
         </ul>
         <ng-template #noEvents>
@@ -67,16 +73,16 @@
             </div>
             <div class="mb-3">
               <label for="hour" class="form-label">Hora</label>
-              <input type="time" class="form-control" id="hour" [(ngModel)]="newEvent.hour" name="hour" required>
+              <input type="time" class="form-control" id="hour" [(ngModel)]="newEvent.hour" name="hour" required [disabled]="isSaving">
             </div>
             <div class="mb-3">
               <label for="status" class="form-label">Estado</label>
-              <select class="form-control" id="status" [(ngModel)]="newEvent.status" name="status">
+              <select class="form-control" id="status" [(ngModel)]="newEvent.status" name="status" [disabled]="isSaving">
                 <option value="active">Activo</option>
                 <option value="cancelled">Cancelado</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary" on>{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="isSaving">{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
           </form>
         </div>
       </ng-template>

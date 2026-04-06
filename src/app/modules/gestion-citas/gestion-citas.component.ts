@@ -31,6 +31,7 @@ export class GestionCitasComponent implements OnInit {
   selectedEvents: CalendarEvent[] = [];
   isEdit: boolean = false;
   eventToEdit: any | null = null;
+  isSaving: boolean = false;
 
   paciente: Paciente = {
     id: 1714807766,
@@ -190,16 +191,35 @@ export class GestionCitasComponent implements OnInit {
 
   saveEvent(): void {
     if (!this.selectedDay) return;
+    if (this.isSaving) return;
 
     const [hour, minute] = this.newEvent.hour.split(':').map((str: string) => parseInt(str, 10));
     const newStartDate = new Date(this.selectedDay);
-    newStartDate.setHours(hour, minute);
+    newStartDate.setHours(hour, minute, 0, 0);
 
     if (!this.newEvent.patient) {
-      alert('Se debe elegir un paciente para continuar y guardar la cita');
       this.notificacion.mostrarMensaje('Se debe elegir un paciente para continuar y guardar la cita', 'error');
       return;
     }
+
+    if (!this.isEdit) {
+      const isOverlapping = this.events.some(event => {
+        if (event.meta?.status === 0 || event.meta?.status === 'cancelled' || event.meta?.status === '0') {
+          return false;
+        }
+        const timeDiff = Math.abs(newStartDate.getTime() - event.start.getTime());
+        const diffInMinutes = timeDiff / (1000 * 60);
+        return diffInMinutes < 15;
+      });
+
+      if (isOverlapping) {
+        this.isSaving = false;
+        this.notificacion.mostrarMensaje('El horario ya está ocupado con otra cita', 'error');
+        return;
+      }
+    }
+
+    this.isSaving = true;
 
     if (this.isEdit && this.eventToEdit) {
       this.eventToEdit.title = this.newEvent.title;
@@ -215,17 +235,19 @@ export class GestionCitasComponent implements OnInit {
       };
 
       this.citasService.updateCita(citaActualizar).subscribe(() => {
+        this.isSaving = false;
         this.loadCitas();
         this.modal.dismissAll();
         this.notificacion.mostrarMensaje('Cita actualizada', 'info');
       }, (error: any) => {
+        this.isSaving = false;
         console.error('Error al actualizar la cita:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar la cita', 'error');
       });
     } else {
       // Validate that the new event is not in the past
       if (newStartDate < new Date()) {
-        alert('No se puede agendar una cita en el pasado.');
+        this.isSaving = false;
         this.notificacion.mostrarMensaje('No se puede agendar una cita en el pasado.', 'error');
         return;
       }
@@ -244,11 +266,13 @@ export class GestionCitasComponent implements OnInit {
       };
 
       this.citasService.agendarCita(citaBackend).subscribe(() => {
+        this.isSaving = false;
         this.events = [...this.events, newEvent];
         this.loadCitas();
         this.modal.dismissAll();
         this.notificacion.mostrarMensaje('Cita agendada', 'info');
       }, (error: any) => {
+        this.isSaving = false;
         console.error('Error al agendar la cita:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar las citas', 'error');
       });
@@ -265,7 +289,7 @@ export class GestionCitasComponent implements OnInit {
       status: event.meta?.status === 1 ? 'active' : 'cancelled',
       hour: event.start.getHours().toString().padStart(2, '0') + ':' + event.start.getMinutes().toString().padStart(2, '0')
     };
-    this.modal.open(this.modalContent, { size: 'sm', centered: true });
+    this.modal.open(this.modalContent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false });
   }
   deleteEvent(event: CalendarEvent): void {
     this.citasService.deleteCita(event).subscribe(() => {
@@ -287,7 +311,7 @@ export class GestionCitasComponent implements OnInit {
     }
     this.isEdit = false;
     this.newEvent = { title: '', patient: '', start: new Date(), hour: '', status: 'active' };
-    this.modal.open(this.modalContent, { size: 'sm', centered: true });
+    this.modal.open(this.modalContent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false });
   }
   registerTreatment(event: CalendarEvent): void {
     this.eventToEdit = event;
