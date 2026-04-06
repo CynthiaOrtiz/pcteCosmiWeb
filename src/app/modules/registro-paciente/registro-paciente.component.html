@@ -27,7 +27,10 @@
       </div>
       <div>
         <label for="telefono">Teléfono:</label>
-        <input id="telefono" formControlName="telefono" type="number" required="true">
+        <input id="telefono" formControlName="telefono" type="text" required="true" maxlength="10">
+        <div *ngIf="formularioPaciente.get('telefono')?.invalid && formularioPaciente.get('telefono')?.touched" style="color: red; font-size: 0.8em;">
+          Teléfono inválido (máximo 10 dígitos numéricos).
+        </div>
       </div>
       <div>
         <label for="ocupacion">Ocupación:</label>

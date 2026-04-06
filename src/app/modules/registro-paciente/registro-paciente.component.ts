@@ -27,12 +27,12 @@ export class RegistroPacienteComponent implements OnInit {
 
   inicializarFormulario(): void {
     this.formularioPaciente = this.formBuilder.group({
-      cedula: ['', Validators.required],
+      cedula: ['', [Validators.required, Validators.maxLength(10)]],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       nomCom: ['', Validators.required],
       direccion: [''],
-      telefono: [''],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.maxLength(10)]],
       ocupacion: [''],
       genero: ['masculino'],
       email: ['', [Validators.required, Validators.email]],
@@ -56,7 +56,13 @@ export class RegistroPacienteComponent implements OnInit {
       });
     } else {
       console.log('Formulario no válido');
-      this.notificacion.mostrarMensaje('No se ha llenado correctamente el formulario', 'error');
+      Object.keys(this.formularioPaciente.controls).forEach(key => {
+        const controlErrors = this.formularioPaciente.get(key)?.errors;
+        if (controlErrors != null) {
+          console.log('Error en campo:', key, ' Detalles:', controlErrors);
+        }
+      });
+      this.notificacion.mostrarMensaje('No se ha llenado adecuadamente el formulario', 'error');
     }
   }
 
