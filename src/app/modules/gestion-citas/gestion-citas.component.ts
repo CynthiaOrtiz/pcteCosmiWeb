@@ -320,8 +320,17 @@ export class GestionCitasComponent implements OnInit {
     this.modal.open(this.modalContent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false });
   }
   registerTreatment(event: CalendarEvent): void {
-    this.eventToEdit = event;
-    this.router.navigate(['/tratamiento-paciente', event.meta?.patient.identificador]);
+    if (event.meta?.patient?.id) {
+      this.eventToEdit = event;
+      this.router.navigate(['/tratamiento-paciente', event.meta.patient.id], {
+        state: {
+          citaFecha: event.start.getTime(),
+          citaDescripcion: event.meta?.title || event.title
+        }
+      });
+    } else {
+      this.notificacion.mostrarMensaje('No hay un paciente asociado a esta cita', 'warn');
+    }
   }
 
   setView(view: CalendarView) {

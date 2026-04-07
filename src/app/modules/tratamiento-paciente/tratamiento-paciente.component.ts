@@ -39,11 +39,26 @@ export class TratamientoPacienteComponent implements OnInit {
     private router: Router,
     private pacienteService: PacienteService
   ) {
+    const nav = this.router.getCurrentNavigation();
+    const state = nav?.extras.state as { citaFecha: number, citaDescripcion: string };
+    
+    let defaultFecha = '';
+    if (state?.citaFecha) {
+      const d = new Date(state.citaFecha);
+      const year = d.getFullYear();
+      const month = ('0' + (d.getMonth() + 1)).slice(-2);
+      const day = ('0' + d.getDate()).slice(-2);
+      defaultFecha = `${year}-${month}-${day}`;
+    }
+
+    const defaultDesc = state?.citaDescripcion || '';
+
     this.tratamientoForm = this.fb.group({
-      descripcion: ['', Validators.required],
+      descripcion: [defaultDesc, Validators.required],
       observacion: ['', Validators.required],
-      tipoTratamiento: ['', Validators.required],
-      fecha: ['', Validators.required],
+      tipo_tratamiento: ['', Validators.required],
+      zonas_tratar: [''],
+      fecha_tratamiento: [defaultFecha, Validators.required],
       antecedente: ['']
     });
     this.pacienteId = +this.route.snapshot.paramMap.get('id')!;
@@ -54,7 +69,8 @@ export class TratamientoPacienteComponent implements OnInit {
   }
 
   drawComplete() {
-    this.tratamiento.firma = this.signaturePad.toDataURL('image/png');
+    const dataUrl = this.signaturePad.toDataURL('image/png');
+    this.tratamiento.firma = dataUrl ? dataUrl.split(',')[1] : null;
   }
 
   guardarTratamiento(): void {
