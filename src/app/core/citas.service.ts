@@ -29,7 +29,7 @@ export class CitasService {
     return this.http.post(`${this.apiUrl}/actualizarCita`, cita);
   }
 
-  deleteCita(event: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/borrarCita/${event.id}`, null);
+  deleteCita(citaId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/borrarCita/${citaId}`, null);
   }
 }

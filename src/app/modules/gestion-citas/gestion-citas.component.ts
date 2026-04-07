@@ -26,7 +26,7 @@ export class GestionCitasComponent implements OnInit {
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
-  newEvent: any = { title: '', patient: '', start: new Date(), hour: '', status: 'active' };
+  newEvent: any = { title: '', patient: '', start: new Date(), hour: '00:00', status: 'active' };
   selectedDay: Date | null = null;
   selectedEvents: CalendarEvent[] = [];
   isEdit: boolean = false;
@@ -98,7 +98,9 @@ export class GestionCitasComponent implements OnInit {
             patient: cita.paciente || null,
             status: cita.estado
           },
-          color: { primary: '#e3bc08', secondary: '#FDF1BA' }
+          color: (cita.estado === 0 || cita.estado === '0' || cita.estado === 'cancelled')
+            ? { primary: '#ad2121', secondary: '#FAE3E3' }
+            : { primary: '#008000', secondary: '#ccffcc' }
         };
       });
       console.log('citas mapeadas', this.events);
@@ -108,7 +110,7 @@ export class GestionCitasComponent implements OnInit {
           event.start.getDate() === (this.selectedDay as Date).getDate() &&
           event.start.getMonth() === (this.selectedDay as Date).getMonth() &&
           event.start.getFullYear() === (this.selectedDay as Date).getFullYear()
-        );
+        ).sort((a, b) => a.start.getTime() - b.start.getTime());
       }
     }, error => {
       console.error('Error al obtener las citas:', error);
@@ -121,7 +123,7 @@ export class GestionCitasComponent implements OnInit {
   dayClicked({ day }: { day: CalendarMonthViewDay }): void {
     if (day.date.getMonth() === this.viewDate.getMonth() && day.date.getFullYear() === this.viewDate.getFullYear()) {
       this.selectedDay = day.date;
-      this.selectedEvents = day.events;
+      this.selectedEvents = [...day.events].sort((a, b) => a.start.getTime() - b.start.getTime());
       document.querySelector('.slide-in')?.classList.add('show');
       this.activeDayIsOpen = true;
     }
@@ -142,7 +144,9 @@ export class GestionCitasComponent implements OnInit {
       title: this.newEvent.title,
       patient: this.newEvent.patient,
       start: newStartDate,
-      color: { primary: '#e3bc08', secondary: '#FDF1BA' }
+      color: (this.newEvent.status === 'cancelled' || this.newEvent.status === '0' || this.newEvent.status === 0)
+        ? { primary: '#ad2121', secondary: '#FAE3E3' }
+        : { primary: '#008000', secondary: '#ccffcc' }
     };
 
     // Mapeo correcto para el backend
@@ -254,7 +258,9 @@ export class GestionCitasComponent implements OnInit {
       const newEvent: CalendarEvent = {
         title: this.newEvent.title,
         start: newStartDate,
-        color: { primary: '#e3bc08', secondary: '#FDF1BA' }
+        color: (this.newEvent.status === 'cancelled' || this.newEvent.status === '0' || this.newEvent.status === 0)
+          ? { primary: '#ad2121', secondary: '#FAE3E3' }
+          : { primary: '#008000', secondary: '#ccffcc' }
       };
 
       const citaBackend = {
@@ -292,9 +298,9 @@ export class GestionCitasComponent implements OnInit {
     this.modal.open(this.modalContent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false });
   }
   deleteEvent(event: CalendarEvent): void {
-    this.citasService.deleteCita(event).subscribe(() => {
-      this.events = this.events.filter(e => e !== event);
-      this.selectedEvents = this.selectedEvents.filter(e => e !== event);
+    this.citasService.deleteCita(event.meta.citaId).subscribe(() => {
+      this.loadCitas();
+      this.notificacion.mostrarMensaje('Cita eliminada', 'info');
     }, (error: any) => {
       console.error('Error al borrar la cita:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al borrar la cita', 'error');
@@ -310,7 +316,7 @@ export class GestionCitasComponent implements OnInit {
       return;
     }
     this.isEdit = false;
-    this.newEvent = { title: '', patient: '', start: new Date(), hour: '', status: 'active' };
+    this.newEvent = { title: '', patient: '', start: new Date(), hour: '00:00', status: 'active' };
     this.modal.open(this.modalContent, { size: 'sm', centered: true, backdrop: 'static', keyboard: false });
   }
   registerTreatment(event: CalendarEvent): void {

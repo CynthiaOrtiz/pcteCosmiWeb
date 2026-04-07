@@ -18,3 +18,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Asegurar que las notificaciones (Material SnackBar) se muestren por encima de los modales (Bootstrap/NgbModal) */
+.cdk-overlay-container {
+  z-index: 2000 !important;
+}
