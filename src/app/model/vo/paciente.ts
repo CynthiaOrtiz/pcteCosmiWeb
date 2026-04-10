@@ -4,6 +4,7 @@ export interface Paciente {
   apellido: string;
   nomCom: string;
   cedula: string;
+  pasaporte?: string;
   direccion: string;
   telefono: number;
   ocupacion: string;

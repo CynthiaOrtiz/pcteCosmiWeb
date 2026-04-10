@@ -49,19 +49,23 @@
     <form [formGroup]="pacienteForm" (ngSubmit)="guardarCambios()">
       <div>
         <label for="nombre">Nombre:</label>
-        <input id="nombre" formControlName="nombre" type="text">
+        <input id="nombre" formControlName="nombre" type="text" (input)="llenarNomCom()">
       </div>
       <div>
         <label for="apellido">Apellido:</label>
-        <input id="apellido" formControlName="apellido" type="text">
+        <input id="apellido" formControlName="apellido" type="text" (input)="llenarNomCom()">
       </div>
       <div>
         <label for="nombre_completo">Nombre Completo:</label>
-        <input id="nombre_completo" formControlName="nomCom" type="text">
+        <input id="nombre_completo" formControlName="nomCom" type="text" readonly>
       </div>
       <div>
         <label for="cedula">Cédula:</label>
-        <input id="cedula" formControlName="cedula" type="text">
+        <input id="cedula" formControlName="cedula" type="text" readonly>
+      </div>
+      <div>
+        <label for="pasaporte">Pasaporte:</label>
+        <input id="pasaporte" formControlName="pasaporte" type="text" readonly>
       </div>
       <div>
         <label for="direccion">Dirección:</label>

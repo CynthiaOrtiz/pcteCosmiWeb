@@ -26,7 +26,8 @@ export class BusquedaPacienteComponent implements OnInit {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       nomCom: ['', Validators.required],
-      cedula: ['', Validators.required],
+      cedula: [''],
+      pasaporte: [''],
       direccion: [''],
       telefono: [null, Validators.required],
       ocupacion: [''],
@@ -45,8 +46,20 @@ export class BusquedaPacienteComponent implements OnInit {
 
   cargarPacientes(): void {
     this.pacienteService.getPacientes().subscribe(pacientes => {
-      this.pacientes = pacientes;
-      this.pacientesFiltrados = pacientes;
+      this.pacientes = pacientes.sort((a, b) => {
+        const nomA = (a.nombre || '').toLowerCase();
+        const nomB = (b.nombre || '').toLowerCase();
+        if (nomA < nomB) return -1;
+        if (nomA > nomB) return 1;
+
+        const apeA = (a.apellido || '').toLowerCase();
+        const apeB = (b.apellido || '').toLowerCase();
+        if (apeA < apeB) return -1;
+        if (apeA > apeB) return 1;
+
+        return 0;
+      });
+      this.pacientesFiltrados = [...this.pacientes];
     }, (error: any) => {
       console.error('Error al cargar los pacientes:', error);
       this.notificacion.mostrarMensaje('Ha ocurrido un error al cargar los pacientes', 'error');
@@ -58,6 +71,12 @@ export class BusquedaPacienteComponent implements OnInit {
     this.pacienteForm.patchValue(paciente);
     const fechaNacimiento = new Date(this.selectedPaciente.nacimiento).toISOString().split('T')[0];
     this.pacienteForm.get('nacimiento')?.setValue(fechaNacimiento);
+  }
+
+  llenarNomCom(){
+    let nombre = this.pacienteForm.get('nombre')?.value || '';
+    let apellido = this.pacienteForm.get('apellido')?.value || '';
+    this.pacienteForm.get('nomCom')?.setValue(nombre.trim() + " " + apellido.trim());
   }
 
   guardarCambios(): void {

@@ -7,19 +7,29 @@
 
       <div>
         <label for="nombre">Nombre:</label>
-        <input id="nombre" formControlName="nombre" type="text" (blur)="llenarNomCom()" required="true">
+        <input id="nombre" formControlName="nombre" type="text" (input)="llenarNomCom()" required="true">
       </div>
       <div>
         <label for="apellido">Apellido:</label>
-        <input id="apellido" formControlName="apellido" type="text" (blur)="llenarNomCom()" required="true">
+        <input id="apellido" formControlName="apellido" type="text" (input)="llenarNomCom()" required="true">
       </div>
       <div>
         <label for="nombre_completo">Nombre Completo:</label>
-        <input id="nombre_completo" formControlName="nomCom" type="text" >
+        <input id="nombre_completo" formControlName="nomCom" type="text" readonly>
       </div>
       <div>
         <label for="cedula">Cédula:</label>
-        <input id="cedula" formControlName="cedula" type="text" required="true">
+        <input id="cedula" formControlName="cedula" type="text" maxlength="10">
+        <div *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaLength') && formularioPaciente.get('cedula')?.touched" style="color: red; font-size: 0.8em;">La cédula debe tener 10 dígitos.</div>
+        <div *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaPattern') && formularioPaciente.get('cedula')?.touched" style="color: red; font-size: 0.8em;">La cédula solo debe contener números.</div>
+        <div *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaInvalida') && formularioPaciente.get('cedula')?.touched" style="color: red; font-size: 0.8em;">La cédula ecuatoriana ingresada no es válida.</div>
+      </div>
+      <div>
+        <label for="pasaporte">Pasaporte:</label>
+        <input id="pasaporte" formControlName="pasaporte" type="text" maxlength="20">
+      </div>
+      <div *ngIf="formularioPaciente.hasError('requiereIdentificacion') && (formularioPaciente.get('cedula')?.touched || formularioPaciente.get('pasaporte')?.touched)" style="color: red; font-size: 0.8em; margin-bottom: 10px;">
+        Debe ingresar la cédula o el pasaporte para continuar.
       </div>
       <div>
         <label for="direccion">Dirección:</label>

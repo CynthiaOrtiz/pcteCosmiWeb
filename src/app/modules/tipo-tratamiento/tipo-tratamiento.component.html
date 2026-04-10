@@ -7,8 +7,11 @@
       <input formControlName="nombre" type="text">
       <label>Descripción:</label>
       <input formControlName="descripcion" type="text">
-      <label>Tipo:</label>
-      <input formControlName="tipo" type="text" appUppercase >
+      <label>Tipo de Catálogo:</label>
+      <select formControlName="tipoCatalogo">
+        <option [ngValue]="null" disabled>Selecciona un Tipo</option>
+        <option *ngFor="let tipo of tiposCatalogo" [value]="tipo.id">{{ tipo.nombre }}</option>
+      </select>
       <div class="buttons">
         <button type="submit" class="btn primary">{{ editando ? 'Actualizar' : 'Guardar' }}</button>
         <button type="button" *ngIf="editando" (click)="cancelarEdicion()" class="btn secondary">Cancelar</button>
@@ -32,11 +35,44 @@
             {{ t.descripcion }}
           </td>
           <td style=" max-width: 50px;" >
-            {{ t.tipo }}
+            {{ t.tipoCatalogo?.nombre }}
           </td>
           <td class="no-tooltip" style=" max-width: 60px;">
             <button (click)="editar(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
             <button (click)="eliminar(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr style="margin: 40px 0; border: 1px solid #ffb6c1;">
+
+    <h1>Gestión de Tipos de Catálogos</h1>
+    <form [formGroup]="formularioTipo" (ngSubmit)="guardarTipo()">
+      <label>Nombre:</label>
+      <input formControlName="nombre" type="text" appUppercase>
+      <label>Descripción:</label>
+      <input formControlName="descripcion" type="text">
+      <div class="buttons">
+        <button type="submit" class="btn primary">{{ editandoTipo ? 'Actualizar Tipo' : 'Guardar Tipo' }}</button>
+        <button type="button" *ngIf="editandoTipo" (click)="cancelarEdicionTipo()" class="btn secondary">Cancelar</button>
+      </div>
+    </form>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th style="max-width: 50px;">Nombre</th>
+          <th style="max-width: 100px;">Descripción</th>
+          <th style="max-width: 50px;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tiposCatalogo">
+          <td style="max-width: 50px;">{{ t.nombre }}</td>
+          <td style="max-width: 100px;">{{ t.descripcion }}</td>
+          <td class="no-tooltip" style="max-width: 60px;">
+            <button (click)="editarTipo(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
+            <button (click)="eliminarTipo(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
           </td>
         </tr>
       </tbody>

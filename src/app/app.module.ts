@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { PacienteService } from './core/paciente.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TipoTratamientoComponent } from './modules/tipo-tratamiento/tipo-tratamiento.component';
 import { UppercaseDirective } from './directives/uppercase.directive';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { LoadingInterceptor } from './core/loading.interceptor';
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { UppercaseDirective } from './directives/uppercase.directive';
     AppComponent,
     TipoTratamientoComponent,
     UppercaseDirective,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,10 @@ import { UppercaseDirective } from './directives/uppercase.directive';
     BrowserAnimationsModule,
     MatSnackBarModule,
   ],
-  providers: [PacienteService],
+  providers: [
+    PacienteService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

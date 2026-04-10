@@ -1,48 +1,47 @@
 <div class="lista-tratamientos-container">
-    <h2>Tratamientos del Paciente</h2>
-    <button (click)="regresar()">
-      <span class="fas fa-arrow-left"></span> Atras
-    </button>
+  <h2>Tratamientos del Paciente</h2>
+  <button (click)="regresar()">
+    <span class="fas fa-arrow-left"></span> Atras
+  </button>
 
   <!-- Barra de filtros -->
   <div class="filtros-container">
-    <input
-      type="date"
-      [ngModel]="filtroFecha ? filtroFecha.toISOString().split('T')[0] : ''"
-      (ngModelChange)="actualizarFiltroFecha($event)"
-      class="input-filtro"
-      placeholder="Filtrar por fecha"
-    />
+    <input type="date" [ngModel]="filtroFecha ? filtroFecha.toISOString().split('T')[0] : ''"
+      (ngModelChange)="actualizarFiltroFecha($event)" class="input-filtro" placeholder="Filtrar por fecha" />
 
-    <input
-      type="text"
-      [(ngModel)]="filtroDescripcion"
-      (input)="filtrarTratamientos()"
-      class="input-filtro"
-      placeholder="Buscar por descripción"
-    />
+    <input type="text" [(ngModel)]="filtroDescripcion" (input)="filtrarTratamientos()" class="input-filtro"
+      placeholder="Buscar por descripción" />
   </div>
-    <ul>
-      <li *ngFor="let tratamiento of tratamientosFiltrados">
-        <div>
-          <strong>Descripción:</strong> {{ tratamiento.descripcion }}
-        </div>
-        <div>
-          <strong>Observación:</strong> {{ tratamiento.observacion }}
-        </div>
-        <div>
-          <strong>Tipo de Tratamiento:</strong> {{ tratamiento.tipo_tratamiento }}
-        </div>
-        <div>
-          <strong>Fecha:</strong> {{ tratamiento.fecha_tratamiento.toISOString().split('T')[0] }}
-        </div>
-        <!-- Aquí puedes agregar botones para editar/eliminar el tratamiento -->
-      </li>
-      <li *ngIf="tratamientosFiltrados.length === 0">
-        <td colspan="2" class="sin-resultados">No se encontraron resultados</td>
-      </li>
-    </ul>
-    <button (click)="regresar()">
-      <span class="fas fa-arrow-left"></span> Atras
-    </button>
-  </div>
+  <ul>
+    <li *ngFor="let tratamiento of tratamientosFiltrados">
+      <div>
+        <strong>Descripción:</strong> {{ tratamiento.descripcion }}
+      </div>
+      <div>
+        <strong>Observación:</strong> {{ tratamiento.observacion }}
+      </div>
+      <div>
+        <strong>Tipo de Tratamiento:</strong> {{ catalogoMap.get(tratamiento.tipo_tratamiento) ||
+        tratamiento.tipo_tratamiento }}
+      </div>
+      <div>
+        <strong>Fecha:</strong> {{ tratamiento.fecha_tratamiento | date:'yyyy-MM-dd' }}
+      </div>
+      <div *ngIf="tratamiento.firma" class="firma-container">
+        <strong>Firma:</strong><br>
+        <img [src]="'data:image/png;base64,' + tratamiento.firma" alt="Firma del paciente"
+          style="max-height: 60px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px;">
+      </div>
+      <div *ngIf="!tratamiento.firma">
+        <strong>Firma:</strong> (Sin firma o vacía)
+      </div>
+      <!-- Aquí puedes agregar botones para editar/eliminar el tratamiento -->
+    </li>
+    <li *ngIf="tratamientosFiltrados.length === 0">
+      <td colspan="2" class="sin-resultados">No se encontraron resultados</td>
+    </li>
+  </ul>
+  <button (click)="regresar()">
+    <span class="fas fa-arrow-left"></span> Atras
+  </button>
+</div>

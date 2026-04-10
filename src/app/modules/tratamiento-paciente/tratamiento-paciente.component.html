@@ -6,6 +6,13 @@
     <div><br></div>
     <form [formGroup]="tratamientoForm" (ngSubmit)="guardarTratamiento()">
       <div>
+        <label for="antecedente">Formulario (Antecedente):</label>
+        <select id="antecedente" formControlName="antecedente">
+          <option value="" disabled>Seleccione un formulario</option>
+          <option *ngFor="let catalogo of catalogosFormularios" [value]="catalogo.id">{{ catalogo.nombre }}</option>
+        </select>
+      </div>
+      <div>
         <label for="descripcionTratamiento">Descripción:</label>
         <input id="descripcionTratamiento" formControlName="descripcion" type="text">
       </div>
@@ -13,13 +20,13 @@
         <label for="observacionTratamiento">Observación:</label>
         <textarea id="observacionTratamiento" formControlName="observacion"></textarea>
       </div>
-      <!-- <div>
-        <label for="antecedente">ID Antecedente:</label>
-        <input id="antecedente" formControlName="antecedente" type="number">
-      </div> -->
+
       <div>
         <label for="tipo_tratamiento">Tipo de Tratamiento:</label>
-        <input id="tipo_tratamiento" formControlName="tipo_tratamiento" type="number">
+        <select id="tipo_tratamiento" formControlName="tipo_tratamiento">
+          <option value="" disabled>Seleccione un tratamiento</option>
+          <option *ngFor="let catalogo of catalogos" [value]="catalogo.id">{{ catalogo.nombre }}</option>
+        </select>
       </div>
       <div>
         <label for="zonas_tratar">Zonas a Tratar:</label>

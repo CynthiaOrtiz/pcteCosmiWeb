@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TipoTratamientoService } from '../../core/tipo-tratamiento.service';
+import { TipoCatalogoService } from '../../core/tipo-catalogo.service';
 import { Router } from '@angular/router';
 import { NotificacionService } from '../../core/notificacion.service';
 
@@ -13,13 +14,18 @@ import { NotificacionService } from '../../core/notificacion.service';
 })
 export class TipoTratamientoComponent implements OnInit {
   formulario!: FormGroup;
+  formularioTipo!: FormGroup;
   tratamientos: any[] = [];
+  tiposCatalogo: any[] = [];
   editando: boolean = false;
   idEditando: number | null = null;
+  editandoTipo: boolean = false;
+  idEditandoTipo: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private tratamientoService: TipoTratamientoService,
+    private tipoCatalogoService: TipoCatalogoService,
     private snackBar: MatSnackBar,
     private router: Router,
     private notificacion: NotificacionService,
@@ -27,6 +33,7 @@ export class TipoTratamientoComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarFormulario();
+    this.obtenerTiposCatalogo();
     this.obtenerTratamientos();
   }
 
@@ -34,7 +41,11 @@ export class TipoTratamientoComponent implements OnInit {
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      tipo: ['', Validators.required]
+      tipoCatalogo: [null, Validators.required]
+    });
+    this.formularioTipo = this.fb.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required]
     });
   }
 
@@ -47,14 +58,24 @@ export class TipoTratamientoComponent implements OnInit {
       });
   }
 
+  obtenerTiposCatalogo(): void {
+    this.tipoCatalogoService.listar().subscribe(
+      (data) => { this.tiposCatalogo = data; },
+      (error) => console.error('Error al cargar tipos de catalogo', error)
+    );
+  }
+
   guardar(): void {
     if (this.formulario.invalid) {
       this.notificacion.mostrarMensaje('Todos los campos deben estar llenos.', 'error');
       return;
     }
-    let trat = this.formulario.value;
-    trat.tipo = trat.tipo.toUpperCase();
-    const tratamiento = trat;
+    const formValue = this.formulario.value;
+    const tratamiento = {
+      nombre: formValue.nombre,
+      descripcion: formValue.descripcion,
+      tipoCatalogo: this.tiposCatalogo.find(t => t.id == formValue.tipoCatalogo)
+    };
 
     if (this.editando && this.idEditando) {
       this.tratamientoService.actualizar(this.idEditando, tratamiento).subscribe(
@@ -84,7 +105,11 @@ export class TipoTratamientoComponent implements OnInit {
   editar(tratamiento: any): void {
     this.editando = true;
     this.idEditando = tratamiento.id;
-    this.formulario.patchValue(tratamiento);
+    this.formulario.patchValue({
+      nombre: tratamiento.nombre,
+      descripcion: tratamiento.descripcion,
+      tipoCatalogo: tratamiento.tipoCatalogo ? tratamiento.tipoCatalogo.id : null
+    });
   }
 
   eliminar(id: number): void {
@@ -103,6 +128,45 @@ export class TipoTratamientoComponent implements OnInit {
     this.editando = false;
     this.idEditando = null;
     this.formulario.reset();
+  }
+
+  guardarTipo(): void {
+    if (this.formularioTipo.invalid) return;
+    const tipo = this.formularioTipo.value;
+    tipo.nombre = tipo.nombre.toUpperCase();
+
+    if (this.editandoTipo && this.idEditandoTipo) {
+      this.tipoCatalogoService.actualizar(this.idEditandoTipo, tipo).subscribe(() => {
+        this.mostrarMensaje('Tipo actualizado', 'info');
+        this.obtenerTiposCatalogo();
+        this.cancelarEdicionTipo();
+      });
+    } else {
+      this.tipoCatalogoService.agregar(tipo).subscribe(() => {
+        this.mostrarMensaje('Tipo agregado', 'info');
+        this.obtenerTiposCatalogo();
+        this.formularioTipo.reset();
+      });
+    }
+  }
+
+  editarTipo(tipo: any): void {
+    this.editandoTipo = true;
+    this.idEditandoTipo = tipo.id;
+    this.formularioTipo.patchValue(tipo);
+  }
+
+  eliminarTipo(id: number): void {
+    this.tipoCatalogoService.eliminar(id).subscribe(() => {
+      this.mostrarMensaje('Tipo eliminado', 'warn');
+      this.obtenerTiposCatalogo();
+    });
+  }
+
+  cancelarEdicionTipo(): void {
+    this.editandoTipo = false;
+    this.idEditandoTipo = null;
+    this.formularioTipo.reset();
   }
 
   mostrarMensaje(mensaje: string, tipo: 'info' | 'error' | 'warn'): void {

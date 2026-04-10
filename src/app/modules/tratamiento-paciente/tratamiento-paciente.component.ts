@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { Tratamiento } from '../../model/vo/tratamiento';
 import { SignaturePad } from 'angular2-signaturepad';
+import { TipoTratamientoService } from '../../core/tipo-tratamiento.service';
+import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
   selector: 'app-tratamiento-paciente',
@@ -25,6 +27,8 @@ export class TratamientoPacienteComponent implements OnInit {
     zonas_tratar: '',
     firma: null
   };
+  catalogos: any[] = [];
+  catalogosFormularios: any[] = [];
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
 
   signaturePadOptions: Object = {
@@ -37,19 +41,18 @@ export class TratamientoPacienteComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private pacienteService: PacienteService
+    private pacienteService: PacienteService,
+    private tipoTratamientoService: TipoTratamientoService,
+    private notificacion: NotificacionService
   ) {
     const nav = this.router.getCurrentNavigation();
     const state = nav?.extras.state as { citaFecha: number, citaDescripcion: string };
-    
-    let defaultFecha = '';
-    if (state?.citaFecha) {
-      const d = new Date(state.citaFecha);
-      const year = d.getFullYear();
-      const month = ('0' + (d.getMonth() + 1)).slice(-2);
-      const day = ('0' + d.getDate()).slice(-2);
-      defaultFecha = `${year}-${month}-${day}`;
-    }
+
+    let d = state?.citaFecha ? new Date(state.citaFecha) : new Date();
+    const year = d.getFullYear();
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    let defaultFecha = `${year}-${month}-${day}`;
 
     const defaultDesc = state?.citaDescripcion || '';
 
@@ -66,6 +69,10 @@ export class TratamientoPacienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tipoTratamientoService.listar().subscribe(catalogos => {
+      this.catalogos = catalogos.filter((c: any) => c.tipoCatalogo && c.tipoCatalogo.nombre === 'TRATAMIENTOS');
+      this.catalogosFormularios = catalogos.filter((c: any) => c.tipoCatalogo && c.tipoCatalogo.nombre === 'FORMULARIO');
+    });
   }
 
   drawComplete() {
@@ -75,11 +82,22 @@ export class TratamientoPacienteComponent implements OnInit {
 
   guardarTratamiento(): void {
     if (this.tratamientoForm.valid) {
-      const tratamiento: Tratamiento = this.tratamientoForm.value;
-      tratamiento.pacienteId = this.pacienteId;
-      tratamiento.firma = this.tratamiento.firma;
-      this.pacienteService.agregarTratamiento(tratamiento).subscribe(() => {
-        this.router.navigate(['/lista-tratamientos', this.pacienteId]);
+      if (this.signaturePad && !this.signaturePad.isEmpty()) {
+        const dataUrl = this.signaturePad.toDataURL('image/png');
+        this.tratamiento.firma = dataUrl ? dataUrl.split(',')[1] : null;
+      } else {
+        this.tratamiento.firma = null;
+      }
+
+      const tratamientoFor: Tratamiento = this.tratamientoForm.value;
+      tratamientoFor.pacienteId = this.pacienteId;
+      tratamientoFor.firma = this.tratamiento.firma;
+      this.pacienteService.agregarTratamiento(tratamientoFor).subscribe(response => {
+        this.notificacion.mostrarMensaje('El tratamiento se ha guardado exitosamente.', 'info');
+        window.history.back();
+      }, (error: any) => {
+        console.error('Error al guardar el tratamiento:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al guardar el tratamiento', 'error');
       });
     }
   }
