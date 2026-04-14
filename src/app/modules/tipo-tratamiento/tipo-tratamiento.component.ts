@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TipoTratamientoService } from '../../core/tipo-tratamiento.service';
 import { TipoCatalogoService } from '../../core/tipo-catalogo.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { NotificacionService } from '../../core/notificacion.service';
   styleUrls: ['./tipo-tratamiento.component.css']
 })
 export class TipoTratamientoComponent implements OnInit {
+
   formulario!: FormGroup;
   formularioTipo!: FormGroup;
   tratamientos: any[] = [];
@@ -21,6 +23,9 @@ export class TipoTratamientoComponent implements OnInit {
   idEditando: number | null = null;
   editandoTipo: boolean = false;
   idEditandoTipo: number | null = null;
+  catalogoAEliminar: any = null;
+  tipoAEliminar: any = null;
+  esNuevo: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +34,8 @@ export class TipoTratamientoComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private notificacion: NotificacionService,
-  ) {}
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -52,7 +58,7 @@ export class TipoTratamientoComponent implements OnInit {
   obtenerTratamientos(): void {
     this.tratamientoService.listar().subscribe(
       (data) => { this.tratamientos = data; }
-      ,(error: any) => {
+      , (error: any) => {
         console.error('Error al cargar tratamientos:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al cargar los tratamientos', 'error');
       });
@@ -83,7 +89,7 @@ export class TipoTratamientoComponent implements OnInit {
           this.mostrarMensaje('Tratamiento actualizado', 'info');
           this.obtenerTratamientos();
           this.cancelarEdicion();
-        },(error: any) => {
+        }, (error: any) => {
           console.error('Error al actualizar tratamiento:', error);
           this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar el tratamiento', 'error');
         }
@@ -94,7 +100,8 @@ export class TipoTratamientoComponent implements OnInit {
           this.mostrarMensaje('Tratamiento agregado', 'info');
           this.obtenerTratamientos();
           this.formulario.reset();
-        },(error: any) => {
+          this.esNuevo = false;
+        }, (error: any) => {
           console.error('Error al agregar el tratamiento:', error);
           this.notificacion.mostrarMensaje('Ha ocurrido un error al agregar el tratamiento', 'error');
         }
@@ -115,11 +122,12 @@ export class TipoTratamientoComponent implements OnInit {
   eliminar(id: number): void {
     this.tratamientoService.eliminar(id).subscribe(
       () => {
-        this.mostrarMensaje('Tratamiento eliminado', 'warn');
+        this.notificacion.mostrarMensaje('Catálogo eliminado correctamente', 'info');
+        this.catalogoAEliminar = null;
         this.obtenerTratamientos();
-      },(error: any) => {
+      }, (error: any) => {
         console.error('Error al eliminar el tratamiento:', error);
-        this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el tratamiento', 'error');
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el catálogo', 'error');
       }
     );
   }
@@ -137,15 +145,21 @@ export class TipoTratamientoComponent implements OnInit {
 
     if (this.editandoTipo && this.idEditandoTipo) {
       this.tipoCatalogoService.actualizar(this.idEditandoTipo, tipo).subscribe(() => {
-        this.mostrarMensaje('Tipo actualizado', 'info');
+        this.notificacion.mostrarMensaje('Tipo actualizado correctamente', 'info');
         this.obtenerTiposCatalogo();
         this.cancelarEdicionTipo();
+      }, (error: any) => {
+        console.error('Error al actualizar tipo de catalogo:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al actualizar el Tipo', 'error');
       });
     } else {
       this.tipoCatalogoService.agregar(tipo).subscribe(() => {
-        this.mostrarMensaje('Tipo agregado', 'info');
+        this.notificacion.mostrarMensaje('Tipo agregado correctamente', 'info');
         this.obtenerTiposCatalogo();
         this.formularioTipo.reset();
+      }, (error: any) => {
+        console.error('Error al agregar el tipo:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al agregar el Tipo', 'error');
       });
     }
   }
@@ -156,10 +170,42 @@ export class TipoTratamientoComponent implements OnInit {
     this.formularioTipo.patchValue(tipo);
   }
 
+  abrirModalEliminarCatalogo(catalogo: any, modalContent: any): void {
+    this.catalogoAEliminar = catalogo;
+    this.modalService.open(modalContent, { centered: true }).result.then(
+      (result) => {
+        if (result === 'Ok') {
+          this.eliminar(catalogo.id);
+        }
+      },
+      (reason) => {
+        this.catalogoAEliminar = null;
+      }
+    );
+  }
+
+  abrirModalEliminarTipo(tipo: any, modalContent: any): void {
+    this.tipoAEliminar = tipo;
+    this.modalService.open(modalContent, { centered: true }).result.then(
+      (result) => {
+        if (result === 'Ok') {
+          this.eliminarTipo(tipo.id);
+        }
+      },
+      (reason) => {
+        this.tipoAEliminar = null;
+      }
+    );
+  }
+
   eliminarTipo(id: number): void {
     this.tipoCatalogoService.eliminar(id).subscribe(() => {
-      this.mostrarMensaje('Tipo eliminado', 'warn');
+      this.notificacion.mostrarMensaje('Tipo eliminado correctamente', 'info');
+      this.tipoAEliminar = null;
       this.obtenerTiposCatalogo();
+    }, (error: any) => {
+      console.error('Error al eliminar tipo:', error);
+      this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el Tipo', 'error');
     });
   }
 
@@ -178,6 +224,14 @@ export class TipoTratamientoComponent implements OnInit {
 
   home() {
     this.router.navigate(['/hom']);
- }
+  }
+
+  nuevo() {
+    if (this.esNuevo) {
+      this.esNuevo = false;
+    } else {
+      this.esNuevo = true;
+    }
+  }
 
 }

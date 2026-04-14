@@ -36,14 +36,14 @@
     background: #d3d3d3;
   }
 
-  .btn.edit {
-    background: #ffa500;
+  .btn.edit, .btn.delete {
+    background: #ff69b4;
     color: white;
+    transition: background-color 0.3s ease;
   }
 
-  .btn.delete {
-    background: #dc143c;
-    color: white;
+  .btn.edit:hover, .btn.delete:hover {
+    background: #ff1493;
   }
 
   .styled-table {

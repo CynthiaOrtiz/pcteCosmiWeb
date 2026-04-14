@@ -4,6 +4,7 @@ import { Paciente } from '../../model/vo/paciente';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificacionService } from '../../core/notificacion.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-busqueda-paciente',
@@ -20,7 +21,8 @@ export class BusquedaPacienteComponent implements OnInit {
 
   constructor(private fb: UntypedFormBuilder, private pacienteService: PacienteService,
     private notificacion: NotificacionService,
-    private router: Router) {
+    private router: Router,
+    private modalService: NgbModal) {
     this.pacienteForm = this.fb.group({
       id: [null],
       nombre: ['', Validators.required],
@@ -131,20 +133,36 @@ export class BusquedaPacienteComponent implements OnInit {
     this.router.navigate(['/hom']);
   }
 
-  eliminarPaciente(paciente: Paciente): void {
-    if (confirm(`¿Estás seguro de que deseas eliminar al paciente ${paciente.nomCom}?`)) {
-      this.pacienteService.deletePaciente(paciente).subscribe(
-        () => {
-          this.notificacion.mostrarMensaje('Paciente eliminado exitosamente', 'info');
-          this.selectedPaciente = null;
-          this.cargarPacientes();
-        },
-        (error: any) => {
-          console.error('Error al eliminar paciente:', error);
-          this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el paciente', 'error');
+  pacienteAEliminar: Paciente | null = null;
+
+  abrirModalEliminar(paciente: Paciente, modalContent: any): void {
+    this.pacienteAEliminar = paciente;
+    this.modalService.open(modalContent, { centered: true }).result.then(
+      (result) => {
+        if (result === 'Ok') {
+          this.eliminarPaciente(paciente);
         }
-      );
-    }
+      },
+      (reason) => {
+        // Modal dismissed
+        this.pacienteAEliminar = null;
+      }
+    );
+  }
+
+  eliminarPaciente(paciente: Paciente): void {
+    this.pacienteService.deletePaciente(paciente).subscribe(
+      () => {
+        this.notificacion.mostrarMensaje('Paciente eliminado exitosamente', 'info');
+        this.selectedPaciente = null;
+        this.pacienteAEliminar = null;
+        this.cargarPacientes();
+      },
+      (error: any) => {
+        console.error('Error al eliminar paciente:', error);
+        this.notificacion.mostrarMensaje('Ha ocurrido un error al eliminar el paciente', 'error');
+      }
+    );
   }
 
   filtrarPacientes(): void {

@@ -1,80 +1,120 @@
 <div class="container coquette">
-    <button type="button" (click)="home()"> <i class="fas fa-home"></i>  </button>
-    <h1>Gestión de Catalogos</h1>
+  <button type="button" (click)="home()"> <i class="fas fa-home"></i> </button>
+  <h1>Gestión de Catalogos</h1>
 
-    <form [formGroup]="formulario" (ngSubmit)="guardar()">
-      <label>Nombre:</label>
-      <input formControlName="nombre" type="text">
-      <label>Descripción:</label>
-      <input formControlName="descripcion" type="text">
-      <label>Tipo de Catálogo:</label>
-      <select formControlName="tipoCatalogo">
-        <option [ngValue]="null" disabled>Selecciona un Tipo</option>
-        <option *ngFor="let tipo of tiposCatalogo" [value]="tipo.id">{{ tipo.nombre }}</option>
-      </select>
-      <div class="buttons">
-        <button type="submit" class="btn primary">{{ editando ? 'Actualizar' : 'Guardar' }}</button>
-        <button type="button" *ngIf="editando" (click)="cancelarEdicion()" class="btn secondary">Cancelar</button>
-      </div>
-    </form>
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th style=" max-width: 50px;">Nombre</th>
-          <th style=" max-width: 100px;">Descripción</th>
-          <th style=" max-width: 50px;">Tipo</th>
-          <th style=" max-width: 50px;">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of tratamientos">
-          <td style=" max-width: 50px;" [attr.data-tooltip]="t.nombre">
-            {{ t.nombre }}
-          </td>
-          <td style=" max-width: 100px;" >
-            {{ t.descripcion }}
-          </td>
-          <td style=" max-width: 50px;" >
-            {{ t.tipoCatalogo?.nombre }}
-          </td>
-          <td class="no-tooltip" style=" max-width: 60px;">
-            <button (click)="editar(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
-            <button (click)="eliminar(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <form [formGroup]="formulario" (ngSubmit)="guardar()" *ngIf="esNuevo">
+    <label>Nombre:</label>
+    <input formControlName="nombre" type="text">
+    <label>Descripción:</label>
+    <input formControlName="descripcion" type="text">
+    <label>Tipo de Catálogo:</label>
+    <select formControlName="tipoCatalogo">
+      <option [ngValue]="null" disabled>Selecciona un Tipo</option>
+      <option *ngFor="let tipo of tiposCatalogo" [value]="tipo.id">{{ tipo.nombre }}</option>
+    </select>
+    <div class="buttons">
+      <button type="submit" class="btn primary">{{ editando ? 'Actualizar' : 'Guardar' }}</button>
+      <button type="button" *ngIf="editando" (click)="cancelarEdicion()" class="btn secondary">Cancelar</button>
+    </div>
+  </form>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th style=" max-width: 50px;">Nombre</th>
+        <th style=" max-width: 100px;">Descripción</th>
+        <th style=" max-width: 50px;">Tipo</th>
+        <th style=" max-width: 80px;">Acciones
+          <button (click)="nuevo()" class="btn fas fa-plus-circle" title="Nuevo" *ngIf="!esNuevo"></button>
+          <button (click)="nuevo()" class="btn fa-solid fa-xmark" title="Cancelar" *ngIf="esNuevo"></button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of tratamientos">
+        <td style=" max-width: 50px;" [attr.data-tooltip]="t.nombre">
+          {{ t.nombre }}
+        </td>
+        <td style=" max-width: 100px;">
+          {{ t.descripcion }}
+        </td>
+        <td style=" max-width: 50px;">
+          {{ t.tipoCatalogo?.nombre }}
+        </td>
+        <td class="no-tooltip" style=" max-width: 60px;">
+          <button (click)="editar(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
+          <button (click)="abrirModalEliminarCatalogo(t, confirmDeleteCatalogoModal)"
+            class="btn delete fas fa-trash-alt" title="Eliminar"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    <hr style="margin: 40px 0; border: 1px solid #ffb6c1;">
+  <hr style="margin: 40px 0; border: 1px solid #ffb6c1;">
 
-    <h1>Gestión de Tipos de Catálogos</h1>
-    <form [formGroup]="formularioTipo" (ngSubmit)="guardarTipo()">
-      <label>Nombre:</label>
-      <input formControlName="nombre" type="text" appUppercase>
-      <label>Descripción:</label>
-      <input formControlName="descripcion" type="text">
-      <div class="buttons">
-        <button type="submit" class="btn primary">{{ editandoTipo ? 'Actualizar Tipo' : 'Guardar Tipo' }}</button>
-        <button type="button" *ngIf="editandoTipo" (click)="cancelarEdicionTipo()" class="btn secondary">Cancelar</button>
-      </div>
-    </form>
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th style="max-width: 50px;">Nombre</th>
-          <th style="max-width: 100px;">Descripción</th>
-          <th style="max-width: 50px;">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of tiposCatalogo">
-          <td style="max-width: 50px;">{{ t.nombre }}</td>
-          <td style="max-width: 100px;">{{ t.descripcion }}</td>
-          <td class="no-tooltip" style="max-width: 60px;">
-            <button (click)="editarTipo(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
-            <button (click)="eliminarTipo(t.id)" class="btn delete fas fa-trash-alt" title="Eliminar"></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h1>Gestión de Tipos de Catálogos</h1>
+  <form [formGroup]="formularioTipo" (ngSubmit)="guardarTipo()">
+    <label>Nombre:</label>
+    <input formControlName="nombre" type="text" appUppercase>
+    <label>Descripción:</label>
+    <input formControlName="descripcion" type="text">
+    <div class="buttons">
+      <button type="submit" class="btn primary">{{ editandoTipo ? 'Actualizar Tipo' : 'Guardar Tipo' }}</button>
+      <button type="button" *ngIf="editandoTipo" (click)="cancelarEdicionTipo()" class="btn secondary">Cancelar</button>
+    </div>
+  </form>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th style="max-width: 50px;">Nombre</th>
+        <th style="max-width: 100px;">Descripción</th>
+        <th style="max-width: 50px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of tiposCatalogo">
+        <td style="max-width: 50px;">{{ t.nombre }}</td>
+        <td style="max-width: 100px;">{{ t.descripcion }}</td>
+        <td class="no-tooltip" style="max-width: 60px;">
+          <button (click)="editarTipo(t)" class="btn edit fas fa-pencil-alt" title="Editar"></button>
+          <button (click)="abrirModalEliminarTipo(t, confirmDeleteTipoModal)" class="btn delete fas fa-trash-alt"
+            title="Eliminar"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #confirmDeleteCatalogoModal let-modal>
+    <div class="modal-header" style="background-color: #ff69b4; color: white; padding: 0.5rem 1rem;">
+      <h4 class="modal-title" id="modal-title" style="font-size: 1.2rem; margin:0 0 0px;">Confirmar Eliminación</h4>
+      <button type="button" class="btn-close btn-close-white" style="font-size: 0.75rem;" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" style="background-color: #e0e0e0; color: #333;">
+      <p style="margin-bottom: 0;">¿Estás seguro de que deseas eliminar el catálogo <strong style="color: black;">{{
+          catalogoAEliminar?.nombre }}</strong>?</p>
+    </div>
+    <div class="modal-footer" style="background-color: #e0e0e0; border-top: 1px solid #c0c0c0;">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel')"
+        style="background-color: white; color: #333;">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok')">Eliminar</button>
+    </div>
+  </ng-template>
+
+  <ng-template #confirmDeleteTipoModal let-modal>
+    <div class="modal-header" style="background-color: #ff69b4; color: white; padding: 0.5rem 1rem;">
+      <h4 class="modal-title" id="modal-title" style="font-size: 1.2rem; margin:0 0 0px;">Confirmar Eliminación</h4>
+      <button type="button" class="btn-close btn-close-white" style="font-size: 0.75rem;" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" style="background-color: #e0e0e0; color: #333;">
+      <p style="margin-bottom: 0;">¿Estás seguro de que deseas eliminar el tipo <strong style="color: black;">{{
+          tipoAEliminar?.nombre }}</strong>?</p>
+    </div>
+    <div class="modal-footer" style="background-color: #e0e0e0; border-top: 1px solid #c0c0c0;">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel')"
+        style="background-color: white; color: #333;">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok')">Eliminar</button>
+    </div>
+  </ng-template>
+
+</div>
