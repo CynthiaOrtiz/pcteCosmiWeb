@@ -25,7 +25,7 @@
         <th style=" max-width: 50px;">Tipo</th>
         <th style=" max-width: 80px;">Acciones
           <button (click)="nuevo()" class="btn fas fa-plus-circle" title="Nuevo" *ngIf="!esNuevo"></button>
-          <button (click)="nuevo()" class="btn fa-solid fa-xmark" title="Cancelar" *ngIf="esNuevo"></button>
+          <button (click)="nuevo()" class="btn fas fa-times" title="Cancelar" *ngIf="esNuevo"></button>
         </th>
       </tr>
     </thead>
@@ -52,7 +52,7 @@
   <hr style="margin: 40px 0; border: 1px solid #ffb6c1;">
 
   <h1>Gestión de Tipos de Catálogos</h1>
-  <form [formGroup]="formularioTipo" (ngSubmit)="guardarTipo()">
+  <form [formGroup]="formularioTipo" (ngSubmit)="guardarTipo()" *ngIf="esNuevoTipo">
     <label>Nombre:</label>
     <input formControlName="nombre" type="text" appUppercase>
     <label>Descripción:</label>
@@ -67,7 +67,10 @@
       <tr>
         <th style="max-width: 50px;">Nombre</th>
         <th style="max-width: 100px;">Descripción</th>
-        <th style="max-width: 50px;">Acciones</th>
+        <th style="max-width: 50px;">Acciones
+          <button (click)="nuevoTipo()" class="btn fas fa-plus-circle" title="Nuevo" *ngIf="!esNuevoTipo"></button>
+          <button (click)="nuevoTipo()" class="btn fas fa-times" title="Cancelar" *ngIf="esNuevoTipo"></button>
+        </th>
       </tr>
     </thead>
     <tbody>

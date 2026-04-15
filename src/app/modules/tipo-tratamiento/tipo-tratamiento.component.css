@@ -71,7 +71,7 @@
     position: relative;
   }
 
-  .styled-table td:hover {
+  .styled-table td[data-tooltip]:hover::after {
     content: attr(data-tooltip);
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
@@ -86,7 +86,7 @@
   }
 
   .no-tooltip {
-    pointer-events: none;
+    /* pointer-events: none; */
   }
 
   h1 {

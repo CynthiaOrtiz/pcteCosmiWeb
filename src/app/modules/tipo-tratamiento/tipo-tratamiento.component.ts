@@ -26,6 +26,7 @@ export class TipoTratamientoComponent implements OnInit {
   catalogoAEliminar: any = null;
   tipoAEliminar: any = null;
   esNuevo: boolean = false;
+  esNuevoTipo: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -111,6 +112,7 @@ export class TipoTratamientoComponent implements OnInit {
 
   editar(tratamiento: any): void {
     this.editando = true;
+    this.esNuevo = true;
     this.idEditando = tratamiento.id;
     this.formulario.patchValue({
       nombre: tratamiento.nombre,
@@ -134,6 +136,7 @@ export class TipoTratamientoComponent implements OnInit {
 
   cancelarEdicion(): void {
     this.editando = false;
+    this.esNuevo = false;
     this.idEditando = null;
     this.formulario.reset();
   }
@@ -157,6 +160,7 @@ export class TipoTratamientoComponent implements OnInit {
         this.notificacion.mostrarMensaje('Tipo agregado correctamente', 'info');
         this.obtenerTiposCatalogo();
         this.formularioTipo.reset();
+        this.esNuevoTipo = false;
       }, (error: any) => {
         console.error('Error al agregar el tipo:', error);
         this.notificacion.mostrarMensaje('Ha ocurrido un error al agregar el Tipo', 'error');
@@ -166,6 +170,7 @@ export class TipoTratamientoComponent implements OnInit {
 
   editarTipo(tipo: any): void {
     this.editandoTipo = true;
+    this.esNuevoTipo = true;
     this.idEditandoTipo = tipo.id;
     this.formularioTipo.patchValue(tipo);
   }
@@ -211,6 +216,7 @@ export class TipoTratamientoComponent implements OnInit {
 
   cancelarEdicionTipo(): void {
     this.editandoTipo = false;
+    this.esNuevoTipo = false;
     this.idEditandoTipo = null;
     this.formularioTipo.reset();
   }
@@ -231,6 +237,15 @@ export class TipoTratamientoComponent implements OnInit {
       this.esNuevo = false;
     } else {
       this.esNuevo = true;
+    }
+  }
+
+  nuevoTipo() {
+    if (this.esNuevoTipo) {
+      this.esNuevoTipo = false;
+      this.cancelarEdicionTipo();
+    } else {
+      this.esNuevoTipo = true;
     }
   }
 
