@@ -9,6 +9,7 @@ import { RegistroPacienteComponent } from './modules/registro-paciente/registro-
 import { GestionCitasComponent } from './modules/gestion-citas/gestion-citas.component';
 import { ListaHistoriasClinicasComponent } from './modules/lista-historias-clinicas/lista-historias-clinicas.component';
 import { TipoTratamientoComponent } from './modules/tipo-tratamiento/tipo-tratamiento.component';
+import { FacturacionComponent } from './modules/facturacion/facturacion.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'registro-paciente', component: RegistroPacienteComponent },
   { path: 'agendar-citas', component: GestionCitasComponent },
   { path: 'catalogos', component: TipoTratamientoComponent },
+  { path: 'facturacion', component: FacturacionComponent },
 ];
 
 @NgModule({

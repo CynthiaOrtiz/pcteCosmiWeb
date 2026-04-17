@@ -18,6 +18,7 @@ import { TipoTratamientoComponent } from './modules/tipo-tratamiento/tipo-tratam
 import { UppercaseDirective } from './directives/uppercase.directive';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { LoadingInterceptor } from './core/loading.interceptor';
+import { FacturacionComponent } from './modules/facturacion/facturacion.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { LoadingInterceptor } from './core/loading.interceptor';
     TipoTratamientoComponent,
     UppercaseDirective,
     SpinnerComponent,
+    FacturacionComponent
   ],
   imports: [
     BrowserModule,

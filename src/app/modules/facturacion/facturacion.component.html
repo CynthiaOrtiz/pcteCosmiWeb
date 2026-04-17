@@ -1,0 +1,27 @@
+<div class="container coquette">
+  <h1>Portal de Facturación Electrónica (SRI)</h1>
+  
+  <form [formGroup]="facturaForm" (ngSubmit)="emitirFactura()">
+    <label>Secuencial de Comprobante:</label>
+    <input formControlName="numeroFactura" type="text" placeholder="001-001-000000001">
+
+    <label>Subtotal Libre de Impuestos:</label>
+    <input formControlName="subtotal" type="number" step="0.01">
+
+    <label>IVA Total:</label>
+    <input formControlName="iva" type="number" step="0.01">
+
+    <label>Valor Total:</label>
+    <input formControlName="total" type="number" step="0.01">
+
+    <div class="buttons" style="margin-top: 15px;">
+      <button type="submit" class="btn primary" [disabled]="isSubmitting">
+        <i class="fas fa-paper-plane"></i> Emitir Factura SRI
+      </button>
+    </div>
+  </form>
+
+  <p *ngIf="isSubmitting" style="text-align: center; color: #ff69b4; margin-top: 20px;">
+    <i>Contactando Web Services del SRI. Por favor espera...</i>
+  </p>
+</div>

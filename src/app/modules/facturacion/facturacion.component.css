@@ -1,0 +1,59 @@
+.container.coquette {
+  max-width: 600px;
+  margin: auto;
+  background: #fffaf0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #d18ca4;
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn.primary {
+  background-color: #ff69b4;
+  color: white;
+}
+
+.btn.primary:hover:not([disabled]) {
+  background-color: #ff1493;
+}
+
+.btn[disabled] {
+  background-color: #f7a8d0;
+  cursor: not-allowed;
+}
