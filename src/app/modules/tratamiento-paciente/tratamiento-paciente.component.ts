@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { Tratamiento } from '../../model/vo/tratamiento';
-import { SignaturePad } from 'angular2-signaturepad';
+import SignaturePad from 'signature_pad';
 import { TipoTratamientoService } from '../../core/tipo-tratamiento.service';
 import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tratamiento-paciente',
   templateUrl: './tratamiento-paciente.component.html',
   styleUrls: ['./tratamiento-paciente.component.css']
 })
-export class TratamientoPacienteComponent implements OnInit {
+export class TratamientoPacienteComponent implements OnInit, AfterViewInit {
 
   tratamientoForm: UntypedFormGroup;
   pacienteId: number = 0;
@@ -29,13 +30,8 @@ export class TratamientoPacienteComponent implements OnInit {
   };
   catalogos: any[] = [];
   catalogosFormularios: any[] = [];
-  @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-
-  signaturePadOptions: Object = {
-    'minWidth': 2,
-    'canvasWidth': 800,
-    'canvasHeight': 300
-  };
+  @ViewChild('signatureCanvas', { static: true }) signatureCanvas!: ElementRef<HTMLCanvasElement>;
+  signaturePad!: SignaturePad;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -75,9 +71,22 @@ export class TratamientoPacienteComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (this.signatureCanvas) {
+      this.signaturePad = new SignaturePad(this.signatureCanvas.nativeElement, {
+        minWidth: 2
+      });
+      this.signaturePad.addEventListener("endStroke", () => {
+        this.drawComplete();
+      });
+    }
+  }
+
   drawComplete() {
-    const dataUrl = this.signaturePad.toDataURL('image/png');
-    this.tratamiento.firma = dataUrl ? dataUrl.split(',')[1] : null;
+    if (this.signaturePad && !this.signaturePad.isEmpty()) {
+      const dataUrl = this.signaturePad.toDataURL('image/png');
+      this.tratamiento.firma = dataUrl ? dataUrl.split(',')[1] : null;
+    }
   }
 
   guardarTratamiento(): void {

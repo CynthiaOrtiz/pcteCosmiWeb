@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
+  standalone: false,
   selector: 'app-gestion-citas',
   templateUrl: './gestion-citas.component.html',
   styleUrls: ['./gestion-citas.component.css'],

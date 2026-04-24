@@ -4,6 +4,7 @@ import { FacturacionService } from '../../core/facturacion.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
+  standalone: false,
   selector: 'app-facturacion',
   templateUrl: './facturacion.component.html',
   styleUrls: ['./facturacion.component.css']

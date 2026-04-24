@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tipo-tratamiento',
   templateUrl: './tipo-tratamiento.component.html',
   styleUrls: ['./tipo-tratamiento.component.css']

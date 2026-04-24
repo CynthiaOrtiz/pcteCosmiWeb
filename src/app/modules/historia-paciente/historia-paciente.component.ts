@@ -4,11 +4,12 @@ import { PacienteService } from '../../core/paciente.service';
 import { HistoriaClinica } from '../../model/vo/historiaClinica';
 import { Tratamiento } from '../../model/vo/tratamiento';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Paciente } from 'src/app/model/vo/paciente';
-import { parse } from 'path';
+import { Paciente } from '../../model/vo/paciente';
+
 import { NotificacionService } from '../../core/notificacion.service';
 
 @Component({
+  standalone: false,
   selector: 'app-historia-paciente',
   templateUrl: './historia-paciente.component.html',
   styleUrls: ['./historia-paciente.component.css']

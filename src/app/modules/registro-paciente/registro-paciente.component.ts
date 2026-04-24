@@ -7,6 +7,7 @@ import { NotificacionService } from '../../core/notificacion.service';
 
 
 @Component ({
+  standalone: false,
   selector: 'app-registro-paciente',
   templateUrl: './registro-paciente.component.html',
   styleUrls: ['./registro-paciente.component.css']

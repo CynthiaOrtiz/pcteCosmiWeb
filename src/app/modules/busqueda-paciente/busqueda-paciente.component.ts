@@ -7,6 +7,7 @@ import { NotificacionService } from '../../core/notificacion.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-busqueda-paciente',
   templateUrl: './busqueda-paciente.component.html',
   styleUrls: ['./busqueda-paciente.component.css']

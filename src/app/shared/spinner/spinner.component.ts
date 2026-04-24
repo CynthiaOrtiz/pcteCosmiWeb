@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
  * Componente que muestra una capa oscura con un spinner si hay tareas activas.
  */
 @Component({
+  standalone: false,
     selector: 'app-spinner',
     templateUrl: './spinner.component.html',
     styleUrls: ['./spinner.component.css']

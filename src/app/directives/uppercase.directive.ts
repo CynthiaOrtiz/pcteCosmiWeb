@@ -1,6 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
+  standalone: false,
   selector: '[appUppercase]'
 })
 export class UppercaseDirective {

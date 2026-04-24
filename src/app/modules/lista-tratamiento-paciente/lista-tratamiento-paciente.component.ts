@@ -6,6 +6,7 @@ import { NotificacionService } from '../../core/notificacion.service';
 import { TipoTratamientoService } from '../../core/tipo-tratamiento.service';
 
 @Component({
+  standalone: false,
   selector: 'app-lista-tratamiento-paciente',
   templateUrl: './lista-tratamiento-paciente.component.html',
   styleUrls: ['./lista-tratamiento-paciente.component.css']

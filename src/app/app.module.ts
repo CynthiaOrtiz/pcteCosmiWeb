@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { PacienteService } from './core/paciente.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SignaturePadModule } from 'angular2-signaturepad';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
@@ -35,7 +35,7 @@ import { FacturacionComponent } from './modules/facturacion/facturacion.componen
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SignaturePadModule,
+
     FontAwesomeModule,
     NgbModalModule,
     CalendarModule.forRoot({

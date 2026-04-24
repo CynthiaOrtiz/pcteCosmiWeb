@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoriaClinica } from 'src/app/model/vo/historiaClinica';
+import { HistoriaClinica } from '../../model/vo/historiaClinica';
 import { Router } from '@angular/router';
 import { PacienteService } from '../../core/paciente.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificacionService } from '../../core/notificacion.service';
-import { Paciente } from 'src/app/model/vo/paciente';
+import { Paciente } from '../../model/vo/paciente';
 
 @Component({
+  standalone: false,
   selector: 'app-lista-historias-clinicas',
   templateUrl: './lista-historias-clinicas.component.html',
   styleUrls: ['./lista-historias-clinicas.component.css']
