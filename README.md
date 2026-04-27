@@ -1,28 +1,40 @@
 # PacienteCosmiWeb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
-nvm version 14.15.0
+Proyecto Frontend en Angular para la gestión de pacientes y la plataforma web.
 
-## Development server
+## Tecnologías y Requisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular CLI:** Versión 20.
+- **Node.js:** Se recomienda usar NVM con la versión 14.15.0.
 
-## Code scaffolding
+## Servidor de Desarrollo
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Ejecuta el siguiente comando para levantar un servidor de desarrollo:
 
-## Build
+```bash
+ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Luego, navega a `http://localhost:4200/` en tu navegador. La aplicación se recargará automáticamente si modificas y guardas algún archivo fuente.
 
-## Running unit tests
+## Generación de Código (Scaffolding)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Ejecuta `ng generate component nombre-componente` para generar un nuevo componente. También puedes usar este comando para generar directivas, pipes, servicios, clases, guards, interfaces, enums y módulos (ej: `ng generate service nombre-servicio`).
 
-## Running end-to-end tests
+## Construcción (Build)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Para compilar el proyecto para un entorno de producción, ejecuta:
 
-## Further help
+```bash
+ng build
+```
+Los artefactos de la construcción se almacenarán en el directorio `dist/`. 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Pruebas
+
+- **Unitarias:** Ejecuta `ng test` para correr las pruebas unitarias a través de [Karma](https://karma-runner.github.io).
+- **End-to-End (E2E):** Ejecuta `ng e2e` para ejecutar pruebas e2e. Requiere un paquete que implemente las capacidades de pruebas end-to-end instalado en el proyecto.
+
+## Ayuda Adicional
+
+Para obtener más información o ayuda sobre el Angular CLI, usa el comando `ng help` o revisa la página oficial: [Angular CLI Overview and Command Reference](https://angular.io/cli).
