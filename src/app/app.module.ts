@@ -19,7 +19,9 @@ import { UppercaseDirective } from './directives/uppercase.directive';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { LoadingInterceptor } from './core/loading.interceptor';
 import { FacturacionComponent } from './modules/facturacion/facturacion.component';
-
+import { ConsultorioModule } from './modules/consultorio.module';
+import { LoginComponent } from './modules/login/login.component';
+import { interceptorProvider } from './core/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { FacturacionComponent } from './modules/facturacion/facturacion.componen
     TipoTratamientoComponent,
     UppercaseDirective,
     SpinnerComponent,
-    FacturacionComponent
+    FacturacionComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +47,12 @@ import { FacturacionComponent } from './modules/facturacion/facturacion.componen
     }),
     BrowserAnimationsModule,
     MatSnackBarModule,
+    ConsultorioModule
   ],
   providers: [
     PacienteService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    interceptorProvider
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

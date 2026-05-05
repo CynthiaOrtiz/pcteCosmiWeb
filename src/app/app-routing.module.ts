@@ -10,24 +10,24 @@ import { GestionCitasComponent } from './modules/gestion-citas/gestion-citas.com
 import { ListaHistoriasClinicasComponent } from './modules/lista-historias-clinicas/lista-historias-clinicas.component';
 import { TipoTratamientoComponent } from './modules/tipo-tratamiento/tipo-tratamiento.component';
 import { FacturacionComponent } from './modules/facturacion/facturacion.component';
+import { LoginComponent } from './modules/login/login.component';
+import { AuthGuard } from './core/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/consultorio', pathMatch: 'full' },
-  {
-    path: 'consultorio',
-    loadChildren: () => import('./modules/consultorio.module').then(m => m.ConsultorioModule)
-  },
-  { path: 'hom', component: ConsultorioContentComponent },
-  { path: 'busqueda-paciente', component: BusquedaPacienteComponent },
-  { path: 'tratamiento-paciente/:id', component: TratamientoPacienteComponent },
-  { path: 'historias-clinicas/:id', component: ListaHistoriasClinicasComponent },
-  { path: 'historia-clinica/:idHistoria/:idPaciente', component: HistoriaPacienteComponent },
-  { path: 'lista-tratamientos/:id', component: ListaTratamientoPacienteComponent },
-  { path: 'registro-paciente', component: RegistroPacienteComponent },
-  { path: 'agendar-citas', component: GestionCitasComponent },
-  { path: 'catalogos', component: TipoTratamientoComponent },
-  { path: 'facturacion', component: FacturacionComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'consultorio', component: ConsultorioContentComponent, canActivate: [AuthGuard] },
+  { path: 'hom', component: ConsultorioContentComponent, canActivate: [AuthGuard] },
+  { path: 'busqueda-paciente', component: BusquedaPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'tratamiento-paciente/:id', component: TratamientoPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'historias-clinicas/:id', component: ListaHistoriasClinicasComponent, canActivate: [AuthGuard] },
+  { path: 'historia-clinica/:idHistoria/:idPaciente', component: HistoriaPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'lista-tratamientos/:id', component: ListaTratamientoPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'registro-paciente', component: RegistroPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'agendar-citas', component: GestionCitasComponent, canActivate: [AuthGuard] },
+  { path: 'catalogos', component: TipoTratamientoComponent, canActivate: [AuthGuard] },
+  { path: 'facturacion', component: FacturacionComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

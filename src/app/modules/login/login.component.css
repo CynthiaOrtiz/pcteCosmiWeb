@@ -1,0 +1,121 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  font-family: 'Georgia', serif;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(255, 182, 193, 0.3);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
+}
+
+.login-header {
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #ffb6c1;
+  padding: 5px;
+  background-color: white;
+}
+
+.login-header h1 {
+  color: #d81b60;
+  font-size: 28px;
+  margin: 0 0 5px 0;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.login-header p {
+  color: #ad1457;
+  font-size: 14px;
+  margin: 0;
+  font-style: italic;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #c2185b;
+  font-size: 14px;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f06292;
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 2px solid #f8bbd0;
+  border-radius: 10px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-icon input:focus {
+  outline: none;
+  border-color: #f06292;
+  box-shadow: 0 0 8px rgba(240, 98, 146, 0.3);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: #f06292;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  font-family: inherit;
+}
+
+.btn-login:hover:not(:disabled) {
+  background: #e91e63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+.btn-login:disabled {
+  background: #f8bbd0;
+  cursor: not-allowed;
+}
+
+.btn-login i {
+  margin-left: 5px;
+}

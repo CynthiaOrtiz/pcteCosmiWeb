@@ -1,19 +1,38 @@
-<header>
-    <h1>Bienvenida a la Página del Consultorio</h1>
-    <img src="assets/images/Logo.png" alt="Logo">
-</header>
+<div class="hom-wrapper">
+  <div class="hom-container">
+    <header class="hom-header">
+        <img src="/assets/images/Logo.png" alt="Logo" class="logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+        <h1>Bienvenida al Consultorio</h1>
+        <p>Paz, Salud y Bienestar en cada detalle</p>
+    </header>
 
-<nav class="consultorio-content">
-    <ul>
-        <li><button (click)="navigate('/agendar-citas')"><i class="fas fa-calendar-alt"></i> Agendar Citas</button></li>
-        <li><button (click)="navigate('/busqueda-paciente')"><i class="fas fa-user-friends"></i> Pacientes</button></li>
-        <li><button (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button></li>
-        <li><button (click)="catalogos()"><i class="fas fa-file-invoice"></i> Gestion Catalogos</button></li>
-        <li><button (click)="navigate('/facturacion')"><i class="fas fa-file-invoice"></i> Facturación</button></li>
-         <!--<li><a routerLink="/facturacion"><i class="fas fa-file-invoice"></i> Facturación</a></li>
-        <button (click)="navigateTo('facturacion')">
-            <i class="fa fa-file-invoice-dollar"></i> Facturación
-          </button> -->
-    </ul>
-
-  </nav>
+    <nav class="consultorio-content">
+        <div class="menu-grid">
+            <button class="menu-card" (click)="navigate('/agendar-citas')">
+                <i class="fas fa-calendar-alt"></i> 
+                <span>Agendar Citas</span>
+            </button>
+            <button class="menu-card" (click)="navigate('/busqueda-paciente')">
+                <i class="fas fa-user-friends"></i> 
+                <span>Pacientes</span>
+            </button>
+            <button class="menu-card" (click)="nuevoPaciente()">
+                <i class="fas fa-user-plus"></i> 
+                <span>Crear Paciente</span>
+            </button>
+            <button class="menu-card" (click)="catalogos()">
+                <i class="fas fa-list"></i> 
+                <span>Catálogos</span>
+            </button>
+            <button class="menu-card" (click)="navigate('/facturacion')">
+                <i class="fas fa-file-invoice-dollar"></i> 
+                <span>Facturación</span>
+            </button>
+            <button class="menu-card logout" routerLink="/login" (click)="cerrarSesion()">
+                <i class="fas fa-sign-out-alt"></i> 
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </nav>
+  </div>
+</div>

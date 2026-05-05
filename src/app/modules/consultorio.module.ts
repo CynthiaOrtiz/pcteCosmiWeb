@@ -12,8 +12,6 @@ import { ListaTratamientoPacienteComponent } from './lista-tratamiento-paciente/
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GestionCitasComponent } from './gestion-citas/gestion-citas.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
@@ -35,13 +33,10 @@ import { ListaHistoriasClinicasComponent } from './lista-historias-clinicas/list
   ],
   imports: [
     CommonModule,
-    ConsultorioRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
 
-    BrowserModule,
-    BrowserAnimationsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

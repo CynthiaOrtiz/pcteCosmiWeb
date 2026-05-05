@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenService } from '../../core/token.service';
 @Component({
   standalone: false,
   selector: 'app-consultorio-content',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ConsultorioContentComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private tokenService: TokenService) { }
 
   ngOnInit(): void {
   }
@@ -28,5 +29,10 @@ export class ConsultorioContentComponent implements OnInit {
   catalogos() {
     this.router.navigate(['/catalogos']);
 
+  }
+
+  cerrarSesion() {
+    this.tokenService.logOut();
+    this.router.navigate(['/login']);
   }
 }
