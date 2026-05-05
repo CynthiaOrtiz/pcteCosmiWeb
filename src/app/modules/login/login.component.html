@@ -19,7 +19,8 @@
         <label for="password">Contraseña</label>
         <div class="input-icon">
           <i class="fas fa-lock"></i>
-          <input type="password" id="password" name="password" [(ngModel)]="password" required autocomplete="off" placeholder="Tu contraseña">
+          <input [type]="hidePassword ? 'password' : 'text'" id="password" name="password" [(ngModel)]="password" required autocomplete="off" placeholder="Tu contraseña">
+          <i class="toggle-password fas" [ngClass]="{'fa-eye-slash': hidePassword, 'fa-eye': !hidePassword}" (click)="togglePasswordVisibility()" style="cursor: pointer;"></i>
         </div>
       </div>
 
