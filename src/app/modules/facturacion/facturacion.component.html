@@ -3,9 +3,9 @@
 
     <header class="fac-header">
       <img src="/assets/images/Logo.png" alt="Logo" class="logo"
-           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+        onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
       <h1>Portal de Facturación Electrónica</h1>
-      <p>Emite tus comprobantes SRI con paz y precisión</p>
+      <p>Emite tus comprobantes SRI</p>
     </header>
 
     <form [formGroup]="facturaForm" (ngSubmit)="emitirFactura()">
@@ -30,10 +30,8 @@
           <div class="input-icon">
             <i class="fas fa-search"></i>
             <input id="buscadorPaciente" type="text" [(ngModel)]="busquedaPaciente"
-                   [ngModelOptions]="{standalone: true}"
-                   (input)="filtrarPacientes()"
-                   placeholder="Escribe al menos 2 caracteres..."
-                   autocomplete="off">
+              [ngModelOptions]="{standalone: true}" (input)="filtrarPacientes()"
+              placeholder="Escribe al menos 2 caracteres..." autocomplete="off">
             <button *ngIf="pacienteSeleccionado" type="button" class="btn-clear" (click)="limpiarPaciente()">
               <i class="fas fa-times"></i>
             </button>
@@ -65,23 +63,20 @@
         </div>
 
         <div formArrayName="detalles">
-          <div *ngFor="let detalle of detalles.controls; let i = index"
-               [formGroupName]="i" class="detalle-fila">
+          <div *ngFor="let detalle of detalles.controls; let i = index" [formGroupName]="i" class="detalle-fila">
 
-            <input formControlName="descripcion" type="text"
-                   placeholder="Servicio o producto...">
+            <input formControlName="descripcion" type="text" placeholder="Servicio o producto...">
 
             <input formControlName="cantidad" type="number" min="1">
 
-            <input formControlName="precioUnitario" type="number" min="0" step="0.01"
-                   placeholder="0.00">
+            <input formControlName="precioUnitario" type="number" min="0" step="0.01" placeholder="0.00">
 
             <span class="subtotal-cell">
               $ {{ asFormGroup(detalle).get('subtotal')?.value | number:'1.2-2' }}
             </span>
 
-            <button type="button" class="btn-delete" (click)="eliminarDetalle(i)"
-                    [disabled]="detalles.length === 1" title="Eliminar línea">
+            <button type="button" class="btn-delete" (click)="eliminarDetalle(i)" [disabled]="detalles.length === 1"
+              title="Eliminar línea">
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
