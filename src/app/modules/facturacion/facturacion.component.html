@@ -1,27 +1,125 @@
-<div class="container coquette">
-  <h1>Portal de Facturación Electrónica (SRI)</h1>
-  
-  <form [formGroup]="facturaForm" (ngSubmit)="emitirFactura()">
-    <label>Secuencial de Comprobante:</label>
-    <input formControlName="numeroFactura" type="text" placeholder="001-001-000000001">
+<div class="fac-wrapper">
+  <div class="fac-container">
 
-    <label>Subtotal Libre de Impuestos:</label>
-    <input formControlName="subtotal" type="number" step="0.01">
+    <header class="fac-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h1>Portal de Facturación Electrónica</h1>
+      <p>Emite tus comprobantes SRI con paz y precisión</p>
+    </header>
 
-    <label>IVA Total:</label>
-    <input formControlName="iva" type="number" step="0.01">
+    <form [formGroup]="facturaForm" (ngSubmit)="emitirFactura()">
 
-    <label>Valor Total:</label>
-    <input formControlName="total" type="number" step="0.01">
+      <!-- Número de factura -->
+      <div class="form-section">
+        <h2 class="section-title"><i class="fas fa-file-invoice-dollar"></i> Datos de la Factura</h2>
+        <div class="form-group">
+          <label for="numeroFactura">Secuencial de Comprobante</label>
+          <div class="input-icon">
+            <i class="fas fa-hashtag"></i>
+            <input id="numeroFactura" type="text" formControlName="numeroFactura" placeholder="001-001-000000001">
+          </div>
+        </div>
+      </div>
 
-    <div class="buttons" style="margin-top: 15px;">
-      <button type="submit" class="btn primary" [disabled]="isSubmitting">
-        <i class="fas fa-paper-plane"></i> Emitir Factura SRI
-      </button>
-    </div>
-  </form>
+      <!-- Búsqueda de paciente -->
+      <div class="form-section">
+        <h2 class="section-title"><i class="fas fa-user"></i> Paciente</h2>
+        <div class="form-group" style="position: relative;">
+          <label for="buscadorPaciente">Buscar Paciente (nombre o cédula)</label>
+          <div class="input-icon">
+            <i class="fas fa-search"></i>
+            <input id="buscadorPaciente" type="text" [(ngModel)]="busquedaPaciente"
+                   [ngModelOptions]="{standalone: true}"
+                   (input)="filtrarPacientes()"
+                   placeholder="Escribe al menos 2 caracteres..."
+                   autocomplete="off">
+            <button *ngIf="pacienteSeleccionado" type="button" class="btn-clear" (click)="limpiarPaciente()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="dropdown-pacientes" *ngIf="mostrarDropdown">
+            <div class="dropdown-item" *ngFor="let p of pacientesFiltrados" (click)="seleccionarPaciente(p)">
+              <i class="fas fa-user-circle"></i>
+              <span class="pac-nombre">{{ p.nomCom }}</span>
+              <span class="pac-cedula">{{ p.cedula }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="paciente-badge" *ngIf="pacienteSeleccionado">
+          <i class="fas fa-check-circle"></i>
+          <strong>{{ pacienteSeleccionado.nomCom }}</strong> &mdash; Cédula: {{ pacienteSeleccionado.cedula }}
+        </div>
+      </div>
 
-  <p *ngIf="isSubmitting" style="text-align: center; color: #ff69b4; margin-top: 20px;">
-    <i>Contactando Web Services del SRI. Por favor espera...</i>
-  </p>
+      <!-- Detalle de la factura -->
+      <div class="form-section">
+        <h2 class="section-title"><i class="fas fa-list"></i> Detalle de Servicios</h2>
+
+        <div class="tabla-header">
+          <span>Descripción</span>
+          <span>Cantidad</span>
+          <span>Precio Unit.</span>
+          <span>Subtotal</span>
+          <span></span>
+        </div>
+
+        <div formArrayName="detalles">
+          <div *ngFor="let detalle of detalles.controls; let i = index"
+               [formGroupName]="i" class="detalle-fila">
+
+            <input formControlName="descripcion" type="text"
+                   placeholder="Servicio o producto...">
+
+            <input formControlName="cantidad" type="number" min="1">
+
+            <input formControlName="precioUnitario" type="number" min="0" step="0.01"
+                   placeholder="0.00">
+
+            <span class="subtotal-cell">
+              $ {{ asFormGroup(detalle).get('subtotal')?.value | number:'1.2-2' }}
+            </span>
+
+            <button type="button" class="btn-delete" (click)="eliminarDetalle(i)"
+                    [disabled]="detalles.length === 1" title="Eliminar línea">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-add-detalle" (click)="agregarDetalle()">
+          <i class="fas fa-plus"></i> Agregar Línea
+        </button>
+      </div>
+
+      <!-- Totales -->
+      <div class="form-section totales">
+        <div class="totales-grid">
+          <span>Subtotal (sin IVA):</span>
+          <span>$ {{ getSubtotalGeneral() | number:'1.2-2' }}</span>
+          <span>IVA (15%):</span>
+          <span>$ {{ getIva() | number:'1.2-2' }}</span>
+          <span class="total-label">TOTAL:</span>
+          <span class="total-valor">$ {{ getTotal() | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="buttons">
+        <button type="button" class="btn secondary" (click)="volverAlMenu()">
+          <i class="fas fa-arrow-left"></i> Volver al Menú
+        </button>
+        <button type="submit" class="btn primary" [disabled]="isSubmitting">
+          <i class="fas fa-paper-plane"></i>
+          {{ isSubmitting ? 'Procesando...' : 'Emitir Factura SRI' }}
+        </button>
+      </div>
+
+    </form>
+
+    <p *ngIf="isSubmitting" class="processing-msg">
+      <i class="fas fa-spinner fa-spin"></i> Contactando Web Services del SRI. Por favor espera...
+    </p>
+
+  </div>
 </div>
