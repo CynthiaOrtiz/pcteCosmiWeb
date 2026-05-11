@@ -1,37 +1,53 @@
-<div class="lista-historias-clinicas">
-    <div class="buttonhom">
-        <button type="button" (click)="home()" style="text-align: center;"> <i class="fas fa-home"></i>  </button>
-      </div>
-      <button type="button" (click)="nuevaHistoria()"><i class="fas fa-user-plus"></i> Crear Historia</button>
-      <button (click)="regresar()">
-        <span class="fas fa-arrow-left"></span> Atras
-      </button>
-    <h2>Historias Clínicas del Paciente</h2>
-    <h2>{{paciente.nomCom}}</h2>
+<div class="cq-wrapper">
+  <div class="cq-card" style="max-width: 700px;">
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="headerColumn">#</th>
-          <th class="headerColumn">Descripción</th>
-          <th class="headerColumn">Observación</th>
-          <th class="headerColumn">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let historia of historiasClinicas; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ historia.descripcion }}</td>
-          <td>{{ historia.observacion }}</td>
-          <td>
-            <button
-              class="btn btn-primary"
-              (click)="verHistoriaClinica(historia.identificador)"
-            >
-              Ver Detalle
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Historias Clínicas</h2>
+      <p class="pac-titulo">{{ paciente.nomCom }}</p>
+    </header>
+
+    <div class="cq-btn-row" style="margin-bottom:20px;">
+      <button class="cq-btn cq-btn-secondary" type="button" (click)="home()">
+        <i class="fas fa-home"></i> Menú
+      </button>
+      <button class="cq-btn cq-btn-primary" type="button" (click)="nuevaHistoria()">
+        <i class="fas fa-plus-circle"></i> Crear Historia
+      </button>
+      <button class="cq-btn cq-btn-secondary" (click)="regresar()">
+        <i class="fas fa-arrow-left"></i> Atrás
+      </button>
+    </div>
+
+    <div class="cq-section">
+      <table class="cq-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Descripción</th>
+            <th>Observación</th>
+            <th style="text-align:center;">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let historia of historiasClinicas; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ historia.descripcion }}</td>
+            <td>{{ historia.observacion }}</td>
+            <td style="text-align:center;">
+              <button class="cq-btn cq-btn-secondary" style="padding:6px 14px; font-size:13px;"
+                      (click)="verHistoriaClinica(historia.identificador)">
+                <i class="fas fa-eye"></i> Ver Detalle
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="historiasClinicas.length === 0">
+            <td colspan="4" class="cq-empty">No se encontraron historias clínicas</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
+</div>

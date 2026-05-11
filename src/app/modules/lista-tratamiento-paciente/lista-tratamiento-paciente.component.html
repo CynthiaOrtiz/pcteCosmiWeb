@@ -1,47 +1,78 @@
-<div class="lista-tratamientos-container">
-  <h2>Tratamientos del Paciente</h2>
-  <button (click)="regresar()">
-    <span class="fas fa-arrow-left"></span> Atras
-  </button>
+<div class="cq-wrapper">
+  <div class="cq-card" style="max-width: 680px;">
 
-  <!-- Barra de filtros -->
-  <div class="filtros-container">
-    <input type="date" [ngModel]="filtroFecha ? filtroFecha.toISOString().split('T')[0] : ''"
-      (ngModelChange)="actualizarFiltroFecha($event)" class="input-filtro" placeholder="Filtrar por fecha" />
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Tratamientos del Paciente</h2>
+      <p>Historial de sesiones y procedimientos</p>
+    </header>
 
-    <input type="text" [(ngModel)]="filtroDescripcion" (input)="filtrarTratamientos()" class="input-filtro"
-      placeholder="Buscar por descripción" />
+    <div class="cq-btn-row" style="margin-bottom:20px;">
+      <button class="cq-btn cq-btn-secondary" (click)="regresar()">
+        <i class="fas fa-arrow-left"></i> Atrás
+      </button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="cq-section">
+      <h3 class="cq-section-title"><i class="fas fa-filter"></i> Filtros</h3>
+      <div class="cq-grid-2">
+        <div class="cq-form-group">
+          <label>Filtrar por fecha</label>
+          <input class="cq-input" type="date"
+                 [ngModel]="filtroFecha ? filtroFecha.toISOString().split('T')[0] : ''"
+                 (ngModelChange)="actualizarFiltroFecha($event)">
+        </div>
+        <div class="cq-form-group">
+          <label>Buscar por descripción</label>
+          <input class="cq-input" type="text" [(ngModel)]="filtroDescripcion"
+                 (input)="filtrarTratamientos()" placeholder="Escribe aquí...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de tratamientos -->
+    <div class="cq-section">
+      <div *ngFor="let tratamiento of tratamientosFiltrados" style="border-bottom:1px solid #fce4ec; padding: 16px 0;">
+        <div class="cq-grid-2" style="margin-bottom:8px;">
+          <div>
+            <div class="cq-info-label">Descripción</div>
+            <div class="cq-info-value">{{ tratamiento.descripcion }}</div>
+          </div>
+          <div>
+            <div class="cq-info-label">Tipo de Tratamiento</div>
+            <div class="cq-info-value">{{ catalogoMap.get(tratamiento.tipo_tratamiento) || tratamiento.tipo_tratamiento }}</div>
+          </div>
+          <div>
+            <div class="cq-info-label">Observación</div>
+            <div class="cq-info-value">{{ tratamiento.observacion }}</div>
+          </div>
+          <div>
+            <div class="cq-info-label">Fecha</div>
+            <div class="cq-info-value">{{ tratamiento.fecha_tratamiento | date:'yyyy-MM-dd' }}</div>
+          </div>
+        </div>
+        <div *ngIf="tratamiento.firma" style="margin-top:8px;">
+          <div class="cq-info-label">Firma del Paciente</div>
+          <img [src]="'data:image/png;base64,' + tratamiento.firma" alt="Firma"
+               style="max-height: 70px; border: 1.5px solid #f8bbd0; border-radius: 8px; margin-top: 6px;">
+        </div>
+        <div *ngIf="!tratamiento.firma" style="margin-top:4px;">
+          <span class="cq-badge"><i class="fas fa-exclamation-circle"></i> Sin firma registrada</span>
+        </div>
+      </div>
+      <div *ngIf="tratamientosFiltrados.length === 0" class="cq-empty">
+        <i class="fas fa-inbox" style="font-size:32px; color:#f8bbd0; display:block; margin-bottom:8px;"></i>
+        No se encontraron resultados
+      </div>
+    </div>
+
+    <div class="cq-btn-row">
+      <button class="cq-btn cq-btn-secondary" (click)="regresar()">
+        <i class="fas fa-arrow-left"></i> Atrás
+      </button>
+    </div>
+
   </div>
-  <ul>
-    <li *ngFor="let tratamiento of tratamientosFiltrados">
-      <div>
-        <strong>Descripción:</strong> {{ tratamiento.descripcion }}
-      </div>
-      <div>
-        <strong>Observación:</strong> {{ tratamiento.observacion }}
-      </div>
-      <div>
-        <strong>Tipo de Tratamiento:</strong> {{ catalogoMap.get(tratamiento.tipo_tratamiento) ||
-        tratamiento.tipo_tratamiento }}
-      </div>
-      <div>
-        <strong>Fecha:</strong> {{ tratamiento.fecha_tratamiento | date:'yyyy-MM-dd' }}
-      </div>
-      <div *ngIf="tratamiento.firma" class="firma-container">
-        <strong>Firma:</strong><br>
-        <img [src]="'data:image/png;base64,' + tratamiento.firma" alt="Firma del paciente"
-          style="max-height: 60px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px;">
-      </div>
-      <div *ngIf="!tratamiento.firma">
-        <strong>Firma:</strong> (Sin firma o vacía)
-      </div>
-      <!-- Aquí puedes agregar botones para editar/eliminar el tratamiento -->
-    </li>
-    <li *ngIf="tratamientosFiltrados.length === 0">
-      <td colspan="2" class="sin-resultados">No se encontraron resultados</td>
-    </li>
-  </ul>
-  <button (click)="regresar()">
-    <span class="fas fa-arrow-left"></span> Atras
-  </button>
 </div>

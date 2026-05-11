@@ -1,259 +1,212 @@
-<div class="historia-clinica-container">
-    <h2>Historia Clínica</h2>
+<div class="cq-wrapper">
+  <div class="cq-card">
 
-    <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()" *ngIf = "esCreacion">
-      <button (click)="regresar()">
-        <span class="fas fa-arrow-left"></span> Atras
-      </button>
-      <button (click)="cancelarEdicion()" *ngIf = "esEdicion">
-        <span class="fas fa fa-pencil-square-o text-info"></span> Cancelar
-      </button>
-      <!-- Campos de Historia Clínica -->
-      <div class="form-group" style="font-size: x-large;">
-        <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nomCom}}</label>
-      </div>
-      <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <input id="descripcion" formControlName="descripcion" type="text" class="form-control" required="true">
-      </div>
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Historia Clínica</h2>
+      <p>{{ paciente.cedula }} - {{ paciente.nomCom }}</p>
+    </header>
 
-      <div class="form-group">
-        <label for="observacion">Observación</label>
-        <input id="observacion" formControlName="observacion" type="text" class="form-control" required="true">
+    <!-- FORMULARIO (creación / edición) -->
+    <form [formGroup]="historiaClinicaForm" (ngSubmit)="guardarHistoriaClinica()" *ngIf="esCreacion">
+
+      <div class="cq-btn-row" style="margin-bottom:20px;">
+        <button type="button" class="cq-btn cq-btn-secondary" (click)="regresar()">
+          <i class="fas fa-arrow-left"></i> Atrás
+        </button>
+        <button type="button" class="cq-btn cq-btn-secondary" *ngIf="esEdicion" (click)="cancelarEdicion()">
+          <i class="fas fa-times"></i> Cancelar Edición
+        </button>
       </div>
 
-      <div class="checkbox-group">
-        <div>
-          <label>
-          <input id="embarazo" formControlName="embarazo" type="checkbox" class="form-check-input">Embarazo
-        </label>
-        </div>
-
-        <div >
-          <label>
-          <input id="lactancia" formControlName="lactancia" type="checkbox" class="form-check-input">
-          Lactancia</label>
-        </div>
-
-        <div >
-          <label>
-          <input id="depilacion" formControlName="depilacion" type="checkbox" class="form-check-input">Depilación</label>
-        </div>
-      </div>
-        <div class="form-group">
-          <label for="metodo">Método anticonceptivo</label>
-          <input id="metodo" formControlName="metodo" type="text" class="form-control" required="true">
-        </div>
-
-      <div class="checkbox-group">
-        <div class="form-check">
-          <input id="bronceado" formControlName="bronceado" type="checkbox" class="form-check-input">
-          <label for="bronceado" class="form-check-label">Bronceado</label>
-        </div>
-
-        <div class="form-group">
-          <label for="fechaBronceado">Fecha de Bronceado</label>
-          <input id="fechaBronceado" formControlName="fechaBronceado" type="date" class="form-control" style="width: 50%;">
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-info-circle"></i> Información General</h3>
+        <div class="cq-grid-2">
+          <div class="cq-form-group" style="grid-column:1/-1;">
+            <label for="descripcion">Descripción</label>
+            <input id="descripcion" class="cq-input" formControlName="descripcion" type="text" required>
+          </div>
+          <div class="cq-form-group" style="grid-column:1/-1;">
+            <label for="observacion">Observación</label>
+            <input id="observacion" class="cq-input" formControlName="observacion" type="text" required>
+          </div>
         </div>
       </div>
 
-      <div class="checkbox-group">
-      <div class="form-check">
-        <input id="queloides" formControlName="queloides" type="checkbox" class="form-check-input">
-        <label for="queloides" class="form-check-label">Queloides</label>
-      </div>
-
-      <div class="form-check">
-        <input id="problemasHormonales" formControlName="problemasHormonales" type="checkbox" class="form-check-input">
-        <label for="problemasHormonales" class="form-check-label">Problemas Hormonales</label>
-      </div>
-
-      <div class="form-check">
-        <input id="enfermedad_cutanea" formControlName="enfermedadCutanea" type="checkbox" class="form-check-input">
-        <label for="enfermedad_cutanea" class="form-check-label">Enfermedad Cutánea</label>
-      </div>
-    </div>
-
-    <div class="checkbox-group">
-      <div class="form-check">
-        <input id="hipertricosis" formControlName="hipertricosis" type="checkbox" class="form-check-input">
-        <label for="hipertricosis" class="form-check-label">Hipertricosis</label>
-      </div>
-
-      <div class="form-check">
-        <input id="epilepsia" formControlName="epilepsia" type="checkbox" class="form-check-input">
-        <label for="epilepsia" class="form-check-label">Epilepsia</label>
-      </div>
-
-      <div class="form-check">
-        <input id="tatuaje" formControlName="tatuaje" type="checkbox" class="form-check-input">
-        <label for="tatuaje" class="form-check-label">Tatuaje</label>
-      </div>
-    </div>
-
-    <div class="checkbox-group">
-      <div class="form-group">
-        <label for="coagulacion">Coagulación</label>
-        <input id="coagulacion" formControlName="coagulacion" type="number" class="form-control" style="width: 120px;">
-      </div>
-
-      <div class="form-check">
-        <input id="herpes" formControlName="herpes" type="checkbox" class="form-check-input">
-        <label for="herpes" class="form-check-label">Herpes</label>
-      </div>
-
-      <div class="form-check">
-        <input id="dispositivo_interno" formControlName="dispositivoInterno" type="checkbox" class="form-check-input">
-        <label for="dispositivo_interno" class="form-check-label">Dispositivo Interno</label>
-      </div>
-    </div>
-
-      <div class="form-group">
-        <label for="zona_dispositivo">Zona del Dispositivo</label>
-        <input id="zona_dispositivo" formControlName="zonaDispositivo" type="text" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="alergias">Alergias</label>
-        <input id="alergias" formControlName="alergias" type="text" class="form-control">
-      </div>
-
-      <div class="checkbox-group">
-        <div class="form-group">
-          <label for="color_piel">Color de Piel</label>
-          <input id="color_piel" formControlName="colorPiel" type="text" class="form-control" required="true">
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-female"></i> Antecedentes Personales</h3>
+        <div class="cq-checkbox-grid">
+          <label class="cq-check-item"><input type="checkbox" formControlName="embarazo"> Embarazo</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="lactancia"> Lactancia</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="depilacion"> Depilación</label>
         </div>
-
-        <div class="form-check">
-          <input id="pecas" formControlName="pecas" type="checkbox" class="form-check-input">
-          <label for="pecas" class="form-check-label">Pecas</label>
+        <div class="cq-form-group">
+          <label for="metodo">Método Anticonceptivo</label>
+          <input id="metodo" class="cq-input" formControlName="metodo" type="text">
         </div>
-
-        <div class="form-group">
-          <label for="color_pelo">Color de Pelo</label>
-          <input id="color_pelo" formControlName="colorPelo" type="text" class="form-control" required="true">
+        <div class="cq-grid-2" style="margin-top:10px;">
+          <label class="cq-check-item"><input type="checkbox" formControlName="bronceado"> Bronceado</label>
+          <div class="cq-form-group">
+            <label for="fechaBronceado">Fecha de Bronceado</label>
+            <input id="fechaBronceado" class="cq-input" formControlName="fechaBronceado" type="date">
+          </div>
         </div>
       </div>
 
-      <div class="checkbox-group">
-      <div class="form-group">
-        <label for="color_ojos">Color de Ojos</label>
-        <input id="color_ojos" formControlName="colorOjos" type="text" class="form-control" required="true">
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-heartbeat"></i> Historial Médico</h3>
+        <div class="cq-checkbox-grid">
+          <label class="cq-check-item"><input type="checkbox" formControlName="queloides"> Queloides</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="problemasHormonales"> Problemas Hormonales</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="enfermedadCutanea"> Enfermedad Cutánea</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="hipertricosis"> Hipertricosis</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="epilepsia"> Epilepsia</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="tatuaje"> Tatuaje</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="herpes"> Herpes</label>
+          <label class="cq-check-item"><input type="checkbox" formControlName="dispositivoInterno"> Dispositivo Interno</label>
+        </div>
+        <div class="cq-grid-2" style="margin-top:12px;">
+          <div class="cq-form-group">
+            <label for="zona_dispositivo">Zona del Dispositivo</label>
+            <input id="zona_dispositivo" class="cq-input" formControlName="zonaDispositivo" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="coagulacion">Coagulación</label>
+            <input id="coagulacion" class="cq-input" formControlName="coagulacion" type="number" style="max-width:130px;">
+          </div>
+          <div class="cq-form-group" style="grid-column:1/-1;">
+            <label for="alergias">Alergias</label>
+            <input id="alergias" class="cq-input" formControlName="alergias" type="text">
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="potencial_quemadura">Potencial de Quemadura</label>
-        <input id="potencial_quemadura" formControlName="potencialQuemadura" type="number" class="form-control">
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-palette"></i> Características Físicas</h3>
+        <div class="cq-grid-3">
+          <div class="cq-form-group">
+            <label for="color_piel">Color de Piel</label>
+            <input id="color_piel" class="cq-input" formControlName="colorPiel" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="color_pelo">Color de Pelo</label>
+            <input id="color_pelo" class="cq-input" formControlName="colorPelo" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="color_ojos">Color de Ojos</label>
+            <input id="color_ojos" class="cq-input" formControlName="colorOjos" type="text">
+          </div>
+          <label class="cq-check-item"><input type="checkbox" formControlName="pecas"> Pecas</label>
+          <div class="cq-form-group">
+            <label for="potencial_quemadura">Potencial de Quemadura</label>
+            <input id="potencial_quemadura" class="cq-input" formControlName="potencialQuemadura" type="number">
+          </div>
+          <div class="cq-form-group">
+            <label for="potencial_bronceado">Potencial de Bronceado</label>
+            <input id="potencial_bronceado" class="cq-input" formControlName="potencialBronceado" type="number">
+          </div>
+          <div class="cq-form-group">
+            <label for="fototipo_piel">Fototipo de Piel</label>
+            <input id="fototipo_piel" class="cq-input" formControlName="fototipoPiel" type="number">
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="potencial_bronceado">Potencial de Bronceado</label>
-        <input id="potencial_bronceado" formControlName="potencialBronceado" type="number" class="form-control">
-      </div>
-    </div>
-
-    <div class="checkbox-group">
-      <div class="form-group">
-        <label for="fototipo_piel">Fototipo de Piel</label>
-        <input id="fototipo_piel" formControlName="fototipoPiel" type="number" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="medicacion">Medicación</label>
-        <input id="medicacion" formControlName="medicacion" type="text" class="form-control">
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-pills"></i> Medicación</h3>
+        <div class="cq-grid-2">
+          <div class="cq-form-group">
+            <label for="medicacion">Medicación</label>
+            <input id="medicacion" class="cq-input" formControlName="medicacion" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="fecha_medicacion">Fecha de Medicación</label>
+            <input id="fecha_medicacion" class="cq-input" formControlName="fechaMedicacion" type="date">
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="fecha_medicacion">Fecha de Medicación</label>
-        <input id="fecha_medicacion" formControlName="fechaMedicacion" type="date" class="form-control">
+      <div class="cq-btn-row">
+        <button type="submit" class="cq-btn cq-btn-primary"><i class="fas fa-save"></i> Guardar Historia Clínica</button>
+        <button type="button" class="cq-btn cq-btn-secondary" (click)="nuevoTratamiento()"><i class="fas fa-plus"></i> Agregar Tratamiento</button>
+        <button type="button" class="cq-btn cq-btn-secondary" (click)="regresar()"><i class="fas fa-times"></i> Cancelar</button>
       </div>
-    </div>
 
-      <button type="submit">Guardar Historia Clínica</button>
-      <button type="button" (click)="nuevoTratamiento()">Agregar Tratamiento</button>
-      <button type="button" (click)="regresar()">Cancelar</button>
     </form>
 
-    <div class="historia-clinica" *ngIf = "!esCreacion">
-      <button (click)="regresar()">
-        <span class="fas fa-arrow-left"></span> Atras
-      </button>
-      <button (click)="editar()">
-        <span class="fas fa fa-pencil-square-o text-info"></span> Editar
-      </button>
-      <div><br></div>
-      <div class="section">
-        <h3>Información General</h3>
-        <div class="form-group" style="font-size: x-large;">
-          <label for="paciente">Paciente: {{paciente.cedula}} - {{paciente.nomCom}}</label>
-        </div>
-        <p><strong>Descripción:</strong> {{ historiaClinica.descripcion }}</p>
-        <p><strong>Observación:</strong> {{ historiaClinica.observacion }}</p>
-        <p><strong>Paciente ID:</strong> {{ historiaClinica.paciente }}</p>
+    <!-- VISTA DE SOLO LECTURA -->
+    <div *ngIf="!esCreacion">
+      <div class="cq-btn-row" style="margin-bottom:20px;">
+        <button class="cq-btn cq-btn-secondary" (click)="regresar()"><i class="fas fa-arrow-left"></i> Atrás</button>
+        <button class="cq-btn cq-btn-primary" (click)="editar()"><i class="fas fa-pencil-alt"></i> Editar</button>
       </div>
 
-      <div class="section">
-        <h3>Antecedentes Personales</h3>
-        <div class="checkbox-group">
-          <div><strong>Embarazo:</strong> {{ historiaClinica.embarazo ? 'Sí' : 'No' }}</div>
-          <div><strong>Lactancia:</strong> {{ historiaClinica.lactancia ? 'Sí' : 'No' }}</div>
-          <div><strong>Depilación:</strong> {{ historiaClinica.depilacion ? 'Sí' : 'No' }}</div>
-          <div><strong>Método:</strong> {{ historiaClinica.metodo }}</div>
-        </div>
-        <div>
-          <strong>Bronceado:</strong> {{ historiaClinica.bronceado ? 'Sí' : 'No' }}
-          <span *ngIf="historiaClinica.bronceado">({{ historiaClinica.fechaBronceado | date:'longDate' }})</span>
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-info-circle"></i> Información General</h3>
+        <div class="cq-grid-2">
+          <div><div class="cq-info-label">Descripción</div><div class="cq-info-value">{{ historiaClinica.descripcion }}</div></div>
+          <div><div class="cq-info-label">Observación</div><div class="cq-info-value">{{ historiaClinica.observacion }}</div></div>
         </div>
       </div>
 
-      <div class="section">
-        <h3>Historial Médico</h3>
-        <div class="checkbox-group">
-          <div><strong>Queloides:</strong> {{ historiaClinica.queloides ? 'Sí' : 'No' }}</div>
-          <div><strong>Problemas Hormonales:</strong> {{ historiaClinica.problemasHormonales ? 'Sí' : 'No' }}</div>
-          <div><strong>Enfermedad Cutánea:</strong> {{ historiaClinica.enfermedadCutanea ? 'Sí' : 'No' }}</div>
-          <div><strong>Hipertricosis:</strong> {{ historiaClinica.hipertricosis ? 'Sí' : 'No' }}</div>
-          <div><strong>Epilepsia:</strong> {{ historiaClinica.epilepsia ? 'Sí' : 'No' }}</div>
-          <div><strong>Tatuaje:</strong> {{ historiaClinica.tatuaje ? 'Sí' : 'No' }}</div>
-          <div><strong>Herpes:</strong> {{ historiaClinica.herpes ? 'Sí' : 'No' }}</div>
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-female"></i> Antecedentes Personales</h3>
+        <div class="cq-checkbox-grid">
+          <div><span class="cq-info-badge">Embarazo:</span> {{ historiaClinica.embarazo ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Lactancia:</span> {{ historiaClinica.lactancia ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Depilación:</span> {{ historiaClinica.depilacion ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Método:</span> {{ historiaClinica.metodo }}</div>
+          <div><span class="cq-info-badge">Bronceado:</span> {{ historiaClinica.bronceado ? 'Sí' : 'No' }}
+            <span *ngIf="historiaClinica.bronceado"> ({{ historiaClinica.fechaBronceado | date:'longDate' }})</span>
+          </div>
         </div>
       </div>
 
-      <div class="section">
-        <h3>Detalles Adicionales</h3>
-        <p><strong>Coagulación:</strong> {{ historiaClinica.coagulacion }}</p>
-        <p><strong>Dispositivo Interno:</strong> {{ historiaClinica.dispositivoInterno ? 'Sí' : 'No' }}</p>
-        <p *ngIf="historiaClinica.dispositivoInterno">
-          <strong>Zona del Dispositivo:</strong> {{ historiaClinica.zonaDispositivo }}
-        </p>
-        <p><strong>Alergias:</strong> {{ historiaClinica.alergias }}</p>
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-heartbeat"></i> Historial Médico</h3>
+        <div class="cq-checkbox-grid">
+          <div><span class="cq-info-badge">Queloides:</span> {{ historiaClinica.queloides ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">P. Hormonales:</span> {{ historiaClinica.problemasHormonales ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">E. Cutánea:</span> {{ historiaClinica.enfermedadCutanea ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Hipertricosis:</span> {{ historiaClinica.hipertricosis ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Epilepsia:</span> {{ historiaClinica.epilepsia ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Tatuaje:</span> {{ historiaClinica.tatuaje ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Herpes:</span> {{ historiaClinica.herpes ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Coagulación:</span> {{ historiaClinica.coagulacion }}</div>
+          <div><span class="cq-info-badge">Dispositivo:</span> {{ historiaClinica.dispositivoInterno ? 'Sí' : 'No' }}
+            <span *ngIf="historiaClinica.dispositivoInterno"> — {{ historiaClinica.zonaDispositivo }}</span>
+          </div>
+          <div><span class="cq-info-badge">Alergias:</span> {{ historiaClinica.alergias }}</div>
+        </div>
       </div>
 
-      <div class="section">
-        <h3>Características Físicas</h3>
-        <p><strong>Color de Piel:</strong> {{ historiaClinica.colorPiel }}</p>
-        <p><strong>Pecas:</strong> {{ historiaClinica.pecas ? 'Sí' : 'No' }}</p>
-        <p><strong>Color de Pelo:</strong> {{ historiaClinica.colorPelo }}</p>
-        <p><strong>Color de Ojos:</strong> {{ historiaClinica.colorOjos}}</p>
-        <p><strong>Raza:</strong> {{ historiaClinica.raza }}</p>
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-palette"></i> Características Físicas y Fototipo</h3>
+        <div class="cq-checkbox-grid">
+          <div><span class="cq-info-badge">Color Piel:</span> {{ historiaClinica.colorPiel }}</div>
+          <div><span class="cq-info-badge">Color Pelo:</span> {{ historiaClinica.colorPelo }}</div>
+          <div><span class="cq-info-badge">Color Ojos:</span> {{ historiaClinica.colorOjos }}</div>
+          <div><span class="cq-info-badge">Pecas:</span> {{ historiaClinica.pecas ? 'Sí' : 'No' }}</div>
+          <div><span class="cq-info-badge">Raza:</span> {{ historiaClinica.raza }}</div>
+          <div><span class="cq-info-badge">P. Quemadura:</span> {{ historiaClinica.potencialQuemadura }}</div>
+          <div><span class="cq-info-badge">P. Bronceado:</span> {{ historiaClinica.potencialBronceado }}</div>
+          <div><span class="cq-info-badge">Fototipo:</span> {{ historiaClinica.fototipoPiel }}</div>
+        </div>
       </div>
 
-      <div class="section">
-        <h3>Fototipo y Potenciales</h3>
-        <p><strong>Potencial de Quemadura:</strong> {{ historiaClinica.potencialQuemadura}}</p>
-        <p><strong>Potencial de Bronceado:</strong> {{ historiaClinica.potencialBronceado }}</p>
-        <p><strong>Fototipo de Piel:</strong> {{ historiaClinica.fototipoPiel }}</p>
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-pills"></i> Medicación</h3>
+        <div class="cq-grid-2">
+          <div><div class="cq-info-label">Medicación</div><div class="cq-info-value">{{ historiaClinica.medicacion }}</div></div>
+          <div><div class="cq-info-label">Fecha de Medicación</div><div class="cq-info-value">{{ historiaClinica.fechaMedicacion | date:'longDate' }}</div></div>
+        </div>
       </div>
 
-      <div class="section">
-        <h3>Medicación</h3>
-        <p><strong>Medicación:</strong> {{ historiaClinica.medicacion }}</p>
-        <p><strong>Fecha de Medicación:</strong> {{ historiaClinica.fechaMedicacion | date:'longDate' }}</p>
+      <div class="cq-btn-row">
+        <button class="cq-btn cq-btn-secondary" (click)="regresar()"><i class="fas fa-arrow-left"></i> Atrás</button>
       </div>
-      <button (click)="regresar()">
-        <span class="fas fa-arrow-left"></span> Atras
-      </button>
     </div>
 
   </div>
-
+</div>

@@ -1,72 +1,96 @@
-<div class="registro-paciente">
-    <h2>Registro de Nuevo Paciente</h2>
-    <button (click)="cancelar()">
-      <span class="fas fa-arrow-left"></span> Atras
-    </button>
+<div class="cq-wrapper">
+  <div class="cq-card">
+
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Registro de Nuevo Paciente</h2>
+      <p>Completa los datos con amor y precisión</p>
+    </header>
+
+    <div class="cq-btn-row" style="margin-bottom: 20px;">
+      <button class="cq-btn cq-btn-secondary" (click)="cancelar()">
+        <i class="fas fa-arrow-left"></i> Atrás
+      </button>
+    </div>
+
     <form [formGroup]="formularioPaciente" (ngSubmit)="guardarPaciente()">
 
-      <div>
-        <label for="nombre">Nombre:</label>
-        <input id="nombre" formControlName="nombre" type="text" (input)="llenarNomCom()" required="true">
-      </div>
-      <div>
-        <label for="apellido">Apellido:</label>
-        <input id="apellido" formControlName="apellido" type="text" (input)="llenarNomCom()" required="true">
-      </div>
-      <div>
-        <label for="nombre_completo">Nombre Completo:</label>
-        <input id="nombre_completo" formControlName="nomCom" type="text" readonly>
-      </div>
-      <div>
-        <label for="cedula">Cédula:</label>
-        <input id="cedula" formControlName="cedula" type="text" maxlength="10">
-        <div *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaLength') && formularioPaciente.get('cedula')?.touched" style="color: red; font-size: 0.8em;">La cédula debe tener 10 dígitos.</div>
-        <div *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaPattern') && formularioPaciente.get('cedula')?.touched" style="color: red; font-size: 0.8em;">La cédula solo debe contener números.</div>
-        <div *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaInvalida') && formularioPaciente.get('cedula')?.touched" style="color: red; font-size: 0.8em;">La cédula ecuatoriana ingresada no es válida.</div>
-      </div>
-      <div>
-        <label for="pasaporte">Pasaporte:</label>
-        <input id="pasaporte" formControlName="pasaporte" type="text" maxlength="20">
-      </div>
-      <div *ngIf="formularioPaciente.hasError('requiereIdentificacion') && (formularioPaciente.get('cedula')?.touched || formularioPaciente.get('pasaporte')?.touched)" style="color: red; font-size: 0.8em; margin-bottom: 10px;">
-        Debe ingresar la cédula o el pasaporte para continuar.
-      </div>
-      <div>
-        <label for="direccion">Dirección:</label>
-        <input id="direccion" formControlName="direccion" type="text">
-      </div>
-      <div>
-        <label for="telefono">Teléfono:</label>
-        <input id="telefono" formControlName="telefono" type="text" required="true" maxlength="10">
-        <div *ngIf="formularioPaciente.get('telefono')?.invalid && formularioPaciente.get('telefono')?.touched" style="color: red; font-size: 0.8em;">
-          Teléfono inválido (máximo 10 dígitos numéricos).
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-user"></i> Datos Personales</h3>
+        <div class="cq-grid-2">
+          <div class="cq-form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" class="cq-input" formControlName="nombre" type="text" (input)="llenarNomCom()" required>
+          </div>
+          <div class="cq-form-group">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" class="cq-input" formControlName="apellido" type="text" (input)="llenarNomCom()" required>
+          </div>
+          <div class="cq-form-group">
+            <label for="nombre_completo">Nombre Completo</label>
+            <input id="nombre_completo" class="cq-input" formControlName="nomCom" type="text" readonly>
+          </div>
+          <div class="cq-form-group">
+            <label for="genero">Género</label>
+            <select id="genero" class="cq-select" formControlName="genero">
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+            </select>
+          </div>
+          <div class="cq-form-group">
+            <label for="nacimiento">Fecha de Nacimiento</label>
+            <input id="nacimiento" class="cq-input" formControlName="nacimiento" type="date" (blur)="calcularEdad()">
+          </div>
+          <div class="cq-form-group">
+            <label for="edad">Edad</label>
+            <input id="edad" class="cq-input" formControlName="edad" type="number">
+          </div>
         </div>
       </div>
-      <div>
-        <label for="ocupacion">Ocupación:</label>
-        <input id="ocupacion" formControlName="ocupacion" type="text">
-      </div>
-      <div>
-        <label for="genero">Género:</label>
-        <select id="genero" formControlName="genero">
-          <option value="masculino">Masculino</option>
-          <option value="femenino">Femenino</option>
-        </select>
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input id="email" formControlName="email" type="email">
-      </div>
-      <div>
-        <label for="nacimiento">Fecha de Nacimiento:</label>
-        <input id="nacimiento" formControlName="nacimiento" type="date" (blur)="calcularEdad()">
-      </div>
-      <div>
-        <label for="edad">Edad:</label>
-        <input id="edad" formControlName="edad" type="number">
-      </div>
-      <button type="submit" >Guardar paciente</button>
-      <button type="button" (click)="cancelar()">Cancelar</button>
-    </form>
 
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-id-card"></i> Identificación y Contacto</h3>
+        <div class="cq-grid-2">
+          <div class="cq-form-group">
+            <label for="cedula">Cédula</label>
+            <input id="cedula" class="cq-input" formControlName="cedula" type="text" maxlength="10">
+            <div class="cq-error" *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaLength') && formularioPaciente.get('cedula')?.touched">La cédula debe tener 10 dígitos.</div>
+            <div class="cq-error" *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaPattern') && formularioPaciente.get('cedula')?.touched">La cédula solo debe contener números.</div>
+            <div class="cq-error" *ngIf="formularioPaciente.get('cedula')?.hasError('cedulaInvalida') && formularioPaciente.get('cedula')?.touched">La cédula ecuatoriana ingresada no es válida.</div>
+          </div>
+          <div class="cq-form-group">
+            <label for="pasaporte">Pasaporte</label>
+            <input id="pasaporte" class="cq-input" formControlName="pasaporte" type="text" maxlength="20">
+          </div>
+          <div class="cq-error" *ngIf="formularioPaciente.hasError('requiereIdentificacion') && (formularioPaciente.get('cedula')?.touched || formularioPaciente.get('pasaporte')?.touched)" style="grid-column: 1/-1;">
+            Debe ingresar la cédula o el pasaporte para continuar.
+          </div>
+          <div class="cq-form-group">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" class="cq-input" formControlName="telefono" type="text" maxlength="10">
+            <div class="cq-error" *ngIf="formularioPaciente.get('telefono')?.invalid && formularioPaciente.get('telefono')?.touched">Teléfono inválido (máximo 10 dígitos numéricos).</div>
+          </div>
+          <div class="cq-form-group">
+            <label for="email">Email</label>
+            <input id="email" class="cq-input" formControlName="email" type="email">
+          </div>
+          <div class="cq-form-group" style="grid-column: 1/-1;">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" class="cq-input" formControlName="direccion" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="ocupacion">Ocupación</label>
+            <input id="ocupacion" class="cq-input" formControlName="ocupacion" type="text">
+          </div>
+        </div>
+      </div>
+
+      <div class="cq-btn-row">
+        <button type="submit" class="cq-btn cq-btn-primary"><i class="fas fa-save"></i> Guardar Paciente</button>
+        <button type="button" class="cq-btn cq-btn-secondary" (click)="cancelar()"><i class="fas fa-times"></i> Cancelar</button>
+      </div>
+
+    </form>
   </div>
+</div>

@@ -1,114 +1,140 @@
-<div class="busqueda-paciente-container">
-  <div class="buttonhom">
-    <button type="button" (click)="home()" style="text-align: center;"> <i class="fas fa-home"></i> </button>
-  </div>
-  <button type="button" (click)="nuevoPaciente()"><i class="fas fa-user-plus"></i> Crear Paciente</button>
-  <button (click)="regresar()">
-    <span class="fas fa-arrow-left"></span> Atras
-  </button>
-  <h2>Lista de Pacientes</h2>
-  <div class="filtro-container">
-    <input type="text" placeholder="Buscar por cédula, nombre o apellido" [(ngModel)]="filtro"
-      (input)="filtrarPacientes()" class="input-filtro" />
-  </div>
-  <ul>
-    <li *ngFor="let paciente of pacientesFiltrados" (click)="seleccionarPaciente(paciente)">
+<div class="cq-wrapper">
+  <div class="cq-card">
 
-      <div class="column-count: 5; column-gap: 20px; ">
-        {{ paciente.cedula }} - {{ paciente.nomCom }}
-        <button (click)="verHistoriaClinica(paciente)" title="Historia Clínica">
-          <i class="fas fa-file-medical"></i>
-        </button>
-        <button (click)="nuevoTratamiento(paciente)" title="Nuevo Tratamiento">
-          <i class="fas fa-plus-circle"></i>
-        </button>
-        <button (click)="verTratamientos(paciente)" title="Tratamientos">
-          <i class="fas fa-list"></i>
-        </button>
-        <button (click)="abrirModalEliminar(paciente, confirmDeleteModal)" title="Eliminar">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Lista de Pacientes</h2>
+      <p>Encuentra y gestiona a tus pacientes</p>
+    </header>
 
-    </li>
-    <li *ngIf="pacientesFiltrados.length === 0">
-      <td colspan="3" class="sin-resultados">No se encontraron resultados</td>
-    </li>
-    <button (click)="regresar()">
-      <span class="fas fa-arrow-left"></span> Atras
-    </button>
-  </ul>
-
-  <div *ngIf="selectedPaciente" class="editar-paciente">
-    <h2>Editar Paciente</h2>
-    <form [formGroup]="pacienteForm" (ngSubmit)="guardarCambios()">
-      <div>
-        <label for="nombre">Nombre:</label>
-        <input id="nombre" formControlName="nombre" type="text" (input)="llenarNomCom()">
-      </div>
-      <div>
-        <label for="apellido">Apellido:</label>
-        <input id="apellido" formControlName="apellido" type="text" (input)="llenarNomCom()">
-      </div>
-      <div>
-        <label for="nombre_completo">Nombre Completo:</label>
-        <input id="nombre_completo" formControlName="nomCom" type="text" readonly>
-      </div>
-      <div>
-        <label for="cedula">Cédula:</label>
-        <input id="cedula" formControlName="cedula" type="text" readonly>
-      </div>
-      <div>
-        <label for="pasaporte">Pasaporte:</label>
-        <input id="pasaporte" formControlName="pasaporte" type="text" readonly>
-      </div>
-      <div>
-        <label for="direccion">Dirección:</label>
-        <input id="direccion" formControlName="direccion" type="text">
-      </div>
-      <div>
-        <label for="telefono">Teléfono:</label>
-        <input id="telefono" formControlName="telefono" type="number">
-      </div>
-      <div>
-        <label for="ocupacion">Ocupación:</label>
-        <input id="ocupacion" formControlName="ocupacion" type="text">
-      </div>
-      <div>
-        <label for="genero">Género:</label>
-        <select id="genero" formControlName="genero">
-          <option value="masculino">Masculino</option>
-          <option value="femenino">Femenino</option>
-        </select>
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input id="email" formControlName="email" type="email">
-      </div>
-      <div>
-        <label for="nacimiento">Fecha de Nacimiento:</label>
-        <input id="nacimiento" formControlName="nacimiento" type="date">
-      </div>
-      <button type="submit">Guardar Cambios</button>
-      <button type="button" (click)="cancelarEdicion()">Cancelar</button>
-    </form>
-  </div>
-
-  <ng-template #confirmDeleteModal let-modal>
-    <div class="modal-header" style="background-color: #ff69b4; color: white; padding: 0.5rem 1rem;">
-      <h4 class="modal-title" id="modal-title" style="font-size: 1.2rem;" style="margin:0 0 0px;">Confirmar Eliminación
-      </h4>
-      <button type="button" class="btn-close btn-close-white" style="font-size: 0.75rem;" aria-label="Close button"
-        aria-describedby="modal-title" (click)="modal.dismiss('Cross click')"></button>
+    <!-- Barra de acciones -->
+    <div class="cq-btn-row" style="margin-bottom: 20px;">
+      <button class="cq-btn cq-btn-secondary" type="button" (click)="home()">
+        <i class="fas fa-home"></i> Menú
+      </button>
+      <button class="cq-btn cq-btn-primary" type="button" (click)="nuevoPaciente()">
+        <i class="fas fa-user-plus"></i> Crear Paciente
+      </button>
     </div>
-    <div class="modal-body" style="background-color: #e0e0e0; color: #333;">
-      <p style="margin-bottom: 0;">¿Estás seguro de que deseas eliminar al paciente <strong style="color: black;">{{
-          pacienteAEliminar?.nomCom }}</strong>?</p>
+
+    <!-- Buscador -->
+    <div class="cq-search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar por cédula, nombre o apellido"
+             [(ngModel)]="filtro" (input)="filtrarPacientes()" />
     </div>
-    <div class="modal-footer" style="background-color: #e0e0e0; border-top: 1px solid #c0c0c0;">
-      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel')"
-        style="background-color: white; color: #333;">Cancelar</button>
-      <button type="button" class="btn btn-danger" (click)="modal.close('Ok')">Eliminar</button>
+
+    <!-- Lista de pacientes -->
+    <div class="cq-section">
+      <table class="cq-table">
+        <thead>
+          <tr>
+            <th>Cédula</th>
+            <th>Nombre Completo</th>
+            <th style="text-align:center;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let paciente of pacientesFiltrados" (click)="seleccionarPaciente(paciente)">
+            <td>{{ paciente.cedula }}</td>
+            <td>{{ paciente.nomCom }}</td>
+            <td style="text-align:center; white-space:nowrap;">
+              <button class="cq-btn-icon" (click)="verHistoriaClinica(paciente); $event.stopPropagation()" title="Historia Clínica">
+                <i class="fas fa-file-medical"></i>
+              </button>
+              <button class="cq-btn-icon" (click)="nuevoTratamiento(paciente); $event.stopPropagation()" title="Nuevo Tratamiento">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <button class="cq-btn-icon" (click)="verTratamientos(paciente); $event.stopPropagation()" title="Tratamientos">
+                <i class="fas fa-list"></i>
+              </button>
+              <button class="cq-btn-icon danger" (click)="abrirModalEliminar(paciente, confirmDeleteModal); $event.stopPropagation()" title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="pacientesFiltrados.length === 0">
+            <td colspan="3" class="cq-empty">No se encontraron resultados</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </ng-template>
+
+    <!-- Formulario edición -->
+    <div *ngIf="selectedPaciente" class="cq-section">
+      <h3 class="cq-section-title"><i class="fas fa-user-edit"></i> Editar Paciente</h3>
+      <form [formGroup]="pacienteForm" (ngSubmit)="guardarCambios()">
+        <div class="cq-grid-2">
+          <div class="cq-form-group">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" class="cq-input" formControlName="nombre" type="text" (input)="llenarNomCom()">
+          </div>
+          <div class="cq-form-group">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" class="cq-input" formControlName="apellido" type="text" (input)="llenarNomCom()">
+          </div>
+          <div class="cq-form-group">
+            <label for="nombre_completo">Nombre Completo</label>
+            <input id="nombre_completo" class="cq-input" formControlName="nomCom" type="text" readonly>
+          </div>
+          <div class="cq-form-group">
+            <label for="cedula">Cédula</label>
+            <input id="cedula" class="cq-input" formControlName="cedula" type="text" readonly>
+          </div>
+          <div class="cq-form-group">
+            <label for="pasaporte">Pasaporte</label>
+            <input id="pasaporte" class="cq-input" formControlName="pasaporte" type="text" readonly>
+          </div>
+          <div class="cq-form-group">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" class="cq-input" formControlName="direccion" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" class="cq-input" formControlName="telefono" type="number">
+          </div>
+          <div class="cq-form-group">
+            <label for="ocupacion">Ocupación</label>
+            <input id="ocupacion" class="cq-input" formControlName="ocupacion" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="genero">Género</label>
+            <select id="genero" class="cq-select" formControlName="genero">
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+            </select>
+          </div>
+          <div class="cq-form-group">
+            <label for="email">Email</label>
+            <input id="email" class="cq-input" formControlName="email" type="email">
+          </div>
+          <div class="cq-form-group">
+            <label for="nacimiento">Fecha de Nacimiento</label>
+            <input id="nacimiento" class="cq-input" formControlName="nacimiento" type="date">
+          </div>
+        </div>
+        <div class="cq-btn-row">
+          <button type="submit" class="cq-btn cq-btn-primary"><i class="fas fa-save"></i> Guardar Cambios</button>
+          <button type="button" class="cq-btn cq-btn-secondary" (click)="cancelarEdicion()"><i class="fas fa-times"></i> Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal confirmación eliminación -->
+    <ng-template #confirmDeleteModal let-modal>
+      <div class="cq-modal-header">
+        <h4 style="margin:0; font-size:16px;">Confirmar Eliminación</h4>
+        <button type="button" style="background:none;border:none;color:white;float:right;font-size:18px;cursor:pointer;" (click)="modal.dismiss('Cross click')">&times;</button>
+      </div>
+      <div class="cq-modal-body">
+        <p>¿Estás segura de que deseas eliminar al paciente <strong>{{ pacienteAEliminar?.nomCom }}</strong>?</p>
+      </div>
+      <div class="cq-modal-footer">
+        <button class="cq-btn cq-btn-secondary" (click)="modal.dismiss('cancel')">Cancelar</button>
+        <button class="cq-btn cq-btn-danger" (click)="modal.close('Ok')"><i class="fas fa-trash"></i> Eliminar</button>
+      </div>
+    </ng-template>
+
+  </div>
 </div>

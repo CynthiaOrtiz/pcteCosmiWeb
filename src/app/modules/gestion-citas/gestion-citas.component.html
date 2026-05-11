@@ -1,89 +1,135 @@
-<div class="gestion-citas">
-  <div class="container">
-    <button type="button" (click)="home()"> <i class="fas fa-home"></i> </button>
-    <h1>Gestión de Citas</h1>
-    <div class="calendar">
-      <div class="navigation">
-        <button (click)="previousMonth()" class="btn btn-secondary" ngbPopover="Mes Anterior"
-          poppoverTitle="Popover on top">
-          <i class="fas fa-arrow-left"></i></button>
-        <button (click)="viewToday()" class="btn btn-secondary btn-sm" ngbPopover="Hoy"
-          poppoverTitle="Popover on top"><i class="fas fa-calendar-alt"></i> Hoy</button>
-        <button (click)="nextMonth()" class="btn btn-secondary" ngbPopover="Mes Siguiente"
-          poppoverTitle="Popover on top">
-          <i class="fas fa-arrow-right"></i></button>
+<div class="cq-wrapper">
+  <div class="cq-card">
+
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Gestión de Citas</h2>
+      <p>Agenda y organiza las citas de tus pacientes</p>
+    </header>
+
+    <div class="cq-btn-row" style="margin-bottom:20px;">
+      <button class="cq-btn cq-btn-secondary" type="button" (click)="home()">
+        <i class="fas fa-home"></i> Menú
+      </button>
+    </div>
+
+    <div class="cq-section">
+      <!-- Navegación del calendario -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="cq-btn cq-btn-secondary" style="padding:7px 12px;" (click)="previousMonth()" title="Mes Anterior">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button class="cq-btn cq-btn-secondary" style="padding:7px 12px;" (click)="viewToday()" title="Hoy">
+            <i class="fas fa-calendar-alt"></i> Hoy
+          </button>
+          <button class="cq-btn cq-btn-secondary" style="padding:7px 12px;" (click)="nextMonth()" title="Mes Siguiente">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <span style="color:#d81b60; font-size:18px; font-weight:bold; font-family:Georgia,serif;">
+          {{ viewDate | date: 'MMMM yyyy' }}
+        </span>
+
+        <div style="display:flex; gap:8px;">
+          <button class="cq-btn cq-btn-secondary" style="padding:7px 12px; font-size:13px;" (click)="setView(CalendarView.Month)">Mes</button>
+          <button class="cq-btn cq-btn-secondary" style="padding:7px 12px; font-size:13px;" (click)="setView(CalendarView.Week)">Semana</button>
+          <button class="cq-btn cq-btn-secondary" style="padding:7px 12px; font-size:13px;" (click)="setView(CalendarView.Day)">Día</button>
+        </div>
       </div>
-      <span>{{ viewDate | date: 'MMMM yyyy' }}</span>
-      <div class="view-buttons">
-        <button (click)="setView(CalendarView.Month)" class="btn btn-secondary btn-sm">Mes</button>
-        <button (click)="setView(CalendarView.Week)" class="btn btn-secondary btn-sm">Semana</button>
-        <button (click)="setView(CalendarView.Day)" class="btn btn-secondary btn-sm">Día</button>
-      </div>
+
+      <!-- Calendario -->
       <ng-container [ngSwitch]="view">
-        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-          [refresh]="refresh" [activeDayIsOpen]="false" (dayClicked)="dayClicked($event)">
+        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+          [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+          [activeDayIsOpen]="false" (dayClicked)="dayClicked($event)">
         </mwl-calendar-month-view>
-        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-          [refresh]="refresh" (eventClicked)="editEvent($event.event)">
+        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
+          [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+          (eventClicked)="editEvent($event.event)">
         </mwl-calendar-week-view>
-        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-          [refresh]="refresh" (eventClicked)="editEvent($event.event)">
+        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
+          [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+          (eventClicked)="editEvent($event.event)">
         </mwl-calendar-day-view>
       </ng-container>
-
-      <div *ngIf="selectedDay" class="slide-in show" id="citasDia">
-        <h3>Citas para {{ selectedDay | date: 'fullDate' }}</h3>
-        <ul *ngIf="selectedEvents.length > 0; else noEvents">
-          <li *ngFor="let event of selectedEvents" [ngClass]="{'text-danger': event.meta?.status === 'cancelled'}">
-            <span *ngIf="event.meta?.status === 0 || event.meta?.status === 'cancelled' || event.meta?.status === '0'" style="color: red; text-transform: uppercase;">CANCELADO </span>{{ event.title }}
-            <button (click)="editEvent(event)" class="btn btn-primary btn-sm" title="Editar">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button (click)="deleteEvent(event)" class="btn btn-danger btn-sm" title="Eliminar">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-            <button (click)="registerTreatment(event)" class="btn btn-success btn-sm" title="Registrar Tratamiento">
-              <i class="fas fa-plus-circle"></i>
-            </button>
-          </li>
-        </ul>
-        <ng-template #noEvents>
-          <p>No hay citas para este día.</p>
-        </ng-template>
-        <button (click)="openAddModal()" class="btn btn-primary btn-sm">Agregar Cita</button>
-      </div>
-      <!-- Modal para agendar una nueva cita -->
-      <ng-template #modalContent let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title">{{ isEdit ? 'Editar' : 'Agendar' }} Cita</h4>
-          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-        </div>
-        <div class="modal-body">
-          <p>Día seleccionado: {{ selectedDay | date: 'fullDate' }}</p>
-          <form (ngSubmit)="saveEvent()">
-            <div class="mb-3">
-              <label for="title" class="form-label">Descripción</label>
-              <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required [disabled]="isEdit">
-            </div>
-            <div class="mb-3">
-              <label for="patient" class="form-label">Paciente</label>
-              <select class="form-control" id="patient" [(ngModel)]="newEvent.patient" name="patient" required [disabled]="isEdit">
-                <option *ngFor="let patient of pacientes" [value]="patient.id">{{ patient.nombre }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="hour" class="form-label">Hora</label>
-              <input type="time" class="form-control" id="hour" [(ngModel)]="newEvent.hour" name="hour" required [disabled]="isSaving">
-            </div>
-            <div class="mb-3">
-              <label for="status" class="form-label">Estado</label>
-              <select class="form-control" id="status" [(ngModel)]="newEvent.status" name="status" [disabled]="isSaving">
-                <option value="active">Activo</option>
-                <option value="cancelled">Cancelado</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary" [disabled]="isSaving">{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
-          </form>
-        </div>
-      </ng-template>
     </div>
+
+    <!-- Citas del día seleccionado -->
+    <div *ngIf="selectedDay" class="cq-section" style="margin-top:16px;">
+      <h3 class="cq-section-title">
+        <i class="fas fa-calendar-day"></i> Citas para {{ selectedDay | date: 'fullDate' }}
+      </h3>
+
+      <div *ngIf="selectedEvents.length > 0; else noEvents">
+        <div *ngFor="let event of selectedEvents"
+             style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #fce4ec; flex-wrap:wrap; gap:8px;">
+          <div>
+            <span *ngIf="event.meta?.status === 0 || event.meta?.status === 'cancelled' || event.meta?.status === '0'"
+                  class="cq-info-badge" style="background:#ffebee; color:#c62828; margin-right:6px;">
+              CANCELADO
+            </span>
+            {{ event.title }}
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button class="cq-btn-icon" (click)="editEvent(event)" title="Editar"><i class="fas fa-edit"></i></button>
+            <button class="cq-btn-icon danger" (click)="deleteEvent(event)" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+            <button class="cq-btn-icon" (click)="registerTreatment(event)" title="Registrar Tratamiento" style="color:#4caf50;"><i class="fas fa-plus-circle"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noEvents>
+        <p class="cq-empty"><i class="fas fa-calendar-times" style="font-size:28px; display:block; margin-bottom:8px; color:#f8bbd0;"></i> No hay citas para este día.</p>
+      </ng-template>
+
+      <div class="cq-btn-row" style="margin-top:16px;">
+        <button class="cq-btn cq-btn-primary" (click)="openAddModal()">
+          <i class="fas fa-plus"></i> Agregar Cita
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal agendar cita -->
+    <ng-template #modalContent let-modal>
+      <div class="cq-modal-header">
+        <h4 style="margin:0; font-size:16px;">{{ isEdit ? 'Editar' : 'Agendar' }} Cita</h4>
+        <button style="background:none;border:none;color:white;float:right;font-size:18px;cursor:pointer;" (click)="modal.dismiss('Cross click')">&times;</button>
+      </div>
+      <div class="cq-modal-body">
+        <p style="color:#c2185b; margin-bottom:12px;">Día: <strong>{{ selectedDay | date: 'fullDate' }}</strong></p>
+        <form (ngSubmit)="saveEvent()">
+          <div class="cq-form-group">
+            <label for="title" class="form-label">Descripción</label>
+            <input type="text" id="title" class="cq-input" [(ngModel)]="newEvent.title" name="title" required [disabled]="isEdit">
+          </div>
+          <div class="cq-form-group">
+            <label for="patient" class="form-label">Paciente</label>
+            <select id="patient" class="cq-select" [(ngModel)]="newEvent.patient" name="patient" required [disabled]="isEdit">
+              <option *ngFor="let patient of pacientes" [value]="patient.id">{{ patient.nombre }}</option>
+            </select>
+          </div>
+          <div class="cq-form-group">
+            <label for="hour" class="form-label">Hora</label>
+            <input type="time" id="hour" class="cq-input" [(ngModel)]="newEvent.hour" name="hour" required [disabled]="isSaving">
+          </div>
+          <div class="cq-form-group">
+            <label for="status" class="form-label">Estado</label>
+            <select id="status" class="cq-select" [(ngModel)]="newEvent.status" name="status" [disabled]="isSaving">
+              <option value="active">Activo</option>
+              <option value="cancelled">Cancelado</option>
+            </select>
+          </div>
+          <div class="cq-btn-row">
+            <button type="submit" class="cq-btn cq-btn-primary" [disabled]="isSaving">
+              <i class="fas fa-save"></i> {{ isEdit ? 'Actualizar' : 'Guardar' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

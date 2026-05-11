@@ -1,49 +1,78 @@
-<div class="tratamiento-paciente-container">
-    <h2>Nuevo Tratamiento</h2>
-    <button (click)="regresar()">
-      <span class="fas fa-arrow-left"></span> Atras
-    </button>
-    <div><br></div>
+<div class="cq-wrapper">
+  <div class="cq-card" style="max-width: 750px;">
+
+    <header class="cq-header">
+      <img src="/assets/images/Logo.png" alt="Logo" class="logo"
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/2966/2966327.png'">
+      <h2>Nuevo Tratamiento</h2>
+      <p>Registra los detalles del procedimiento</p>
+    </header>
+
+    <div class="cq-btn-row" style="margin-bottom:20px;">
+      <button class="cq-btn cq-btn-secondary" (click)="regresar()">
+        <i class="fas fa-arrow-left"></i> Atrás
+      </button>
+    </div>
+
     <form [formGroup]="tratamientoForm" (ngSubmit)="guardarTratamiento()">
-      <div>
-        <label for="antecedente">Formulario (Antecedente):</label>
-        <select id="antecedente" formControlName="antecedente">
-          <option value="" disabled>Seleccione un formulario</option>
-          <option *ngFor="let catalogo of catalogosFormularios" [value]="catalogo.id">{{ catalogo.nombre }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="descripcionTratamiento">Descripción:</label>
-        <input id="descripcionTratamiento" formControlName="descripcion" type="text">
-      </div>
-      <div>
-        <label for="observacionTratamiento">Observación:</label>
-        <textarea id="observacionTratamiento" formControlName="observacion"></textarea>
+
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-clipboard"></i> Datos del Tratamiento</h3>
+        <div class="cq-grid-2">
+          <div class="cq-form-group">
+            <label for="antecedente">Formulario (Antecedente)</label>
+            <select id="antecedente" class="cq-select" formControlName="antecedente">
+              <option value="" disabled>Seleccione un formulario</option>
+              <option *ngFor="let catalogo of catalogosFormularios" [value]="catalogo.id">{{ catalogo.nombre }}</option>
+            </select>
+          </div>
+          <div class="cq-form-group">
+            <label for="tipo_tratamiento">Tipo de Tratamiento</label>
+            <select id="tipo_tratamiento" class="cq-select" formControlName="tipo_tratamiento">
+              <option value="" disabled>Seleccione un tratamiento</option>
+              <option *ngFor="let catalogo of catalogos" [value]="catalogo.id">{{ catalogo.nombre }}</option>
+            </select>
+          </div>
+          <div class="cq-form-group" style="grid-column:1/-1;">
+            <label for="descripcionTratamiento">Descripción</label>
+            <input id="descripcionTratamiento" class="cq-input" formControlName="descripcion" type="text">
+          </div>
+          <div class="cq-form-group" style="grid-column:1/-1;">
+            <label for="observacionTratamiento">Observación</label>
+            <textarea id="observacionTratamiento" class="cq-textarea" formControlName="observacion"></textarea>
+          </div>
+          <div class="cq-form-group">
+            <label for="zonas_tratar">Zonas a Tratar</label>
+            <input id="zonas_tratar" class="cq-input" formControlName="zonas_tratar" type="text">
+          </div>
+          <div class="cq-form-group">
+            <label for="fecha_tratamiento">Fecha del Tratamiento</label>
+            <input id="fecha_tratamiento" class="cq-input" formControlName="fecha_tratamiento" type="date">
+          </div>
+        </div>
       </div>
 
-      <div>
-        <label for="tipo_tratamiento">Tipo de Tratamiento:</label>
-        <select id="tipo_tratamiento" formControlName="tipo_tratamiento">
-          <option value="" disabled>Seleccione un tratamiento</option>
-          <option *ngFor="let catalogo of catalogos" [value]="catalogo.id">{{ catalogo.nombre }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="zonas_tratar">Zonas a Tratar:</label>
-        <input id="zonas_tratar" formControlName="zonas_tratar" type="text">
-      </div>
-      <div>
-        <label for="fecha_tratamiento">Fecha del Tratamiento:</label>
-        <input id="fecha_tratamiento" formControlName="fecha_tratamiento" type="date">
-      </div>
-      <div class="signature-container">
-        <label>Firma:</label>
-        <div style="background-color: white; border: 1px solid #ccc; width: 800px; height: 300px;">
-          <canvas #signatureCanvas width="800" height="300"></canvas>
+      <div class="cq-section">
+        <h3 class="cq-section-title"><i class="fas fa-signature"></i> Firma del Paciente</h3>
+        <div class="cq-canvas-wrap" style="max-width:100%; overflow-x:auto;">
+          <canvas #signatureCanvas width="800" height="220"></canvas>
         </div>
-        <button type="button" (click)="clearSignature()">Borrar Firma</button>
+        <div class="cq-btn-row" style="margin-top:12px;">
+          <button type="button" class="cq-btn cq-btn-secondary" (click)="clearSignature()">
+            <i class="fas fa-eraser"></i> Borrar Firma
+          </button>
+        </div>
       </div>
-      <button type="submit" [disabled]="tratamientoForm.invalid">Guardar Tratamiento</button>
-      <button (click)="regresar()">Cancelar</button>
+
+      <div class="cq-btn-row">
+        <button type="submit" class="cq-btn cq-btn-primary" [disabled]="tratamientoForm.invalid">
+          <i class="fas fa-save"></i> Guardar Tratamiento
+        </button>
+        <button type="button" class="cq-btn cq-btn-secondary" (click)="regresar()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+
     </form>
   </div>
+</div>

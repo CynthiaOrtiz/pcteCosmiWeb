@@ -1,0 +1,406 @@
+/* ============================================
+   SHARED COQUETTE STYLES - styles.css global base
+   Apply this to the src/styles.css
+   ============================================ */
+
+/* Wrapper de página completa */
+.cq-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  font-family: 'Georgia', serif;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+/* Tarjeta contenedora */
+.cq-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  padding: 36px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(255, 182, 193, 0.35);
+  width: 100%;
+  max-width: 900px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Header con logo */
+.cq-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.cq-header .logo {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffb6c1;
+  padding: 4px;
+  background: white;
+  margin-bottom: 10px;
+}
+
+.cq-header h1, .cq-header h2 {
+  color: #d81b60;
+  font-size: 26px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  margin: 0 0 4px 0;
+}
+
+.cq-header p {
+  color: #ad1457;
+  font-size: 14px;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Sección interior */
+.cq-section {
+  background: white;
+  border: 1.5px solid #f8bbd0;
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.cq-section-title {
+  color: #c2185b;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #fce4ec;
+  padding-bottom: 10px;
+}
+
+/* Labels y inputs */
+.cq-form-group {
+  margin-bottom: 14px;
+}
+
+.cq-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #555;
+  font-size: 13px;
+}
+
+.cq-input, .cq-select, .cq-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #f8bbd0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+  background: white;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.cq-input:focus, .cq-select:focus, .cq-textarea:focus {
+  outline: none;
+  border-color: #f06292;
+  box-shadow: 0 0 8px rgba(240, 98, 146, 0.25);
+}
+
+.cq-input[readonly] {
+  background: #fce4ec;
+  color: #888;
+}
+
+.cq-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Checkboxes */
+.cq-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cq-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.cq-check-item input[type="checkbox"] {
+  accent-color: #f06292;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Grilla de campos 2 columnas */
+.cq-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cq-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+/* Info display (solo lectura) */
+.cq-info-label {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.cq-info-value {
+  font-size: 15px;
+  color: #333;
+  font-weight: bold;
+}
+
+.cq-info-badge {
+  display: inline-block;
+  background: #fce4ec;
+  color: #c2185b;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Tabla coquette */
+.cq-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+.cq-table thead tr {
+  background: #fce4ec;
+}
+
+.cq-table th {
+  color: #c2185b;
+  font-weight: bold;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid #f8bbd0;
+}
+
+.cq-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #fce4ec;
+  color: #444;
+  vertical-align: middle;
+}
+
+.cq-table tbody tr:hover {
+  background: #fff8fb;
+  cursor: pointer;
+}
+
+/* Botones */
+.cq-btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.cq-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.3s ease;
+}
+
+.cq-btn-primary {
+  background: #f06292;
+  color: white;
+}
+
+.cq-btn-primary:hover:not([disabled]) {
+  background: #e91e63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+.cq-btn-secondary {
+  background: white;
+  color: #c2185b;
+  border: 2px solid #f8bbd0;
+}
+
+.cq-btn-secondary:hover {
+  background: #fce4ec;
+  transform: translateY(-2px);
+}
+
+.cq-btn-danger {
+  background: white;
+  color: #c62828;
+  border: 2px solid #ef9a9a;
+}
+
+.cq-btn-danger:hover {
+  background: #ffebee;
+}
+
+.cq-btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f06292;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.cq-btn-icon:hover {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.cq-btn-icon.danger {
+  color: #e57373;
+}
+
+.cq-btn-icon.danger:hover {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.cq-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Filtro búsqueda */
+.cq-search-bar {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.cq-search-bar i {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f06292;
+}
+
+.cq-search-bar input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 2px solid #f8bbd0;
+  border-radius: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.cq-search-bar input:focus {
+  outline: none;
+  border-color: #f06292;
+  box-shadow: 0 0 8px rgba(240, 98, 146, 0.2);
+}
+
+/* Paciente badge */
+.cq-badge {
+  background: #fce4ec;
+  border: 1.5px solid #f48fb1;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #c2185b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Validacion errores */
+.cq-error {
+  color: #e91e63;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Sin resultados */
+.cq-empty {
+  text-align: center;
+  color: #bbb;
+  padding: 30px;
+  font-style: italic;
+}
+
+/* Modal coquette */
+.cq-modal-header {
+  background: #f06292;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 16px 16px 0 0;
+}
+
+.cq-modal-body {
+  background: #fff8fb;
+  padding: 18px;
+}
+
+.cq-modal-footer {
+  background: #fff8fb;
+  padding: 14px 18px;
+  border-top: 1px solid #f8bbd0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-radius: 0 0 16px 16px;
+}
+
+/* Firma canvas */
+.cq-canvas-wrap {
+  border: 2px solid #f8bbd0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+/* Spinner / loading */
+.cq-processing {
+  text-align: center;
+  color: #f06292;
+  font-style: italic;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cq-grid-2, .cq-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
