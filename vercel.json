@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "dist/temp-v20/browser",
   "rewrites": [
     {
       "source": "/(.*)",
