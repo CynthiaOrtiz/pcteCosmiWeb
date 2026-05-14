@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TipoTratamientoService {
 
-  private apiUrl = 'http://localhost:8082/adminPacServ/api/catalogo';
+  private apiUrl = `${environment.apiUrl}/catalogo`;
 
   constructor(private http: HttpClient) {}
 

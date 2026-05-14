@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { Paciente } from '../model/vo/paciente';
 import { Cita } from '../model/vo/cita';
 import { CalendarEvent } from 'angular-calendar';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitasService {
-  private apiUrl = 'http://localhost:8082/adminPacServ/api/citas'; // URL del servicio web
-  private apiUrlPaciente = 'http://localhost:8082/adminPacServ/api/adminpaciente';
+  private apiUrl = `${environment.apiUrl}/citas`; // URL del servicio web
+  private apiUrlPaciente = `${environment.apiUrl}/adminpaciente`;
 
   constructor(private http: HttpClient) { }
 

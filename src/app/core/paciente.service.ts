@@ -5,15 +5,16 @@ import { Observable } from 'rxjs';
 import { HistoriaClinica } from '../model/vo/historiaClinica';
 import { Tratamiento } from '../model/vo/tratamiento';
 import { Paciente } from '../model/vo/paciente';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PacienteService {
-  private apiUrl = 'http://localhost:8082/adminPacServ/api/adminpaciente';
-  private tratamientosUrl = 'http://localhost:8082/adminPacServ/api/tratamientos'; // URL para tratamientos
-  private historia = 'http://localhost:8082/adminPacServ/api/historia'; // URL para tratamientos
+  private apiUrl = `${environment.apiUrl}/adminpaciente`;
+  private tratamientosUrl = `${environment.apiUrl}/tratamientos`; // URL para tratamientos
+  private historia = `${environment.apiUrl}/historia`; // URL para tratamientos
 
   constructor(private http: HttpClient) { }
 
